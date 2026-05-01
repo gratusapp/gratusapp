@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preisliste | Web & App Development</title>
+    <link rel="stylesheet" href="../index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Startseite</a>
+                <a href="preise.html" class="active">Preise</a>
+                <a href="apps.html">Apps</a>
+                <a href="support.html">Support</a>
+                <div class="lang-switcher">
+                    <a href="../cenik.html">CZ</a>
+                    <a href="../en/pricing.html">EN</a>
+                    <a href="preise.html" class="active">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 100px;">
+        <section id="pricing" class="fade-in">
+            <h1 class="section-title" style="font-size: 48px; margin-bottom: 20px;">Zusammenarbeit & Preise</h1>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 18px;">
+                Faire Preise und ein individueller Ansatz für jedes Projekt. Wählen Sie zwischen monatlicher Pflege oder Festpreisprojekten.
+            </p>
+            
+            <h2 class="section-title" style="font-size: 28px; text-align: left; margin-top: 40px; margin-bottom: 30px;">Monatliche Pflege & Support</h2>
+            <div class="grid">
+                <div class="card" onclick="window.location.href='support.html'">
+                    <h3 style="color: var(--text-color);">BASIC Support</h3>
+                    <p style="font-size: 32px; font-weight: 600; margin: 15px 0;">40 € <span style="font-size: 14px; font-weight: 400; opacity: 0.6;">/ Monat</span></p>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Änderungen 1x Monat</p>
+                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                        <li>• Website-Funktionsprüfung</li>
+                        <li>• Inhaltsaktualisierungen (Text/Fotos)</li>
+                        <li>• Grundlegende technische Aufsicht</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-color: var(--accent-color);" onclick="window.location.href='support.html'">
+                    <span style="position: absolute; top: 15px; right: 20px; background: var(--accent-color); color: white; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">BELIEBT</span>
+                    <h3 style="color: var(--accent-color);">WEEKLY Pflege</h3>
+                    <p style="font-size: 32px; font-weight: 600; margin: 15px 0;">140 € <span style="font-size: 14px; font-weight: 400; opacity: 0.6;">/ Monat</span></p>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Wöchentliche Updates</p>
+                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                        <li>• **Wöchentliche Inhaltsaktualisierungen**</li>
+                        <li>• Design 1x Newsletter monatlich</li>
+                        <li>• 2x Social Media Grafiken (Canva)</li>
+                        <li>• Priorisierter Support</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-color: #FF9A8B;" onclick="window.location.href='support.html'">
+                    <h3>PREMIUM Support</h3>
+                    <p style="font-size: 32px; font-weight: 600; margin: 15px 0;">280 € <span style="font-size: 14px; font-weight: 400; opacity: 0.6;">/ Monat</span></p>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Für aktive Projekte</p>
+                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                        <li>• Regelmäßiges Inhaltsmanagement</li>
+                        <li>• Direkter Telefon-Support</li>
+                        <li>• Erstellung 2x Newslettern monatlich</li>
+                        <li>• Rabatte auf neue Features</li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-color: #fff;" onclick="window.location.href='support.html'">
+                    <h3>ULTIMATE Admin</h3>
+                    <p style="font-size: 32px; font-weight: 600; margin: 15px 0;">400 € <span style="font-size: 14px; font-weight: 400; opacity: 0.6;">/ Monat</span></p>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Full-Service-Paket</p>
+                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                        <li>• **Content-Strategie und Erstellung**</li>
+                        <li>• Monatliche Strategieberatung</li>
+                        <li>• Komplette digitale Markenpflege</li>
+                        <li>• Unbegrenzte technische Anpassungen</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px; font-style: italic;">
+                * Bei den Verwaltungspaketen wird vorausgesetzt, dass die Inhalte (Texte, Fotos) vom Kunden geliefert werden, sofern keine Inhaltserstellung vereinbart wurde (z.B. im ULTIMATE-Paket).<br>
+                ** Die Preise beinhalten keine Kosten für Webhosting, Domain oder Softwarelizenzen von Drittanbietern.
+            </p>
+
+            <h2 class="section-title" style="font-size: 28px; text-align: left; margin-top: 80px; margin-bottom: 30px;">Festpreisprojekte</h2>
+            <div class="grid">
+                <div class="card" style="text-align: center;" onclick="window.location.href='support.html'">
+                    <h3>Landing Page</h3>
+                    <p style="font-size: 36px; font-weight: 600; margin: 20px 0;">Ab 200 €</p>
+                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 15px; margin-bottom: 20px;">
+                        <li style="margin-bottom: 10px;">• Moderne One-Page-Website</li>
+                        <li style="margin-bottom: 10px;">• Voll responsives Design</li>
+                        <li style="margin-bottom: 10px;">• Grundlegende SEO-Optimierung</li>
+                    </ul>
+                    <span class="btn" style="font-size: 14px;">Ich bin interessiert</span>
+                </div>
+
+                <div class="card" style="text-align: center; border-color: var(--accent-color);" onclick="window.location.href='support.html'">
+                    <h3>Mobile & Web Apps</h3>
+                    <p style="font-size: 36px; font-weight: 600; margin: 20px 0;">Ab 1,000 €</p>
+                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 15px; margin-bottom: 20px;">
+                        <li style="margin-bottom: 10px;">• Maßgeschneiderte iOS-Entwicklung</li>
+                        <li style="margin-bottom: 10px;">• Komplexe Web-Ökosysteme</li>
+                        <li style="margin-bottom: 10px;">• App Store Veröffentlichung</li>
+                    </ul>
+                    <span class="btn" style="font-size: 14px;">Ich bin interessiert</span>
+                </div>
+
+                <div class="card" style="text-align: center; border-color: #FF9A8B;" onclick="window.location.href='support.html'">
+                    <h3>Content & SEO</h3>
+                    <p style="font-size: 36px; font-weight: 600; margin: 20px 0;">Ab 120 €</p>
+                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 15px; margin-bottom: 20px;">
+                        <li style="margin-bottom: 10px;">• Technisches Web-SEO</li>
+                        <li style="margin-bottom: 10px;">• Erstellung moderner Newsletter</li>
+                        <li style="margin-bottom: 10px;">• Content-Strategie und Textierung</li>
+                    </ul>
+                    <span class="btn" style="font-size: 14px;">Ich bin interessiert</span>
+                </div>
+            </div>h bin interessiert</span>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 60px; border: 1px dashed #444; background: rgba(255,255,255,0.02); padding: 50px; text-align: center;" onclick="window.location.href='support.html'">
+                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px; color: var(--text-color);">Nicht gefunden, was Sie suchen?</p>
+                <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.8; max-width: 800px; margin: 0 auto;">
+                    Jede Zusammenarbeit ist einzigartig. Senden Sie mir Ihre Ideen, und ich erstelle ein individuelles Angebot für Ihr Projekt.
+                </p>
+                <br>
+                <span class="btn">Angebot anfordern</span>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Mit Liebe zum Detail erstellt.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="support.html">Kontakt und Support</a> | 
+                <a href="legal/terms.html">AGB</a> | 
+                <a href="legal/privacy.html">Datenschutz</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

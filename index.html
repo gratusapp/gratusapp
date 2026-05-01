@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gratus App | Webové stránky a aplikace na míru</title>
+    <meta name="description" content="Profesionální vývoj webů a aplikací s využitím AI. Moderní design a řešení na míru.">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Domů</a>
+                <a href="cenik.html">Ceník</a>
+                <a href="apps.html">Aplikace</a>
+                <a href="support.html">Podpora</a>
+                <div class="lang-switcher">
+                    <a href="index.html" class="active">CZ</a>
+                    <a href="en/index.html">EN</a>
+                    <a href="de/index.html">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Basic language detection and redirect
+        (function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const hasRedirected = sessionStorage.getItem('langRedirect');
+            
+            if (!hasRedirected) {
+                sessionStorage.setItem('langRedirect', 'true');
+                if (userLang.startsWith('en')) {
+                    window.location.href = 'en/index.html';
+                } else if (userLang.startsWith('de')) {
+                    window.location.href = 'de/index.html';
+                }
+            }
+        })();
+    </script>
+
+    <header class="hero fade-in">
+        <div class="ambient-glow" style="top: 10%; left: -10%;"></div>
+        <div class="ambient-glow" style="bottom: 10%; right: -10%; background: radial-gradient(circle, rgba(0, 113, 227, 0.1) 0%, transparent 70%);"></div>
+        
+        <h1>Digitální řešení na míru</h1>
+        <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <a href="#vision" class="btn" style="background: white; color: black;">Moje vize</a>
+            <a href="apps.html" class="btn">Prohlédnout projekty</a>
+        </div>
+        <div class="hero-showcase">
+            <div class="ambient-glow"></div>
+            <div class="showcase-item item-left">
+                <img src="assets/app-inspiration-clean.png" alt="Inspirace">
+            </div>
+            <div class="showcase-item item-center">
+                <img src="assets/app-home-clean.png" alt="Domů">
+            </div>
+            <div class="showcase-item item-right">
+                <img src="assets/app-journey-clean.png" alt="Moje cesta">
+            </div>
+        </div>
+    </header>
+
+
+
+    <section id="approach" style="padding: 100px 20px;">
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+            <div class="fade-in">
+                <h2 style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Kreativita poháněná technologií</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 25px; font-size: 18px;">
+                    Věřím, že digitální produkt by měl být víc než jen kód. Měl by vyprávět příběh a vzbuzovat emoce. Má cesta začala vášní pro design a postupně se prolnula s precizností softwarového testování a efektivitou programování s AI.
+                </p>
+                <p style="color: var(--text-secondary); line-height: 1.8; font-size: 18px;">
+                    Dnes pomáhám podnikatelům růst tím, že z jejich vizí dělám hmatatelnou realitu. Můj přístup je postaven na detailech, které dělají rozdíl.
+                </p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" class="fade-in">
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(255, 154, 139, 0.05);">
+                    <h4 style="margin-bottom: 10px; color: #FF9A8B;">Preciznost</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Odzkoušené a spolehlivé projekty bez chyb.</p>
+                </div>
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(0, 113, 227, 0.05);">
+                    <h4 style="margin-bottom: 10px; color: #0071e3;">AI Efektivita</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Rychlejší doručení bez ztráty kvality.</p>
+                </div>
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(255, 255, 255, 0.03);">
+                    <h4 style="margin-bottom: 10px;">UI Design</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Minimalismus inspirovaný Apple estetikou.</p>
+                </div>
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(255, 255, 255, 0.03);">
+                    <h4 style="margin-bottom: 10px;">Marketing</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Obsah, který lidi baví a prodává.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" style="padding: 100px 20px; background: rgba(255, 255, 255, 0.01);">
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;">
+            <div style="order: 2;" class="fade-in">
+                <h2 style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Moje vize</h2>
+                <div class="card" style="background: linear-gradient(145deg, #1c1c1e, #000); border: 1px solid #333; padding: 40px; margin: 0;">
+                    <p style="font-size: 19px; line-height: 1.8; color: var(--text-color); margin-bottom: 25px;">
+                        Budoucnost leží v symbióze <span class="highlight">lidského nápadu a AI</span>. Jako nezávislý vývojář doručuji výsledky, na které by agentura potřebovala celý tým.
+                    </p>
+                    <ul style="color: var(--text-secondary); list-style: none; padding: 0; font-size: 16px;">
+                        <li style="margin-bottom: 15px;">✓ <strong>Rychlost:</strong> AI nám dává křídla v základech.</li>
+                        <li style="margin-bottom: 15px;">✓ <strong>Flexibilita:</strong> Komunikujete přímo se mnou.</li>
+                        <li style="margin-bottom: 15px;">✓ <strong>Kvalita:</strong> Agenturní standard za férovou cenu.</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="order: 1;" class="fade-in">
+                <div style="position: relative; padding: 40px; background: radial-gradient(circle at center, rgba(255, 154, 139, 0.1), transparent); border-radius: 40px; text-align: center;">
+                    <div style="font-size: 80px; margin-bottom: 20px;">💡</div>
+                    <p style="font-size: 22px; font-weight: 500; color: #FF9A8B;">Innovation starts here.</p>
+                    <p style="color: var(--text-secondary); margin-top: 15px;">Každý projekt je pro mě příležitostí ukázat, že i malý tým dokáže překonat velké agentury.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise" style="padding: 100px 20px;">
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <h2 class="section-title" style="margin-bottom: 60px;">Specializace & Know-how</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🎓</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Google AI Essentials</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">Ovládám techniky Prompt Engineeringu a vím, jak pomocí AI doručovat výsledky v rekordním čase.</p>
+                    </div>
+                </div>
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🎨</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Creative UX/UI</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">Design v Canvě a Figma, který lidi baví. Čistota, minimalismus a důraz na uživatelský prožitek.</p>
+                    </div>
+                </div>
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🧪</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Software Testing</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">Zkušenosti z QA zaručují, že vaše řešení bude stabilní, bezpečné a připravené na reálný nápor uživatelů.</p>
+                    </div>
+                </div>
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🔍</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">SEO & Analytika</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">Váš web nezapadne. Nastavím technické SEO a analytiku tak, abyste byli vidět tam, kde vás lidé hledají.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="technologies" style="padding: 100px 20px; background: rgba(255, 255, 255, 0.01);">
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <h2 class="section-title" style="margin-bottom: 60px;">Využívané technologie</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🍎</div>
+                    <h3 style="margin-bottom: 15px;">iOS & Swift</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Vývoj nativních aplikací pro ekosystém Apple s důrazem na plynulost, bezpečnost a čistý Swift kód.</p>
+                </div>
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🤖</div>
+                    <h3 style="margin-bottom: 15px;">AI Integration</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Implementace GPT modelů a pokročilého Prompt Engineeringu pro chytřejší a efektivnější funkce.</p>
+                </div>
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🌐</div>
+                    <h3 style="margin-bottom: 15px;">Modern Web</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Stavba rychlých a responzivních webů využívajících HTML5, CSS3 a moderní JavaScriptové frameworky.</p>
+                </div>
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">☁️</div>
+                    <h3 style="margin-bottom: 15px;">iCloud & Cloud</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Lokální úložiště v zařízení, volitelné zálohy přes Apple podle nastavení uživatele — bez vlastního „datového cloudu“ vývojáře u obsahu aplikace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="developer">
+        <h2 class="section-title">Více aplikací již brzy</h2>
+        <div class="card" style="text-align: center;">
+            <p>Jako nezávislý vývojář se soustředím na tvoření nástrojů, které zlepšují každodenní život. Sledujte tuto stránku pro další novinky.</p>
+            <br>
+            <a href="apps/denik-vdecnosti.html">Prohlédnout portfolio →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="support.html">Kontakt a podpora</a> | 
+                <a href="legal/terms.html">Obchodní podmínky</a> | 
+                <a href="legal/privacy.html">Ochrana soukromí</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer for fade-in animations
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section, header').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

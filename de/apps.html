@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Apps | Projekt-Portfolio</title>
+    <link rel="stylesheet" href="../index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Startseite</a>
+                <a href="preise.html">Preise</a>
+                <a href="apps.html" class="active">Apps</a>
+                <a href="support.html">Support</a>
+                <div class="lang-switcher">
+                    <a href="../apps.html">CZ</a>
+                    <a href="../en/apps.html">EN</a>
+                    <a href="apps.html" class="active">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 100px;">
+        <section class="fade-in">
+            <h1 class="section-title" style="font-size: 48px; margin-bottom: 20px;">Meine Anwendungen</h1>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 18px;">
+                Ich entwickle Werkzeuge, die einen Unterschied machen. Von persönlicher Entwicklung bis hin zu komplexen Systemen. Entdecken Sie meine Projekte.
+            </p>
+            
+            <div class="grid">
+                <!-- Dankbarkeitstagebuch -->
+                <div class="card" onclick="window.location.href='apps/dankbarkeitstagebuch.html'" style="border-color: var(--accent-color);">
+                    <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #000); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                        <img src="../assets/de-dankbarkeit-home.png" alt="Dankbarkeitstagebuch" style="width: 150px; transform: rotate(5deg); transition: transform 0.5s ease;">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;">AKTIV</div>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px;">Dankbarkeitstagebuch</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Ihre tägliche Dosis Positivität. Eine moderne iOS-App, inspiriert von Ruhe und Minimalismus. Verfolgen Sie Ihren Fortschritt.
+                    </p>
+                    <a href="apps/dankbarkeitstagebuch.html" class="btn" style="padding: 10px 20px; font-size: 14px;">Details ansehen →</a>
+                </div>
+
+                <!-- Placeholder Project 1 -->
+                <div class="card" style="opacity: 0.7; border-style: dashed;">
+                    <div style="height: 250px; background: rgba(255,255,255,0.02); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 40px;">⏳</span>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px; color: var(--text-secondary);">Focus Flow (Bald)</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Ich entwickle derzeit ein neues Werkzeug für tiefe Konzentration und die Eliminierung von digitalem Rauschen. Minimalismus in jedem Pixel.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 8px; font-size: 12px; color: var(--text-secondary); display: inline-block;">
+                        In Entwicklung...
+                    </div>
+                </div>
+
+                <!-- Placeholder Project 2 -->
+                <div class="card" style="opacity: 0.7; border-style: dashed;">
+                    <div style="height: 250px; background: rgba(255,255,255,0.02); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 40px;">🏗️</span>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px; color: var(--text-secondary);">E-Shop Suite</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Eine umfassende Lösung für modernen E-Commerce. Volle KI-Integration für automatisierte Produktbeschreibungen.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 8px; font-size: 12px; color: var(--text-secondary); display: inline-block;">
+                        In Planung
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 80px; text-align: center; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.01);">
+                <h2 style="margin-bottom: 20px;">Haben Sie eine Idee für eine eigene App?</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 30px auto; line-height: 1.8;">
+                    Ich begleite Sie durch den gesamten Prozess von der Analyse über das Design bis hin zur Veröffentlichung im App Store.
+                </p>
+                <a href="support.html" class="btn">Projekt besprechen</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Mit Liebe zum Detail erstellt.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="support.html">Kontakt und Support</a> | 
+                <a href="legal/terms.html">AGB</a> | 
+                <a href="legal/privacy.html">Datenschutz</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

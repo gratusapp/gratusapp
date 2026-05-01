@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gratus App | Maßgeschneiderte Webseiten & Apps</title>
+    <meta name="description" content="Professionelle Web- und App-Entwicklung mit KI. Modernes Design und maßgeschneiderte Lösungen.">
+    <link rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Startseite</a>
+                <a href="preise.html">Preise</a>
+                <a href="apps.html">Apps</a>
+                <a href="support.html">Support</a>
+                <div class="lang-switcher">
+                    <a href="../index.html">CZ</a>
+                    <a href="../en/index.html">EN</a>
+                    <a href="index.html" class="active">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Basic language detection and redirect
+        (function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const hasRedirected = sessionStorage.getItem('langRedirect');
+            
+            if (!hasRedirected) {
+                sessionStorage.setItem('langRedirect', 'true');
+                if (userLang.startsWith('cs')) {
+                    window.location.href = '../index.html';
+                } else if (userLang.startsWith('en')) {
+                    window.location.href = '../en/index.html';
+                }
+            }
+        })();
+    </script>
+
+    <header class="hero fade-in">
+        <div class="ambient-glow" style="top: 10%; left: -10%;"></div>
+        <div class="ambient-glow" style="bottom: 10%; right: -10%; background: radial-gradient(circle, rgba(0, 113, 227, 0.1) 0%, transparent 70%);"></div>
+        
+        <h1>Maßgeschneiderte digitale Lösungen</h1>
+        <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <a href="#vision" class="btn" style="background: white; color: black;">Meine Vision</a>
+            <a href="apps.html" class="btn">Projekte ansehen</a>
+        </div>
+        <div class="hero-showcase hero-showcase--device">
+            <div class="ambient-glow"></div>
+            <div class="showcase-item item-left">
+                <div class="iphone-frame">
+                    <div class="iphone-screen">
+                        <img src="../assets/de-mein-raum.png" alt="Mein Raum">
+                    </div>
+                </div>
+            </div>
+            <div class="showcase-item item-center">
+                <div class="iphone-frame">
+                    <div class="iphone-screen">
+                        <img src="../assets/de-dankbarkeit-home.png" alt="Heutige Dankbarkeit">
+                    </div>
+                </div>
+            </div>
+            <div class="showcase-item item-right">
+                <div class="iphone-frame">
+                    <div class="iphone-screen">
+                        <img src="../assets/de-meine-reise.png" alt="Meine Reise">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="approach" style="padding: 100px 20px;">
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;">
+            <div class="fade-in">
+                <h2 style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Technologiegetriebene Kreativität</h2>
+                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 25px; font-size: 18px;">
+                    Ich glaube, dass ein digitales Produkt mehr als nur Code sein sollte. Es sollte eine Geschichte erzählen und Emotionen wecken. Meine Reise begann mit einer Leidenschaft für Design und verschmolz allmählich mit der Präzision von Softwaretests und der Effizienz von KI-gesteuerter Programmierung.
+                </p>
+                <p style="color: var(--text-secondary); line-height: 1.8; font-size: 18px;">
+                    Heute helfe ich Unternehmern zu wachsen, indem ich ihre Visionen in greifbare Realität umsetze. Mein Ansatz baut auf Details auf, die den Unterschied machen.
+                </p>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" class="fade-in">
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(255, 154, 139, 0.05);">
+                    <h4 style="margin-bottom: 10px; color: #FF9A8B;">Präzision</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Geprüfte und zuverlässige Projekte ohne Fehler.</p>
+                </div>
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(0, 113, 227, 0.05);">
+                    <h4 style="margin-bottom: 10px; color: #0071e3;">KI-Effizienz</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Schnellere Lieferung ohne Qualitätsverlust.</p>
+                </div>
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(255, 255, 255, 0.03);">
+                    <h4 style="margin-bottom: 10px;">UI Design</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Minimalismus inspiriert von Apple-Ästhetik.</p>
+                </div>
+                <div class="card" style="margin: 0; padding: 30px; background: rgba(255, 255, 255, 0.03);">
+                    <h4 style="margin-bottom: 10px;">Marketing</h4>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Inhalte, die begeistern und verkaufen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" style="padding: 100px 20px; background: rgba(255, 255, 255, 0.01);">
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center;">
+            <div style="order: 2;" class="fade-in">
+                <h2 style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Meine Vision</h2>
+                <div class="card" style="background: linear-gradient(145deg, #1c1c1e, #000); border: 1px solid #333; padding: 40px; margin: 0;">
+                    <p style="font-size: 19px; line-height: 1.8; color: var(--text-color); margin-bottom: 25px;">
+                        Die Zukunft liegt in der Symbiose von <span class="highlight">menschlichen Ideen und KI</span>. Als unabhängiger Entwickler liefere ich Ergebnisse, für die eine Agentur ein ganzes Team bräuchte.
+                    </p>
+                    <ul style="color: var(--text-secondary); list-style: none; padding: 0; font-size: 16px;">
+                        <li style="margin-bottom: 15px;">✓ <strong>Geschwindigkeit:</strong> KI gibt uns Flügel in den Fundamenten.</li>
+                        <li style="margin-bottom: 15px;">✓ <strong>Flexibilität:</strong> Sie kommunizieren direkt mit mir.</li>
+                        <li style="margin-bottom: 15px;">✓ <strong>Qualität:</strong> Agenturstandard zum fairen Preis.</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="order: 1;" class="fade-in">
+                <div style="position: relative; padding: 40px; background: radial-gradient(circle at center, rgba(255, 154, 139, 0.1), transparent); border-radius: 40px; text-align: center;">
+                    <div style="font-size: 80px; margin-bottom: 20px;">💡</div>
+                    <p style="font-size: 22px; font-weight: 500; color: #FF9A8B;">Innovation beginnt hier.</p>
+                    <p style="color: var(--text-secondary); margin-top: 15px;">Jedes Projekt ist eine Gelegenheit zu zeigen, dass ein kleines Team große Agenturen übertreffen kann.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise" style="padding: 100px 20px;">
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <h2 class="section-title" style="margin-bottom: 60px;">Spezialisierung & Know-how</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🎓</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Google AI Essentials</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">Experte im Prompt Engineering. Ich nutze KI, um hochwertige Ergebnisse in Rekordzeit zu liefern.</p>
+                    </div>
+                </div>
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🎨</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Creative UX/UI</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">Design in Canva und Figma, das begeistert. Fokus na Minimalismus und Benutzererfahrung.</p>
+                    </div>
+                </div>
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🧪</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">Software Testing</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">QA-Erfahrung garantiert stabile und sichere Lösungen, bereit für den echten Einsatz.</p>
+                    </div>
+                </div>
+                <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                    <div style="font-size: 40px;">🔍</div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">SEO & Analytik</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">Ihre Website wird nicht untergehen. Ich richte technisches SEO und Analysen ein, damit Sie dort sichtbar sind, wo die Leute nach Ihnen suchen.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="technologies" style="padding: 100px 20px; background: rgba(255, 255, 255, 0.01);">
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <h2 class="section-title" style="margin-bottom: 60px;">Genutzte Technologien</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🍎</div>
+                    <h3 style="margin-bottom: 15px;">iOS & Swift</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Entwicklung nativer Apps für das Apple-Ökosystem mit Fokus auf Performance, Sicherheit und sauberen Swift-Code.</p>
+                </div>
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🤖</div>
+                    <h3 style="margin-bottom: 15px;">KI-Integration</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Implementierung von GPT-Modellen und modernem Prompt Engineering für intelligentere Funktionen.</p>
+                </div>
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">🌐</div>
+                    <h3 style="margin-bottom: 15px;">Modernes Web</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Erstellung schneller Webseiten mit HTML5, CSS3 und modernen JavaScript-Frameworks.</p>
+                </div>
+                <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                    <div style="font-size: 50px; margin-bottom: 20px;">☁️</div>
+                    <h3 style="margin-bottom: 15px;">iCloud & Cloud</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">Lokale Speicherung auf dem Gerät, optionale Apple-Backups je nach Nutzereinstellung — kein eigener Cloud-Server des Entwicklers für App-Inhalte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="developer">
+        <h2 class="section-title">Weitere Apps kommen bald</h2>
+        <div class="card" style="text-align: center;">
+            <p>Als unabhängiger Entwickler konzentriere ich mich auf Tools, die das tägliche Leben verbessern. Folgen Sie dieser Seite.</p>
+            <br>
+            <a href="apps.html">Portfolio ansehen →</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Mit Liebe zum Detail erstellt.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="support.html">Kontakt und Support</a> | 
+                <a href="legal/terms.html">AGB</a> | 
+                <a href="legal/privacy.html">Datenschutz</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('section, header').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

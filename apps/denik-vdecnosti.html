@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deník vděčnosti | Funkce a detaily</title>
+    <link rel="stylesheet" href="../index.css">
+    <style>
+        .feature-hero {
+            background: linear-gradient(180deg, #1c1c1e 0%, #000 100%);
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background: #1c1c1e;
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid #333;
+        }
+        .feature-card h3 {
+            color: #FF9A8B;
+            margin-bottom: 15px;
+        }
+        .icon-box {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Domů</a>
+                <a href="../cenik.html">Ceník</a>
+                <a href="../apps.html">Aplikace</a>
+                <a href="../support.html">Podpora</a>
+                <div class="lang-switcher">
+                    <a href="denik-vdecnosti.html" class="active">CZ</a>
+                    <a href="../en/apps/gratitude-journal.html">EN</a>
+                    <a href="../de/apps/dankbarkeitstagebuch.html">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="feature-hero">
+        <h1 style="font-size: 48px; margin-bottom: 20px;">Deník vděčnosti</h1>
+        <p style="font-size: 20px; color: var(--text-secondary); max-width: 800px; margin: 0 auto;">
+            Osobní deník a nástroje pro každodenní záznamy a reflexi — inspirované mindfulness, v jedné aplikaci. Nenahrazuje odbornou péči.
+        </p>
+        <p style="font-size: 13px; color: var(--text-secondary); max-width: 640px; margin: 24px auto 0; line-height: 1.6; padding: 14px 18px; border: 1px solid #333; border-radius: 12px; background: rgba(0,0,0,0.25);">
+            <strong style="color: var(--text-color);">Důležité:</strong> Aplikace není zdravotnický prostředek ani terapie. V akutní psychické tísni volejte <strong>155</strong> nebo <strong>158</strong>, při ohrožení života <strong>112</strong>. <a href="../legal/terms.html" style="color: var(--accent-color);">Obchodní podmínky</a>
+        </p>
+    </header>
+
+    <section>
+        <h2 class="section-title">Co všechno aplikace umí?</h2>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon-box">🌿</div>
+                <h3>Zahrada Vděčnosti</h3>
+                <p>Unikátní vizuální systém, kde vaše vděčnost doslova roste. Čím pravidelněji si zapisujete, tím košatější a krásnější je vaše digitální zahrada.</p>
+                <span class="highlight" style="font-size: 12px; letter-spacing: 1px;">SOUČÁST VERZE 1.0</span>
+            </div>
+            
+            <div class="feature-card" style="opacity: 0.7;">
+                <div class="icon-box">🧘‍♀️</div>
+                <h3>Oáza klidu</h3>
+                <p>Váš osobní prostor pro relaxaci. Obsahuje ambientní zvuky a vedená dechová cvičení.</p>
+                <span style="color: #888; font-size: 12px; font-weight: 600;">JIŽ BRZY V AKTUALIZACI</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">🌑</div>
+                <h3>Můj prostor & Stíny</h3>
+                <p>Bezpečné místo nejen pro radost, ale i pro těžké chvíle. Sekce pro vypsání se z negativních emocí.</p>
+                <span class="highlight" style="font-size: 12px; letter-spacing: 1px;">SOUČÁST VERZE 1.0</span>
+            </div>
+
+            <div class="feature-card" style="opacity: 0.7;">
+                <div class="icon-box">📈</div>
+                <h3>Moje cesta PLUS</h3>
+                <p>Interaktivní grafy, kalendář nálady a měsíční PDF reporty pro hlubší pochopení sebe sama.</p>
+                <span style="color: #888; font-size: 12px; font-weight: 600;">PŘIPRAVUJEME PRO PREMIUM</span>
+            </div>
+
+            <div class="feature-card" style="opacity: 0.7;">
+                <div class="icon-box">🏆</div>
+                <h3>Mikro-vítězství</h3>
+                <p>Oslavujte malé denní úspěchy. Pomáháme vám všímat si drobností, které dělají život lepším.</p>
+                <span style="color: #888; font-size: 12px; font-weight: 600;">PŘIPRAVUJEME</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">☀️</div>
+                <h3>Atmosféra podle počasí</h3>
+                <p>Aplikace žije s vámi. Prostředí a barvy se dynamicky mění podle aktuálního počasí ve vašem okolí, což umocňuje zážitek z každého zápisu.</p>
+                <span class="highlight" style="font-size: 12px; letter-spacing: 1px;">SOUČÁST VERZE 1.0</span>
+            </div>
+
+            <div class="feature-card" style="opacity: 0.7;">
+                <div class="icon-box">📅</div>
+                <h3>Kalendář nálady</h3>
+                <p>Ucelený přehled vašich dnů v přehledném kalendáři. Sledujte, jak se vaše nálada mění v průběhu měsíců.</p>
+                <span style="color: #888; font-size: 12px; font-weight: 600;">PŘIPRAVUJEME PRO PREMIUM</span>
+            </div>
+
+            <div class="feature-card" style="opacity: 0.7;">
+                <div class="icon-box">🎙️</div>
+                <h3>Hlasové zadávání</h3>
+                <p>Nestíháte psát? Brzy budete moci své vděčnosti prostě nadiktovat. AI se postará o zbytek.</p>
+                <span style="color: #888; font-size: 12px; font-weight: 600;">PŘIPRAVUJEME</span>
+            </div>
+
+            <div class="feature-card" style="opacity: 0.7;">
+                <div class="icon-box">📸</div>
+                <h3>Foto vzpomínky</h3>
+                <p>Uchovejte si vizuální vzpomínky. Možnost vyfotit momentku nebo nahrát fotku přímo k vašemu zápisu.</p>
+                <span style="color: #888; font-size: 12px; font-weight: 600;">PŘIPRAVUJEME PRO PREMIUM</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">👁️</div>
+                <h3>Přístupnost (VoiceOver)</h3>
+                <p>Plná podpora pro nevidomé a slabozraké. Aplikace je plně navržena a optimalizována pro čtečku obrazovky VoiceOver, včetně dynamických výzev.</p>
+                <span class="highlight" style="font-size: 12px; letter-spacing: 1px;">SOUČÁST VERZE 1.0</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">🔒</div>
+                <h3>Soukromí na prvním místě</h3>
+                <p>Vaše záznamy jsou v zařízení chráněné Face ID / Touch ID. Ukládají se lokálně v telefonu; do iCloudu se dostanou jen v rámci zálohy iPhonu, pokud ji máte u Apple zapnutou.</p>
+                <span class="highlight" style="font-size: 12px; letter-spacing: 1px;">SOUČÁST VERZE 1.0</span>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #0a0a0a; text-align: center;">
+        <h2 class="section-title">Jak to vypadá?</h2>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px;">
+            <img src="../assets/app-home-clean.png" alt="Domů" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+            <img src="../assets/app-inspiration-clean.png" alt="Inspirace" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+        </div>
+        <br><br>
+        <div class="card" style="max-width: 800px; margin: 40px auto 0; border: 1px dashed #444;">
+            <h3>Deník v PLUS verzi</h3>
+            <p>Postupně budeme uvolňovat prémiové funkce jako pokročilé statistiky, PDF exporty a relaxační zvukové terapie. Možnost předplatného bude přidána v rámci dalších aktualizací.</p>
+            <br>
+            <p style="color: var(--text-secondary); font-size: 14px;">Aktuálně se soustředíme na to, aby vaše základní zkušenost s Deníkem vděčnosti byla co nejdokonalejší.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="../support.html">Kontakt a podpora</a> | 
+                <a href="../legal/terms.html">Obchodní podmínky</a> | 
+                <a href="../legal/privacy.html">Ochrana soukromí</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
