@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gratus App | Maßgeschneiderte Webseiten & Apps</title>
     <meta name="description" content="Professionelle Web- und App-Entwicklung mit KI. Modernes Design und maßgeschneiderte Lösungen.">
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="../index.css?v=20260501-1">
 </head>
 <body>
     <nav>
@@ -223,6 +223,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('animations-ready');
+            if (!('IntersectionObserver' in window)) {
+                document.querySelectorAll('.fade-in').forEach((el) => {
+                    el.classList.add('visible');
+                });
+                return;
+            }
             const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

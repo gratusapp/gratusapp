@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support | Contact Us</title>
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="../index.css?v=20260501-1">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="dark-mode">
@@ -65,5 +65,13 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fade-in').forEach((el) => {
+                el.classList.add('visible');
+            });
+        });
+    </script>
 </body>
 </html>

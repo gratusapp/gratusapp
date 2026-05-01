@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gratus App | Webové stránky a aplikace na míru</title>
     <meta name="description" content="Profesionální vývoj webů a aplikací s využitím AI. Moderní design a řešení na míru.">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index.css?v=20260501-1">
 </head>
 <body>
     <nav>
@@ -211,6 +211,12 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('animations-ready');
+            if (!('IntersectionObserver' in window)) {
+                document.querySelectorAll('.fade-in').forEach((el) => {
+                    el.classList.add('visible');
+                });
+                return;
+            }
             // Intersection Observer for fade-in animations
             const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
