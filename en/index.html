@@ -222,6 +222,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('animations-ready');
             const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {

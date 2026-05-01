@@ -210,6 +210,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('animations-ready');
             // Intersection Observer for fade-in animations
             const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
