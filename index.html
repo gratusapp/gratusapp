@@ -35,11 +35,10 @@
             
             if (!hasRedirected) {
                 sessionStorage.setItem('langRedirect', 'true');
-                const basePath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
                 if (userLang.startsWith('en')) {
-                    window.location.href = basePath + 'en/index.html';
+                    window.location.href = 'en/index.html';
                 } else if (userLang.startsWith('de')) {
-                    window.location.href = basePath + 'de/index.html';
+                    window.location.href = 'de/index.html';
                 }
             }
         })();
