@@ -150,10 +150,72 @@ nav {
     filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
 }
 
-.showcase-item > img {
+.showcase-item img {
     width: 100%;
     height: auto;
     display: block;
+}
+
+/* Device screenshot wrapper for raw app screens (EN/DE) */
+.iphone-frame {
+    width: 100%;
+    border-radius: 32px;
+    overflow: hidden;
+    border: 2px solid #3a3a3c;
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 30px 60px rgba(0, 0, 0, 0.6);
+    background: #000;
+}
+
+.iphone-screen {
+    width: 100%;
+    aspect-ratio: 1260 / 2736;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.iphone-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+
+/* App screenshot galleries & cards */
+.app-screenshot-gallery {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+    padding: 0 16px;
+}
+
+.app-screenshot {
+    width: 220px;
+    max-width: min(220px, 42vw);
+    height: auto;
+    aspect-ratio: 1260 / 2736;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    display: block;
+    border: 2px solid #3a3a3c;
+}
+
+.app-screenshot--card {
+    width: 130px;
+    max-width: 38%;
+    height: auto;
+    aspect-ratio: 1260 / 2736;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 18px;
+    border: 2px solid #3a3a3c;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
 }
 
 /* Specific Positions */
@@ -311,6 +373,14 @@ section {
         flex-wrap: wrap;
         justify-content: center;
         gap: 12px;
+    }
+    .app-screenshot {
+        width: 160px;
+        max-width: 70vw;
+    }
+    .app-screenshot--card {
+        width: 110px;
+        max-width: 32vw;
     }
 }
 
