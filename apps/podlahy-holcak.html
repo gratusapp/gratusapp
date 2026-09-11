@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podlahy Holčák | Detail realizace webu</title>
+    <link rel="stylesheet" href="../index.css?v=20260501-1">
+    <style>
+        .project-hero {
+            background: linear-gradient(180deg, #1c1c1e 0%, #0c0b0a 100%);
+            padding: 90px 20px 70px;
+            text-align: center;
+            position: relative;
+        }
+        .breadcrumb-nav {
+            margin-bottom: 24px;
+        }
+        .breadcrumb-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+        }
+        .breadcrumb-nav a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background: #1c1c1e;
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid #333;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: #8c7a6b;
+        }
+        .feature-card h3 {
+            color: #d1bfae;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .icon-box {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+        .highlight-gold {
+            color: #d1bfae;
+            font-weight: 600;
+        }
+        .showcase-desktop {
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        .showcase-desktop img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 40px auto 0;
+        }
+        .gallery-item {
+            background: #1c1c1e;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #333;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            border-color: #8c7a6b;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-caption {
+            padding: 18px 20px;
+        }
+        .gallery-caption h4 {
+            color: #fff;
+            margin-bottom: 6px;
+            font-size: 17px;
+        }
+        .gallery-caption p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin: 40px auto 0;
+            max-width: 800px;
+        }
+        .stat-box {
+            text-align: center;
+            min-width: 140px;
+        }
+        .stat-box .number {
+            font-size: 40px;
+            font-weight: 700;
+            color: #d1bfae;
+            margin-bottom: 4px;
+        }
+        .stat-box .label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Domů</a>
+                <a href="../cenik.html">Ceník</a>
+                <a href="../apps.html" class="active">Aplikace</a>
+                <a href="../support.html">Podpora</a>
+                <div class="lang-switcher">
+                    <a href="podlahy-holcak.html" class="active">CZ</a>
+                    <a href="../en/apps/podlahy-holcak.html">EN</a>
+                    <a href="../de/apps/podlahy-holcak.html">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="project-hero">
+        <div class="breadcrumb-nav">
+            <a href="../apps.html">← Zpět na Moje Aplikace & Projekty</a>
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+            <span style="font-size: 36px;">🏡</span>
+            <span style="background: #8c7a6b; color: white; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">
+                ACTIVE
+            </span>
+        </div>
+        <h1 style="font-size: 48px; margin-bottom: 20px;">Podlahy Holčák</h1>
+        <p style="font-size: 20px; color: var(--text-secondary); max-width: 820px; margin: 0 auto; line-height: 1.6;">
+            Prémiová webová prezentace pro rodinnou firmu s mnohaletou tradicí. Precizní řemeslná práce přenesená do elegantního a rychlého digitálního prostoru.
+        </p>
+
+        <div class="stats-bar">
+            <div class="stat-box">
+                <div class="number">500+</div>
+                <div class="label">Spokojených zákazníků</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">15+</div>
+                <div class="label">Let zkušeností</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">100%</div>
+                <div class="label">Garance spokojenosti</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <a href="https://www.podlahyholcak.cz" target="_blank" rel="noopener noreferrer" class="btn" style="background: #8c7a6b; color: white; padding: 14px 30px; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                Otevřít live web www.podlahyholcak.cz ↗
+            </a>
+        </div>
+    </header>
+
+    <section>
+        <h2 class="section-title">O projektu & Realizaci</h2>
+        <div style="max-width: 800px; margin: 0 auto 50px; text-align: center; color: var(--text-secondary); font-size: 17px; line-height: 1.8;">
+            Cílem projektu bylo vytvořit čistý, moderní a vysoce reprezentativní web, který okamžitě buduje důvěru a usnadňuje potenciálním zákazníkům výběr vhodného podlahového materiálu i zaslání nezávazné poptávky.
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon-box">🪵</div>
+                <h3>Dřevěné podlahy & Parkety</h3>
+                <p>Prezentace pokládky masivních i vícevrstvých podlah, parket, chevronu i klasické rybí kosti s ukázkami reálných realizací.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">PORTFOLIO SLUŽEB</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">🎨</div>
+                <h3>Lité podlahy & Terrazzo</h3>
+                <p>Moderní lité podlahy pro industriální i rezidenční interiéry, designové terrazzo a vysoká odolnost pro náročné prostory.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">PORTFOLIO SLUŽEB</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">🏛️</div>
+                <h3>Dekorační stěrky</h3>
+                <p>Exkluzivní sekce pro bezespáré luxusní stěrky stěn a podlah. Designový akcent, který z obyčejného prostoru vytváří moderní skvost.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">PORTFOLIO SLUŽEB</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">📸</div>
+                <h3>Filtrovatelná fotogalerie</h3>
+                <p>Návštěvník může filtrovat fotky reálných realizací podle typu podlahy (dřevo, lité, vinyl, koberce, stěrky) a prohlédnout si detaily.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">INTERAKTIVITA</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">⚡</div>
+                <h3>Blesková rychlost & SEO</h3>
+                <p>Web postavený na lehkém, sémantickém HTML5/CSS3 bez zbytečného balastu. Rychlé načítání a skvělé pozice v lokálním vyhledávání.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">VÝKON & GOOGLE</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">📲</div>
+                <h3>Poptávkový funnel & Click-to-call</h3>
+                <p>Optimalizováno pro konverze na mobilních zařízeních: 1-klikové volání, rychlý poptávkový formulář a indikátor dostupnosti zakázek.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">KONVERZE</span>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #0a0a0a; text-align: center; padding: 80px 20px;">
+        <h2 class="section-title">Ukázka webu a realizací</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: -10px auto 40px; font-size: 16px;">
+            Náhled homepage a detailních fotek řemeslných prací z webu podlahyholcak.cz
+        </p>
+
+        <!-- Desktop Showcase with clean browser frame -->
+        <div class="showcase-desktop" style="max-width: 960px; margin: 0 auto; background: #1c1c1e; border-radius: 16px; overflow: hidden; border: 1px solid #333; box-shadow: 0 25px 60px rgba(0,0,0,0.8);">
+            <div style="background: #252528; padding: 12px 18px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333;">
+                <span style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+                <span style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e; display: inline-block;"></span>
+                <span style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f; display: inline-block;"></span>
+                <span style="margin-left: 12px; background: rgba(0,0,0,0.4); padding: 4px 16px; border-radius: 6px; font-size: 12px; color: var(--text-secondary); font-family: monospace;">https://www.podlahyholcak.cz</span>
+            </div>
+            <img src="../assets/podlahy-holcak-hero.png" alt="Podlahy Holčák Homepage" loading="lazy" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <!-- Real Gallery from Website -->
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="../assets/podlahy-holcak-drevo.jpg" alt="Dřevěná podlaha stromeček" loading="lazy">
+                <div class="gallery-caption">
+                    <h4>Dřevěná podlaha (Chevron)</h4>
+                    <p>Klasický francouzský stromeček v moderním rodinném interiéru.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../assets/podlahy-holcak-sterka.jpg" alt="Dekorační stěrka" loading="lazy">
+                <div class="gallery-caption">
+                    <h4>Dekorační stěrky</h4>
+                    <p>Luxusní bezespárý povrch v koupelně a obývacích prostorech.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../assets/podlahy-holcak-lite.jpg" alt="Moderní litá podlaha" loading="lazy">
+                <div class="gallery-caption">
+                    <h4>Designová litá podlaha</h4>
+                    <p>Vysoce odolná jednolitá podlaha v moderním šedém odstínu.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <a href="https://www.podlahyholcak.cz" target="_blank" rel="noopener noreferrer" class="btn" style="background: #8c7a6b; color: white; padding: 12px 28px; font-size: 14px; font-weight: 600;">
+                Zobrazit celou galerii na www.podlahyholcak.cz →
+            </a>
+        </div>
+    </section>
+
+    <section class="cta-download">
+        <h2>Potřebujete podobný web pro vaše podnikání?</h2>
+        <p>Vytvářím moderní weby a aplikace s důrazem na rychlost, čistý design a vysokou konverzi poptávek.</p>
+        <div style="margin-top: 25px;">
+            <a href="../support.html" class="btn" style="padding: 14px 30px; font-size: 15px;">
+                Konzultovat můj projekt
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="../support.html">Kontakt a podpora</a> | 
+                <a href="../legal/terms.html">Obchodní podmínky</a> | 
+                <a href="../legal/privacy.html">Ochrana soukromí</a> | 
+                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

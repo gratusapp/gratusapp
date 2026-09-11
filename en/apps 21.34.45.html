@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Apps | Project Portfolio</title>
+    <link rel="stylesheet" href="../index.css?v=20260622-1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="dark-mode">
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="apps.html" class="active">Apps</a>
+                <a href="support.html">Support</a>
+                <div class="lang-switcher">
+                    <a href="../apps.html">CZ</a>
+                    <a href="apps.html" class="active">EN</a>
+                    <a href="../de/apps.html">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 100px;">
+        <section class="fade-in">
+            <h1 class="section-title" style="font-size: 48px; margin-bottom: 20px;">My Applications</h1>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 18px;">
+                I build tools that matter. From personal growth to complex systems. Explore my current projects and what's coming next.
+            </p>
+            
+            <div class="grid">
+                <!-- Gratitude Journal -->
+                <div class="card" onclick="window.location.href='apps/gratitude-journal.html'" style="border-color: var(--accent-color);">
+                    <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #000); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                        <img src="../assets/en-home.png" alt="Gratitude Journal" class="app-screenshot--card" style="transform: rotate(5deg); transition: transform 0.5s ease;">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;">ACTIVE</div>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px;">Gratitude Journal</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Your daily dose of positivity. A modern iOS app inspired by peace and minimalism. Track your progress and build new habits.
+                    </p>
+                    <a href="apps/gratitude-journal.html" class="btn" style="padding: 10px 20px; font-size: 14px;">View App Details →</a>
+                </div>
+
+                <!-- Podlahy Holčák -->
+                <div class="card" onclick="window.location.href='apps/podlahy-holcak.html'" style="border-color: #8c7a6b; cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='#d1bfae'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='#8c7a6b'">
+                    <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #0a0a0a); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                        <div style="font-size: 70px; text-shadow: 0 10px 20px rgba(0,0,0,0.5);">🏡</div>
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: #8c7a6b; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;">ACTIVE</div>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px;">Podlahy Holčák</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Modern and elegant web presentation for flooring services. Focus on clean design, functional SEO, and great user experience.
+                    </p>
+                    <a href="apps/podlahy-holcak.html" class="btn" style="padding: 10px 20px; font-size: 14px; background: #333; color: white;">View Project Details →</a>
+                </div>
+
+                <!-- Placeholder Project 2 -->
+                <div class="card" style="opacity: 0.7; border-style: dashed;">
+                    <div style="height: 250px; background: rgba(255,255,255,0.02); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 40px;">🏗️</span>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px; color: var(--text-secondary);">E-Shop Suite</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        A comprehensive solution for modern e-commerce. Full AI integration for automated product descriptions and customer care.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 8px 15px; border-radius: 8px; font-size: 12px; color: var(--text-secondary); display: inline-block;">
+                        Planning
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 80px; text-align: center; border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.01);">
+                <h2 style="margin-bottom: 20px;">Have an Idea for Your Own App?</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 30px auto; line-height: 1.8;">
+                    I'll guide you through the entire process from analysis and design to final App Store publication. Let's turn your vision into code.
+                </p>
+                <a href="support.html" class="btn">Consult My Project</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Crafted with an eye for detail.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="support.html">Contact and Support</a> | 
+                <a href="legal/terms.html">Terms of Service</a> | 
+                <a href="legal/privacy.html">Privacy Policy</a> | 
+                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fade-in').forEach((el) => {
+                el.classList.add('visible');
+            });
+        });
+    </script>
+</body>
+</html>

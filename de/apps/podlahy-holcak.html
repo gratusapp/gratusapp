@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podlahy Holčák | Web-Projekt-Fallstudie</title>
+    <link rel="stylesheet" href="../../index.css?v=20260622-1">
+    <style>
+        .project-hero {
+            background: linear-gradient(180deg, #1c1c1e 0%, #0c0b0a 100%);
+            padding: 90px 20px 70px;
+            text-align: center;
+            position: relative;
+        }
+        .breadcrumb-nav {
+            margin-bottom: 24px;
+        }
+        .breadcrumb-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+        }
+        .breadcrumb-nav a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background: #1c1c1e;
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid #333;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: #8c7a6b;
+        }
+        .feature-card h3 {
+            color: #d1bfae;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .icon-box {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+        .highlight-gold {
+            color: #d1bfae;
+            font-weight: 600;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1100px;
+            margin: 40px auto 0;
+        }
+        .gallery-item {
+            background: #1c1c1e;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #333;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            border-color: #8c7a6b;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-caption {
+            padding: 18px 20px;
+        }
+        .gallery-caption h4 {
+            color: #fff;
+            margin-bottom: 6px;
+            font-size: 17px;
+        }
+        .gallery-caption p {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin: 40px auto 0;
+            max-width: 800px;
+        }
+        .stat-box {
+            text-align: center;
+            min-width: 140px;
+        }
+        .stat-box .number {
+            font-size: 40px;
+            font-weight: 700;
+            color: #d1bfae;
+            margin-bottom: 4px;
+        }
+        .stat-box .label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Startseite</a>
+                <a href="../preise.html">Preise</a>
+                <a href="../apps.html" class="active">Apps</a>
+                <a href="../support.html">Support</a>
+                <div class="lang-switcher">
+                    <a href="../../apps/podlahy-holcak.html">CZ</a>
+                    <a href="../../en/apps/podlahy-holcak.html">EN</a>
+                    <a href="podlahy-holcak.html" class="active">DE</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="project-hero">
+        <div class="breadcrumb-nav">
+            <a href="../apps.html">← Zurück zu Meine Anwendungen & Projekte</a>
+        </div>
+        <div style="display: inline-flex; align-items: center; gap: 12px; margin-bottom: 15px;">
+            <span style="font-size: 36px;">🏡</span>
+            <span style="background: #8c7a6b; color: white; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">
+                AKTIV
+            </span>
+        </div>
+        <h1 style="font-size: 48px; margin-bottom: 20px;">Podlahy Holčák</h1>
+        <p style="font-size: 20px; color: var(--text-secondary); max-width: 820px; margin: 0 auto; line-height: 1.6;">
+            Erstklassige Web-Präsentation für ein Familienunternehmen mit über 15 Jahren Handwerkstradition. Präzises Handwerk in modernem digitalem Raum.
+        </p>
+
+        <div class="stats-bar">
+            <div class="stat-box">
+                <div class="number">500+</div>
+                <div class="label">Zufriedene Kunden</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">15+</div>
+                <div class="label">Jahre Erfahrung</div>
+            </div>
+            <div class="stat-box">
+                <div class="number">100%</div>
+                <div class="label">Zufriedenheit garantiert</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px;">
+            <a href="https://www.podlahyholcak.cz" target="_blank" rel="noopener noreferrer" class="btn" style="background: #8c7a6b; color: white; padding: 14px 30px; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px;">
+                Live-Webseite www.podlahyholcak.cz öffnen ↗
+            </a>
+        </div>
+    </header>
+
+    <section>
+        <h2 class="section-title">Über das Projekt & Ziele</h2>
+        <div style="max-width: 800px; margin: 0 auto 50px; text-align: center; color: var(--text-secondary); font-size: 17px; line-height: 1.8;">
+            Ziel des Projekts war die Schaffung einer klaren, modernen und vertrauensvollen Online-Präsenz, die das breite Leistungsportfolio (Holzböden, Gussböden, Vinyl, Teppiche und Design-Spachtelmassen) hervorhebt.
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon-box">🪵</div>
+                <h3>Holzböden & Parkett</h3>
+                <p>Verlegung von Massiv- und Mehrschichtholzböden, Fischgrät- und Chevron-Mustern mit echten Projektfotos.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">LEISTUNGEN</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">🎨</div>
+                <h3>Gussböden & Terrazzo</h3>
+                <p>Moderne fugenlose Gussböden für anspruchsvolle Wohnbereiche und gewerbliche Nutzung.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">LEISTUNGEN</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">🏛️</div>
+                <h3>Dekorative Spachtelböden</h3>
+                <p>Exklusive fugenlose Wand- und Bodenspachtelungen für zeitloses, minimalistisches Wohndesign.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">LEISTUNGEN</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">📸</div>
+                <h3>Interaktive Bildergalerie</h3>
+                <p>Gezieltes Filtern nach Bodenkategorien (Holz, Guss, Vinyl, Teppiche, Spachtel) für Detailansichten.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">INTERAKTIVITÄT</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">⚡</div>
+                <h3>Schnelligkeit & SEO</h3>
+                <p>Schlanker HTML5/CSS3-Code für maximale Ladegeschwindigkeit und beste Google-Rankings.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">PERFORMANCE</span>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon-box">📲</div>
+                <h3>Anfrage-Funnel & Direktanruf</h3>
+                <p>Mobiloptimierte Kontaktaufnahme: Direktanruf per Klick, Angebotsformular und Auftragsverfügbarkeit.</p>
+                <span class="highlight-gold" style="font-size: 12px; letter-spacing: 1px;">KONVERSION</span>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: #0a0a0a; text-align: center; padding: 80px 20px;">
+        <h2 class="section-title">Webseiten-Vorschau</h2>
+        <p style="color: var(--text-secondary); max-width: 600px; margin: -10px auto 40px; font-size: 16px;">
+            Einblick in die Desktop-Homepage und echte Handwerksfotografie von podlahyholcak.cz
+        </p>
+
+        <!-- Desktop Showcase with clean browser frame -->
+        <div class="showcase-desktop" style="max-width: 960px; margin: 0 auto; background: #1c1c1e; border-radius: 16px; overflow: hidden; border: 1px solid #333; box-shadow: 0 25px 60px rgba(0,0,0,0.8);">
+            <div style="background: #252528; padding: 12px 18px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333;">
+                <span style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f56; display: inline-block;"></span>
+                <span style="width: 10px; height: 10px; border-radius: 50%; background: #ffbd2e; display: inline-block;"></span>
+                <span style="width: 10px; height: 10px; border-radius: 50%; background: #27c93f; display: inline-block;"></span>
+                <span style="margin-left: 12px; background: rgba(0,0,0,0.4); padding: 4px 16px; border-radius: 6px; font-size: 12px; color: var(--text-secondary); font-family: monospace;">https://www.podlahyholcak.cz</span>
+            </div>
+            <img src="../../assets/podlahy-holcak-hero.png" alt="Podlahy Holčák Homepage" loading="lazy" style="width: 100%; height: auto; display: block;">
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="../../assets/podlahy-holcak-drevo.jpg" alt="Holzboden Chevron" loading="lazy">
+                <div class="gallery-caption">
+                    <h4>Französisches Chevron-Parkett</h4>
+                    <p>Klassische Eichenverlegung im modernen Wohnbereich.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../../assets/podlahy-holcak-sterka.jpg" alt="Design-Spachtelboden" loading="lazy">
+                <div class="gallery-caption">
+                    <h4>Fugenlose Mikrozement-Spachtel</h4>
+                    <p>Wasserfeste Designoberfläche für Bäder und Wohnräume.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="../../assets/podlahy-holcak-lite.jpg" alt="Design-Gussboden" loading="lazy">
+                <div class="gallery-caption">
+                    <h4>Design-Gussboden</h4>
+                    <p>Strapazierfähiger Gussboden in elegantem Grauton.</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <a href="https://www.podlahyholcak.cz" target="_blank" rel="noopener noreferrer" class="btn" style="background: #8c7a6b; color: white; padding: 12px 28px; font-size: 14px; font-weight: 600;">
+                Gesamte Galerie auf www.podlahyholcak.cz ansehen →
+            </a>
+        </div>
+    </section>
+
+    <section class="cta-download">
+        <h2>Benötigen Sie eine ähnliche Website für Ihr Unternehmen?</h2>
+        <p>Ich entwickle moderne Webseiten und Anwendungen mit Fokus auf Geschwindigkeit, klares Design und hohe Anfrageraten.</p>
+        <div style="margin-top: 25px;">
+            <a href="../support.html" class="btn" style="padding: 14px 30px; font-size: 15px;">
+                Projekt anfragen
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Mit Liebe zum Detail erstellt.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="../support.html">Kontakt und Support</a> | 
+                <a href="../legal/terms.html">AGB</a> | 
+                <a href="../legal/privacy.html">Datenschutz</a> | 
+                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

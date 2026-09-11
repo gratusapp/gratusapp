@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naše Aplikace | Portfolio</title>
+    <title>Moje Aplikace | Portfolio Projektů</title>
     <link rel="stylesheet" href="../index.css?v=20260501-1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="dark-mode">
     <nav>
         <div class="nav-content">
             <div class="logo">
@@ -14,51 +15,69 @@
             </div>
             <div class="nav-links">
                 <a href="../index.html">Domů</a>
-                <a href="index.html">Aplikace</a>
+                <a href="../cenik.html">Ceník</a>
+                <a href="../apps.html" class="active">Aplikace</a>
                 <a href="../support.html">Podpora</a>
             </div>
         </div>
     </nav>
 
-    <section style="padding-top: 100px;">
-        <h1 class="section-title">Portfolio aplikací</h1>
-        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 60px;">Vytvářím aplikace pro iOS, které jsou krásné, užitečné a respektují vaše soukromí.</p>
+    <main style="padding-top: 100px;">
+        <section class="fade-in">
+            <h1 class="section-title" style="font-size: 48px; margin-bottom: 20px;">Moje Aplikace</h1>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 18px;">
+                Tvořím nástroje, které mají smysl. Od osobního rozvoje až po komplexní systémy. Prohlédněte si mé aktuální projekty i ty, které právě vznikají.
+            </p>
+            
+            <div class="grid">
+                <!-- Deník Vděčnosti -->
+                <div class="card" onclick="window.location.href='denik-vdecnosti.html'" style="border-color: var(--accent-color); cursor: pointer;">
+                    <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #000); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                        <img src="../assets/app-home-clean.png" alt="Deník vděčnosti" style="width: 150px; transform: rotate(5deg); transition: transform 0.5s ease;">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: var(--accent-color); color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;">ACTIVE</div>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px;">Deník vděčnosti</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Vaše každodenní dávka pozitivity. Moderní iOS aplikace inspirovaná klidem a minimalismem. Sledujte svůj pokrok a budujte nové návyky.
+                    </p>
+                    <a href="denik-vdecnosti.html" class="btn" style="padding: 10px 20px; font-size: 14px;">Zobrazit detaily aplikace →</a>
+                </div>
 
-        <div class="grid">
-            <!-- Main App -->
-            <div class="card">
-                <div style="background: linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%); width: 60px; height: 60px; border-radius: 15px; margin-bottom: 20px;"></div>
-                <h2>Deník vděčnosti</h2>
-                <p>Nástroj pro každodenní reflexi a pozitivní myšlení. Obsahuje afirmace, výzvy a audio prvky.</p>
-                <br>
-                <a href="denik-vdecnosti.html" class="btn" style="font-size: 14px; padding: 8px 20px;">Detail aplikace</a>
-            </div>
+                <!-- DaněPro -->
+                <div class="card" onclick="window.location.href='dane-pro.html'" style="border-color: #10B981; cursor: pointer;">
+                    <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #0a0a0a); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                        <img src="../assets/dane-pro-dashboard.png" alt="DaněPro" style="width: 140px; transform: rotate(-5deg); border-radius: 14px; box-shadow: 0 15px 35px rgba(0,0,0,0.7); transition: transform 0.5s ease;">
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: #10B981; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 800;">ACTIVE</div>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px;">DaněPro</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí na iCloudu.
+                    </p>
+                    <a href="dane-pro.html" class="btn" style="padding: 10px 20px; font-size: 14px; background: #10B981; color: #000; font-weight: 700;">Zobrazit detaily aplikace →</a>
+                </div>
 
-            <!-- Future App Placeholder 1 -->
-            <div class="card" style="opacity: 0.6; border-style: dashed;">
-                <div style="background: #333; width: 60px; height: 60px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px;">?</div>
-                <h2>Nová aplikace</h2>
-                <p>Pracujeme na něčem novém. Zůstaňte naladěni na další aktualizace.</p>
-                <br>
-                <span style="color: var(--text-secondary); font-size: 14px;">Již brzy</span>
+                <!-- Podlahy Holčák -->
+                <div class="card" onclick="window.location.href='podlahy-holcak.html'" style="border-color: #8c7a6b; cursor: pointer;">
+                    <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #0a0a0a); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                        <div style="font-size: 70px; text-shadow: 0 10px 20px rgba(0,0,0,0.5);">🏡</div>
+                        <div style="position: absolute; bottom: 10px; right: 10px; background: #8c7a6b; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600;">ACTIVE</div>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 15px;">Podlahy Holčák</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                        Moderní a elegantní webová prezentace řemeslných služeb. Důraz na čistý design, funkční SEO a skvělý uživatelský zážitek.
+                    </p>
+                    <a href="podlahy-holcak.html" class="btn" style="padding: 10px 20px; font-size: 14px; background: #333; color: white;">Zobrazit detaily projektu →</a>
+                </div>
             </div>
-
-            <!-- Future App Placeholder 2 -->
-            <div class="card" style="opacity: 0.6; border-style: dashed;">
-                <div style="background: #333; width: 60px; height: 60px; border-radius: 15px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; font-size: 24px;">?</div>
-                <h2>Další projekt</h2>
-                <p>Další inovativní nástroj pro váš iPhone je ve fázi plánování.</p>
-                <br>
-                <span style="color: var(--text-secondary); font-size: 14px;">Již brzy</span>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2024 Gratus App Portfolio. Vytvořeno s pomocí umělé inteligence.</p>
+            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
             <div class="footer-links">
-                <a href="../legal/terms.html">Obchodní podmínky</a>
+                <a href="../support.html">Kontakt a podpora</a> | 
+                <a href="../legal/terms.html">Obchodní podmínky</a> | 
                 <a href="../legal/privacy.html">Ochrana soukromí</a> | 
                 <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
             </div>
