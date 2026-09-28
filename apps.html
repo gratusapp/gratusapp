@@ -34,7 +34,7 @@
                 Tvořím nástroje, které mají smysl. Od osobního rozvoje až po komplexní systémy. Prohlédněte si mé aktuální projekty i ty, které právě vznikají.
             </p>
             
-            <div class="grid">
+            <div class="grid" id="appsGrid">
                 <!-- Deník Vděčnosti -->
                 <div class="card" onclick="window.location.href='apps/denik-vdecnosti.html'" style="border-color: var(--accent-color);">
                     <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #000); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
@@ -69,7 +69,7 @@
                     </div>
                     <h3 style="font-size: 24px; margin-bottom: 15px;">DaněPro</h3>
                     <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
-                        Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem a 100% soukromí na iCloudu.
+                        Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí na iCloudu.
                     </p>
                     <a href="apps/dane-pro.html" class="btn" style="padding: 10px 20px; font-size: 14px; background: #10B981; color: #000; font-weight: 700;">Zobrazit detaily aplikace →</a>
                 </div>
@@ -92,7 +92,8 @@
                 <a href="support.html">Kontakt a podpora</a> | 
                 <a href="legal/terms.html">Obchodní podmínky</a> | 
                 <a href="legal/privacy.html">Ochrana soukromí</a> | 
-                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a> | 
+                <a href="admin.html" style="opacity: 0.4;">Admin</a>
             </div>
         </div>
     </footer>
@@ -102,7 +103,57 @@
             document.querySelectorAll('.fade-in').forEach((el) => {
                 el.classList.add('visible');
             });
+            loadDynamicApps();
         });
+
+        async function loadDynamicApps() {
+            try {
+                let data = null;
+                try {
+                    const localDraft = localStorage.getItem('gratus_admin_content');
+                    if (localDraft) data = JSON.parse(localDraft);
+                } catch(e) {}
+
+                if (!data) {
+                    const res = await fetch(`data/content.json?v=${Date.now()}`);
+                    if (res.ok) data = await res.json();
+                }
+
+                if (!data || !data.apps || data.apps.length === 0) return;
+
+                const grid = document.getElementById('appsGrid');
+                if (!grid) return;
+
+                grid.innerHTML = data.apps.map(app => {
+                    const detailHref = app.detailUrl || `apps/app.html?id=${app.id}`;
+                    const badgeColor = app.badgeColor || app.accentColor || 'var(--accent-color)';
+                    const accentColor = app.accentColor || 'var(--accent-color)';
+                    
+                    let previewContent = '';
+                    if (app.image) {
+                        previewContent = `<img src="${app.image}" alt="${app.title}" style="width: 140px; transform: rotate(${app.imageRotate || '0deg'}); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); transition: transform 0.5s ease;">`;
+                    } else {
+                        previewContent = `<div style="font-size: 70px; text-shadow: 0 10px 20px rgba(0,0,0,0.5);">${app.iconEmoji || '📱'}</div>`;
+                    }
+
+                    return `
+                        <div class="card" onclick="window.location.href='${detailHref}'" style="border-color: ${accentColor}; cursor: pointer; transition: transform 0.3s ease, border-color 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div style="height: 250px; background: linear-gradient(135deg, #1c1c1e, #0a0a0a); border-radius: 12px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                                ${previewContent}
+                                <div style="position: absolute; bottom: 10px; right: 10px; background: ${badgeColor}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;">${app.badge || 'ACTIVE'}</div>
+                            </div>
+                            <h3 style="font-size: 24px; margin-bottom: 15px;">${app.title}</h3>
+                            <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+                                ${app.tagline || ''}
+                            </p>
+                            <a href="${detailHref}" class="btn" style="padding: 10px 20px; font-size: 14px; background: ${accentColor}; color: #fff;">Zobrazit detaily projektu →</a>
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                console.warn('Použita statická záloha pro aplikace:', e);
+            }
+        }
     </script>
 </body>
 </html>

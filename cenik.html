@@ -29,13 +29,13 @@
 
     <main style="padding-top: 100px;">
         <section id="pricing" class="fade-in">
-            <h1 class="section-title" style="font-size: 48px; margin-bottom: 20px;">Možnosti spolupráce</h1>
-            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 18px;">
+            <h1 id="pricingPageTitle" class="section-title" style="font-size: 48px; margin-bottom: 20px;">Možnosti spolupráce</h1>
+            <p id="pricingPageSubtitle" style="text-align: center; color: var(--text-secondary); margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; font-size: 18px;">
                 Férové ceny a individuální přístup pro každý projekt. Vyberte si úroveň měsíční péče nebo jednorázové řešení.
             </p>
             
-            <h2 class="section-title" style="font-size: 28px; text-align: left; margin-top: 40px; margin-bottom: 30px;">Měsíční správa a podpora</h2>
-            <div class="grid">
+            <h2 id="pricingMonthlyTitle" class="section-title" style="font-size: 28px; text-align: left; margin-top: 40px; margin-bottom: 30px;">Měsíční správa a podpora</h2>
+            <div class="grid" id="pricingMonthlyGrid">
                 <div class="card" onclick="window.location.href='support.html'">
                     <h3 style="color: var(--text-color);">BASIC Podpora</h3>
                     <p style="font-size: 32px; font-weight: 600; margin: 15px 0;">1 000 Kč <span style="font-size: 14px; font-weight: 400; opacity: 0.6;">/ měsíc</span></p>
@@ -88,13 +88,13 @@
                     <div style="margin-top: 24px;"><a href="support.html" class="btn" style="font-size: 13px; padding: 8px 18px; width: 100%; box-sizing: border-box; background: #fff; color: #000; font-weight: 600;">Zvolit balíček</a></div>
                 </div>
             </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px; font-style: italic;">
+            <p id="pricingMonthlyNote" style="font-size: 13px; color: var(--text-secondary); margin-top: 10px; font-style: italic;">
                 * U balíčků správy se předpokládá dodání podkladů (texty, fotky) od klienta, pokud není sjednána i tvorba obsahu (např. v balíčku ULTIMATE).<br>
                 ** Ceny nezahrnují náklady na webhosting, doménu nebo licence za software třetích stran.
             </p>
 
-            <h2 class="section-title" style="font-size: 28px; text-align: left; margin-top: 80px; margin-bottom: 30px;">Jednorázové projekty</h2>
-            <div class="grid">
+            <h2 id="pricingOneTimeTitle" class="section-title" style="font-size: 28px; text-align: left; margin-top: 80px; margin-bottom: 30px;">Jednorázové projekty</h2>
+            <div class="grid" id="pricingOneTimeGrid">
                 <div class="card" style="text-align: center;" onclick="window.location.href='support.html'">
                     <h3>Landing Page</h3>
                     <p style="font-size: 36px; font-weight: 600; margin: 20px 0;">Již od 5 000 Kč</p>
@@ -129,25 +129,26 @@
                 </div>
             </div>
 
-            <div class="card" style="margin-top: 60px; border: 1px dashed #444; background: rgba(255,255,255,0.02); padding: 50px; text-align: center;" onclick="window.location.href='support.html'">
-                <p style="font-size: 20px; font-weight: 600; margin-bottom: 15px; color: var(--text-color);">Nenašli jste, co jste hledali?</p>
-                <p style="color: var(--text-secondary); font-size: 16px; line-height: 1.8; max-width: 800px; margin: 0 auto;">
+            <div id="pricingCustomOfferCard" class="card" style="margin-top: 60px; border: 1px dashed #444; background: rgba(255,255,255,0.02); padding: 50px; text-align: center;" onclick="window.location.href='support.html'">
+                <p id="pricingCustomOfferTitle" style="font-size: 20px; font-weight: 600; margin-bottom: 15px; color: var(--text-color);">Nenašli jste, co jste hledali?</p>
+                <p id="pricingCustomOfferText" style="color: var(--text-secondary); font-size: 16px; line-height: 1.8; max-width: 800px; margin: 0 auto;">
                     Každá spolupráce je unikátní. Napište mi své představy a já vám připravím nabídku na míru vašim potřebám.
                 </p>
                 <br>
-                <a href="support.html" class="btn">Nezávazně poptat</a>
+                <a id="pricingCustomOfferBtn" href="support.html" class="btn">Nezávazně poptat</a>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
+            <p id="pricingFooterCopyright">&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
             <div class="footer-links" style="margin-top: 20px;">
                 <a href="support.html">Kontakt a podpora</a> | 
                 <a href="legal/terms.html">Obchodní podmínky</a> | 
                 <a href="legal/privacy.html">Ochrana soukromí</a> | 
-                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
+                <a id="pricingFooterLinkedin" href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a> | 
+                <a href="admin.html" style="opacity: 0.4;">Admin</a>
             </div>
         </div>
     </footer>
@@ -157,7 +158,113 @@
             document.querySelectorAll('.fade-in').forEach((el) => {
                 el.classList.add('visible');
             });
+            loadDynamicPricing();
         });
+
+        async function loadDynamicPricing() {
+            let data = null;
+            try {
+                const localDraft = localStorage.getItem('gratus_admin_content');
+                if (localDraft) data = JSON.parse(localDraft);
+            } catch(e) {}
+
+            if (!data) {
+                try {
+                    const res = await fetch(`data/content.json?v=${Date.now()}`);
+                    if (res.ok) data = await res.json();
+                } catch(e) {}
+            }
+
+            if (!data) return;
+
+            // Settings
+            if (data.settings) {
+                const s = data.settings;
+                const cr = document.getElementById('pricingFooterCopyright');
+                if (cr && s.footerCopyright) cr.textContent = s.footerCopyright;
+                const li = document.getElementById('pricingFooterLinkedin');
+                if (li && s.linkedinUrl) li.href = s.linkedinUrl;
+            }
+
+            // Pricing
+            if (data.pricing) {
+                const p = data.pricing;
+                const pt = document.getElementById('pricingPageTitle');
+                if (pt && p.title) pt.textContent = p.title;
+                const ps = document.getElementById('pricingPageSubtitle');
+                if (ps && p.subtitle) ps.textContent = p.subtitle;
+
+                const mt = document.getElementById('pricingMonthlyTitle');
+                if (mt && p.monthlyTitle) mt.textContent = p.monthlyTitle;
+
+                if (p.monthlyPackages && p.monthlyPackages.length > 0) {
+                    const mg = document.getElementById('pricingMonthlyGrid');
+                    if (mg) {
+                        mg.innerHTML = p.monthlyPackages.map(pkg => {
+                            const borderColor = pkg.borderColor ? `border-color: ${pkg.borderColor};` : '';
+                            const titleColor = pkg.borderColor ? `color: ${pkg.borderColor};` : 'color: var(--text-color);';
+                            let badgeHtml = '';
+                            if (pkg.badge) {
+                                const bColor = pkg.badgeColor || 'var(--accent-color)';
+                                badgeHtml = `<span style="position: absolute; top: 15px; right: 20px; background: ${bColor}; color: white; padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 600;">${pkg.badge}</span>`;
+                            }
+                            const featuresList = (pkg.features || []).map(f => `<li>• ${f}</li>`).join('');
+                            const btnBg = pkg.borderColor ? `background: ${pkg.borderColor}; color: #fff;` : 'background: #2c2c2e;';
+
+                            return `
+                                <div class="card" style="${borderColor} position: relative;" onclick="window.location.href='support.html'">
+                                    ${badgeHtml}
+                                    <h3 style="${titleColor}">${pkg.title}</h3>
+                                    <p style="font-size: 32px; font-weight: 600; margin: 15px 0;">${pkg.price} <span style="font-size: 14px; font-weight: 400; opacity: 0.6;">${pkg.period || '/ měsíc'}</span></p>
+                                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">${pkg.tagline || ''}</p>
+                                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 14px; line-height: 2;">
+                                        ${featuresList}
+                                    </ul>
+                                    <div style="margin-top: 24px;"><a href="support.html" class="btn" style="font-size: 13px; padding: 8px 18px; width: 100%; box-sizing: border-box; ${btnBg}">${pkg.buttonText || 'Zvolit balíček'}</a></div>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                }
+
+                const mn = document.getElementById('pricingMonthlyNote');
+                if (mn && p.monthlyNote) {
+                    mn.innerHTML = p.monthlyNote.replace(/\n/g, '<br>');
+                }
+
+                const ot = document.getElementById('pricingOneTimeTitle');
+                if (ot && p.oneTimeTitle) ot.textContent = p.oneTimeTitle;
+
+                if (p.oneTimePackages && p.oneTimePackages.length > 0) {
+                    const og = document.getElementById('pricingOneTimeGrid');
+                    if (og) {
+                        og.innerHTML = p.oneTimePackages.map(pkg => {
+                            const borderColor = pkg.borderColor ? `border-color: ${pkg.borderColor};` : '';
+                            const featuresList = (pkg.features || []).map(f => `<li style="margin-bottom: 10px;">• ${f}</li>`).join('');
+                            return `
+                                <div class="card" style="text-align: center; ${borderColor}" onclick="window.location.href='support.html'">
+                                    <h3>${pkg.title}</h3>
+                                    <p style="font-size: 36px; font-weight: 600; margin: 20px 0;">${pkg.price}</p>
+                                    <ul style="text-align: left; color: var(--text-secondary); list-style: none; padding: 0; font-size: 15px; margin-bottom: 20px;">
+                                        ${featuresList}
+                                    </ul>
+                                    <a href="support.html" class="btn" style="font-size: 14px; width: 100%; box-sizing: border-box;">${pkg.buttonText || 'Mám zájem'}</a>
+                                </div>
+                            `;
+                        }).join('');
+                    }
+                }
+
+                if (p.customOffer) {
+                    const cot = document.getElementById('pricingCustomOfferTitle');
+                    if (cot && p.customOffer.title) cot.textContent = p.customOffer.title;
+                    const cox = document.getElementById('pricingCustomOfferText');
+                    if (cox && p.customOffer.text) cox.textContent = p.customOffer.text;
+                    const cob = document.getElementById('pricingCustomOfferBtn');
+                    if (cob && p.customOffer.buttonText) cob.textContent = p.customOffer.buttonText;
+                }
+            }
+        }
     </script>
 </body>
 </html>

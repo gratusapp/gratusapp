@@ -21,11 +21,11 @@
 
     <main style="padding: 120px 20px; max-width: 800px; margin: 0 auto; line-height: 1.8;">
         <h1>Ochrana osobních údajů (GDPR)</h1>
-        <p style="color: var(--text-secondary); margin-bottom: 20px;">Poslední aktualizace: 15. dubna 2026</p>
+        <p id="privacyLastUpdated" style="color: var(--text-secondary); margin-bottom: 20px;">Poslední aktualizace: 15. dubna 2026</p>
 
-        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); padding: 20px; border-radius: 12px; margin-bottom: 40px;">
+        <div id="adminInfoBox" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); padding: 20px; border-radius: 12px; margin-bottom: 40px;">
             <p style="font-weight: 600; margin-bottom: 12px;">Údaje správce</p>
-            <p style="font-size: 14px; line-height: 1.7;"><strong>Správce:</strong> Veronika Mikovcová (fyzická osoba)<br>
+            <p id="adminInfoText" style="font-size: 14px; line-height: 1.7;"><strong>Správce:</strong> Veronika Mikovcová (fyzická osoba)<br>
                 <strong>Sídlo / místo podnikání:</strong> Praha, Česká republika<br>
                 <strong>IČO:</strong> 29851106<br>
                 <strong>Kontakt (žádosti dle GDPR, dotazy):</strong> <a href="mailto:gratusapp@icloud.com" style="color: var(--accent-color);">gratusapp@icloud.com</a>
@@ -47,6 +47,25 @@
             <h2>3. Účel zpracování</h2>
             <p>Vaše údaje využíváme k vyřízení poptávek, technické podpoře a správě vašich digitálních produktů. Vaše data nikdy neprodáváme třetím stranám.</p>
         </section>
+
+        <!-- Dynamické sekce soukromí pro aplikace -->
+        <div id="dynamicAppPrivacyContainer">
+            <section style="margin-bottom: 30px; background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 22px;">
+                <h2 style="color: #34D399; margin-top: 0;">Aplikace DaněPro – 100% Soukromí a Finanční Data</h2>
+                <p>Aplikace DaněPro byla od základů navržena s maximálním důrazem na ochranu soukromí českých podnikatelů a OSVČ:</p>
+                <ul style="padding-left: 20px; line-height: 1.7;">
+                    <li><strong>Lokální uložení a Apple iCloud:</strong> Veškeré vámi zadané finanční doklady, faktury, výdaje, bankovní účty (Revolut Pro), IČO/DIČ a fotografie účtenek jsou ukládány <strong>výhradně na vašem zařízení</strong> a synchronizovány v rámci vašeho <strong>osobního soukromého iCloudu</strong> (technologie Apple CloudKit).</li>
+                    <li><strong>Žádné servery vývojáře:</strong> Poskytovatel aplikace <strong>neprovozuje žádný externí server</strong>, na který by se vaše účetní či osobní údaje odesílaly. K vašim fakturám ani finančním částkám nemá přístup vývojář ani jakákoliv třetí strana.</li>
+                    <li><strong>Žádné sledování ani reklamy:</strong> Aplikace neobsahuje žádné reklamní trackery, analytické nástroje sledující vaše chování ani nástroje pro zpeněžování dat uživatelů.</li>
+                    <li><strong>Veřejná API rozhraní:</strong>
+                        <ul>
+                            <li><strong>ČNB (Česká národní banka):</strong> Aplikace stahuje oficiální kurzovní lístek ČNB z veřejného endpointu. Dotaz neobsahuje žádná osobní data.</li>
+                            <li><strong>ARES (Ministerstvo financí ČR):</strong> Při jednorázovém ověření IČO se aplikace dotazuje oficiálního registru ekonomických subjektů ARES. Přenáší se pouze zadané 8místné IČO za účelem načtení veřejných údajů z rejstříku.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </div>
 
         <section style="margin-bottom: 30px;">
             <h2>4. Bezpečnost dat a ukládání v aplikaci</h2>
@@ -81,5 +100,56 @@
             <p>&copy; 2026 Veronika Mikovcová. Všechna práva vyhrazena.</p>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                let data = null;
+                try {
+                    const localDraft = localStorage.getItem('gratus_admin_content');
+                    if (localDraft) data = JSON.parse(localDraft);
+                } catch(e) {}
+
+                if (!data) {
+                    const res = await fetch(`../data/content.json?v=${Date.now()}`);
+                    if (res.ok) data = await res.json();
+                }
+
+                if (!data || !data.legal) return;
+
+                // Update last updated
+                if (data.legal.lastUpdated) {
+                    document.getElementById('privacyLastUpdated').innerText = `Poslední aktualizace: ${data.legal.lastUpdated}`;
+                }
+
+                // Update admin info if present
+                if (data.legal.admin) {
+                    const admin = data.legal.admin;
+                    document.getElementById('adminInfoText').innerHTML = `
+                        <strong>Správce:</strong> ${admin.name || 'Veronika Mikovcová'}<br>
+                        <strong>Sídlo / místo podnikání:</strong> ${admin.address || 'Praha, Česká republika'}<br>
+                        <strong>IČO:</strong> ${admin.ico || '29851106'}<br>
+                        <strong>Kontakt (žádosti dle GDPR, dotazy):</strong> <a href="mailto:${admin.email || 'gratusapp@icloud.com'}" style="color: var(--accent-color);">${admin.email || 'gratusapp@icloud.com'}</a>
+                    `;
+                }
+
+                // Render dynamic app privacy sections
+                const appSections = data.legal.appPrivacySections || [];
+                if (appSections.length > 0) {
+                    const container = document.getElementById('dynamicAppPrivacyContainer');
+                    container.innerHTML = appSections.map(sec => `
+                        <section style="margin-bottom: 30px; background: rgba(255, 255, 255, 0.02); border: 1px solid ${sec.badgeColor || '#10B981'}44; border-radius: 12px; padding: 22px;">
+                            <h2 style="color: ${sec.badgeColor || '#34D399'}; margin-top: 0;">${sec.title}</h2>
+                            <ul style="padding-left: 20px; line-height: 1.7;">
+                                ${(sec.points || []).map(pt => `<li>${pt}</li>`).join('')}
+                            </ul>
+                        </section>
+                    `).join('');
+                }
+            } catch (e) {
+                console.warn('Použita statická verze GDPR:', e);
+            }
+        });
+    </script>
 </body>
 </html>

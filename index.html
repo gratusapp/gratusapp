@@ -6,7 +6,6 @@
     <title>Gratus App | Webové stránky a aplikace na míru</title>
     <meta name="description" content="Profesionální vývoj webů a aplikací s využitím AI. Moderní design a řešení na míru.">
     <link rel="stylesheet" href="index.css?v=20260501-1">
-    <meta name="google-site-verification" content="cO0qTeVfmuPjlir5AVTTpHANAhtNsnt4nvYdYBR67lw" />
 </head>
 <body>
     <nav>
@@ -50,13 +49,13 @@
         <div class="ambient-glow" style="top: 10%; left: -10%;"></div>
         <div class="ambient-glow" style="bottom: 10%; right: -10%; background: radial-gradient(circle, rgba(0, 113, 227, 0.1) 0%, transparent 70%);"></div>
         
-        <h1>Digitální řešení na míru</h1>
+        <h1 id="homeHeroTitle">Digitální řešení na míru</h1>
         <div class="hero-btns">
-            <a href="#vision" class="btn" style="background: white; color: black;">Moje vize</a>
-            <a href="apps.html" class="btn">Prohlédnout projekty</a>
+            <a id="homeHeroBtn1" href="#vision" class="btn" style="background: white; color: black;">Moje vize</a>
+            <a id="homeHeroBtn2" href="apps.html" class="btn">Prohlédnout projekty</a>
         </div>
         <div class="hero-badge">
-            <a href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge" target="_blank" rel="noopener noreferrer">
+            <a id="homeHeroAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge" target="_blank" rel="noopener noreferrer">
                 <span class="asb-apple"></span>
                 <span class="asb-text">
                     <span class="asb-subtitle">Download on the</span>
@@ -67,13 +66,13 @@
         <div class="hero-showcase">
             <div class="ambient-glow"></div>
             <div class="showcase-item item-left">
-                <img src="assets/app-inspiration-clean.png" alt="Inspirace">
+                <img id="homeShowcaseLeft" src="assets/app-inspiration-clean.png" alt="Inspirace">
             </div>
             <div class="showcase-item item-center">
-                <img src="assets/app-home-clean.png" alt="Domů">
+                <img id="homeShowcaseCenter" src="assets/app-home-clean.png" alt="Domů">
             </div>
             <div class="showcase-item item-right">
-                <img src="assets/app-journey-clean.png" alt="Moje cesta">
+                <img id="homeShowcaseRight" src="assets/app-journey-clean.png" alt="Moje cesta">
             </div>
         </div>
     </header>
@@ -81,15 +80,15 @@
     <section id="approach">
         <div class="two-col-grid">
             <div class="fade-in">
-                <h2 style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Kreativita poháněná technologií</h2>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 25px; font-size: 18px;">
+                <h2 id="homeApproachTitle" style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Kreativita poháněná technologií</h2>
+                <p id="homeApproachP1" style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 25px; font-size: 18px;">
                     Věřím, že digitální produkt by měl být víc než jen kód. Měl by vyprávět příběh a vzbuzovat emoce. Má cesta začala vášní pro design a postupně se prolnula s precizností softwarového testování a efektivitou programování s AI.
                 </p>
-                <p style="color: var(--text-secondary); line-height: 1.8; font-size: 18px;">
+                <p id="homeApproachP2" style="color: var(--text-secondary); line-height: 1.8; font-size: 18px;">
                     Dnes pomáhám podnikatelům růst tím, že z jejich vizí dělám hmatatelnou realitu. Můj přístup je postaven na detailech, které dělají rozdíl.
                 </p>
             </div>
-            <div class="fade-in two-col-grid-small">
+            <div id="homeApproachPillars" class="fade-in two-col-grid-small">
                 <div class="card" style="background: rgba(255, 154, 139, 0.05);">
                     <h4 style="margin-bottom: 10px; color: #FF9A8B;">Preciznost</h4>
                     <p style="font-size: 14px; color: var(--text-secondary);">Odzkoušené a spolehlivé projekty bez chyb.</p>
@@ -113,12 +112,12 @@
     <section id="vision" style="background: rgba(255, 255, 255, 0.01);">
         <div class="two-col-grid">
             <div style="order: 2;" class="fade-in">
-                <h2 style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Moje vize</h2>
+                <h2 id="homeVisionTitle" style="font-size: 42px; margin-bottom: 30px; letter-spacing: -1px;">Moje vize</h2>
                 <div class="card" style="background: linear-gradient(145deg, #1c1c1e, #000); border: 1px solid #333; padding: 40px;">
-                    <p style="font-size: 19px; line-height: 1.8; color: var(--text-color); margin-bottom: 25px;">
+                    <p id="homeVisionQuote" style="font-size: 19px; line-height: 1.8; color: var(--text-color); margin-bottom: 25px;">
                         Budoucnost leží v symbióze <span class="highlight">lidského nápadu a AI</span>. Jako nezávislý vývojář doručuji výsledky, na které by agentura potřebovala celý tým.
                     </p>
-                    <ul style="color: var(--text-secondary); list-style: none; padding: 0; font-size: 16px;">
+                    <ul id="homeVisionPoints" style="color: var(--text-secondary); list-style: none; padding: 0; font-size: 16px;">
                         <li style="margin-bottom: 15px;">✓ <strong>Rychlost:</strong> AI nám dává křídla v základech.</li>
                         <li style="margin-bottom: 15px;">✓ <strong>Flexibilita:</strong> Komunikujete přímo se mnou.</li>
                         <li style="margin-bottom: 15px;">✓ <strong>Kvalita:</strong> Agenturní standard za férovou cenu.</li>
@@ -127,9 +126,9 @@
             </div>
             <div style="order: 1;" class="fade-in">
                 <div style="position: relative; padding: 40px; background: radial-gradient(circle at center, rgba(255, 154, 139, 0.1), transparent); border-radius: 40px; text-align: center;">
-                    <div style="font-size: 80px; margin-bottom: 20px;">💡</div>
-                    <p style="font-size: 22px; font-weight: 500; color: #FF9A8B;">Innovation starts here.</p>
-                    <p style="color: var(--text-secondary); margin-top: 15px;">Každý projekt je pro mě příležitostí ukázat, že i malý tým dokáže překonat velké agentury.</p>
+                    <div id="homeVisionEmoji" style="font-size: 80px; margin-bottom: 20px;">💡</div>
+                    <p id="homeVisionBoxTitle" style="font-size: 22px; font-weight: 500; color: #FF9A8B;">Innovation starts here.</p>
+                    <p id="homeVisionBoxDesc" style="color: var(--text-secondary); margin-top: 15px;">Každý projekt je pro mě příležitostí ukázat, že i malý tým dokáže překonat velké agentury.</p>
                 </div>
             </div>
         </div>
@@ -137,8 +136,8 @@
 
     <section id="expertise">
         <div style="max-width: 1100px; margin: 0 auto;">
-            <h2 class="section-title" style="margin-bottom: 60px;">Specializace & Know-how</h2>
-            <div class="two-col-grid-small" style="gap: 30px;">
+            <h2 id="homeExpertiseTitle" class="section-title" style="margin-bottom: 60px;">Specializace & Know-how</h2>
+            <div id="homeExpertiseGrid" class="two-col-grid-small" style="gap: 30px;">
                 <div class="card fade-in" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
                     <div style="font-size: 40px;">🎓</div>
                     <div>
@@ -187,8 +186,8 @@
 
     <section id="technologies" style="background: rgba(255, 255, 255, 0.01);">
         <div style="max-width: 1100px; margin: 0 auto;">
-            <h2 class="section-title" style="margin-bottom: 60px;">Využívané technologie</h2>
-            <div class="grid">
+            <h2 id="homeTechTitle" class="section-title" style="margin-bottom: 60px;">Využívané technologie</h2>
+            <div id="homeTechGrid" class="grid">
                 <div class="card fade-in" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
                     <div style="font-size: 50px; margin-bottom: 20px;">🍎</div>
                     <h3 style="margin-bottom: 15px;">iOS & Swift</h3>
@@ -215,7 +214,7 @@
 
     <section id="developer">
         <h2 class="section-title">Moje projekty & aplikace</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto;">
+        <div id="homeProjectsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto;">
             <!-- Deník vděčnosti -->
             <div class="card" onclick="window.location.href='apps/denik-vdecnosti.html'" style="border-color: var(--accent-color); cursor: pointer; text-align: left;">
                 <div style="height: 200px; background: linear-gradient(135deg, #1c1c1e, #000); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
@@ -234,7 +233,7 @@
                     <div style="position: absolute; bottom: 10px; right: 10px; background: #10B981; color: #000; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 800;">NOVINKA</div>
                 </div>
                 <h3 style="font-size: 22px; margin-bottom: 10px;">DaněPro (2026)</h3>
-                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem a nahrání výdajů a příjmů přes bankovní výpisy.</p>
+                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem a Revolut Pro.</p>
                 <a href="apps/dane-pro.html" class="btn" style="font-size: 13px; padding: 8px 18px; background: #10B981; color: #000; font-weight: 700;">Zobrazit detail aplikace →</a>
             </div>
 
@@ -252,9 +251,9 @@
     </section>
 
     <section class="cta-download">
-        <h2>Začněte svou cestu k vděčnosti ještě dnes</h2>
-        <p>Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.</p>
-        <a href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge app-store-badge--lg" target="_blank" rel="noopener noreferrer">
+        <h2 id="homeCtaTitle">Začněte svou cestu k vděčnosti ještě dnes</h2>
+        <p id="homeCtaDesc">Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.</p>
+        <a id="homeCtaAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge app-store-badge--lg" target="_blank" rel="noopener noreferrer">
             <span class="asb-apple"></span>
             <span class="asb-text">
                 <span class="asb-subtitle">Download on the</span>
@@ -265,15 +264,16 @@
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
+            <p id="homeFooterCopyright">&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
             <div class="footer-links">
                 <a href="support.html">Kontakt a podpora</a> | 
                 <a href="legal/terms.html">Obchodní podmínky</a> | 
                 <a href="legal/privacy.html">Ochrana soukromí</a> | 
-                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
+                <a id="homeFooterLinkedin" href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a> | 
+                <a href="admin.html" style="opacity: 0.4;">Admin</a>
             </div>
             <div class="footer-badge">
-                <a href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge app-store-badge--sm" target="_blank" rel="noopener noreferrer">
+                <a id="homeFooterAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge app-store-badge--sm" target="_blank" rel="noopener noreferrer">
                     <span class="asb-apple"></span>
                     <span class="asb-text">
                         <span class="asb-subtitle">Download on the</span>
@@ -291,22 +291,196 @@
                 document.querySelectorAll('.fade-in').forEach((el) => {
                     el.classList.add('visible');
                 });
-                return;
-            }
-            // Intersection Observer for fade-in animations
-            const observerOptions = { threshold: 0.1 };
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, observerOptions);
+            } else {
+                const observerOptions = { threshold: 0.1 };
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, observerOptions);
 
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
+            // Load dynamic content from Admin / content.json
+            loadDynamicHomeContent();
         });
+
+        async function loadDynamicHomeContent() {
+            let data = null;
+            try {
+                const localDraft = localStorage.getItem('gratus_admin_content');
+                if (localDraft) {
+                    data = JSON.parse(localDraft);
+                }
+            } catch (e) {}
+
+            if (!data) {
+                try {
+                    const res = await fetch(`data/content.json?v=${Date.now()}`);
+                    if (res.ok) data = await res.json();
+                } catch (e) {}
+            }
+
+            if (!data) return;
+
+            // 1. Settings / Footer
+            if (data.settings) {
+                const s = data.settings;
+                const cr = document.getElementById('homeFooterCopyright');
+                if (cr && s.footerCopyright) cr.textContent = s.footerCopyright;
+                const li = document.getElementById('homeFooterLinkedin');
+                if (li && s.linkedinUrl) li.href = s.linkedinUrl;
+            }
+
+            // 2. Home content
+            if (data.home) {
+                const h = data.home;
+
+                // Hero
+                if (h.hero) {
+                    const ht = document.getElementById('homeHeroTitle');
+                    if (ht && h.hero.title) ht.textContent = h.hero.title;
+                    const b1 = document.getElementById('homeHeroBtn1');
+                    if (b1) {
+                        if (h.hero.btn1Text) b1.textContent = h.hero.btn1Text;
+                        if (h.hero.btn1Link) b1.href = h.hero.btn1Link;
+                    }
+                    const b2 = document.getElementById('homeHeroBtn2');
+                    if (b2) {
+                        if (h.hero.btn2Text) b2.textContent = h.hero.btn2Text;
+                        if (h.hero.btn2Link) b2.href = h.hero.btn2Link;
+                    }
+                    const asb = document.getElementById('homeHeroAppStore');
+                    if (asb && h.hero.appStoreUrl) asb.href = h.hero.appStoreUrl;
+                    const sl = document.getElementById('homeShowcaseLeft');
+                    if (sl && h.hero.showcaseLeft) sl.src = h.hero.showcaseLeft;
+                    const sc = document.getElementById('homeShowcaseCenter');
+                    if (sc && h.hero.showcaseCenter) sc.src = h.hero.showcaseCenter;
+                    const sr = document.getElementById('homeShowcaseRight');
+                    if (sr && h.hero.showcaseRight) sr.src = h.hero.showcaseRight;
+                }
+
+                // Approach / O mně
+                if (h.approach) {
+                    const at = document.getElementById('homeApproachTitle');
+                    if (at && h.approach.title) at.textContent = h.approach.title;
+                    const ap1 = document.getElementById('homeApproachP1');
+                    if (ap1 && h.approach.p1) ap1.textContent = h.approach.p1;
+                    const ap2 = document.getElementById('homeApproachP2');
+                    if (ap2 && h.approach.p2) ap2.textContent = h.approach.p2;
+
+                    if (h.approach.pillars && h.approach.pillars.length > 0) {
+                        const pillarsContainer = document.getElementById('homeApproachPillars');
+                        if (pillarsContainer) {
+                            pillarsContainer.innerHTML = h.approach.pillars.map(p => `
+                                <div class="card" style="background: rgba(255, 255, 255, 0.03);">
+                                    <h4 style="margin-bottom: 10px; color: ${p.color || '#fff'};">${p.title}</h4>
+                                    <p style="font-size: 14px; color: var(--text-secondary);">${p.desc}</p>
+                                </div>
+                            `).join('');
+                        }
+                    }
+                }
+
+                // Vision
+                if (h.vision) {
+                    const vt = document.getElementById('homeVisionTitle');
+                    if (vt && h.vision.title) vt.textContent = h.vision.title;
+                    const vq = document.getElementById('homeVisionQuote');
+                    if (vq && h.vision.mainQuote) vq.innerHTML = h.vision.mainQuote;
+
+                    if (h.vision.points && h.vision.points.length > 0) {
+                        const pointsContainer = document.getElementById('homeVisionPoints');
+                        if (pointsContainer) {
+                            pointsContainer.innerHTML = h.vision.points.map(pt => `
+                                <li style="margin-bottom: 15px;">✓ ${pt}</li>
+                            `).join('');
+                        }
+                    }
+
+                    const ve = document.getElementById('homeVisionEmoji');
+                    if (ve && h.vision.sideBoxEmoji) ve.textContent = h.vision.sideBoxEmoji;
+                    const vbt = document.getElementById('homeVisionBoxTitle');
+                    if (vbt && h.vision.sideBoxTitle) vbt.textContent = h.vision.sideBoxTitle;
+                    const vbd = document.getElementById('homeVisionBoxDesc');
+                    if (vbd && h.vision.sideBoxDesc) vbd.textContent = h.vision.sideBoxDesc;
+                }
+
+                // Expertise (6 karet)
+                if (h.expertise && h.expertise.length > 0) {
+                    const expGrid = document.getElementById('homeExpertiseGrid');
+                    if (expGrid) {
+                        expGrid.innerHTML = h.expertise.map(item => `
+                            <div class="card" style="display: flex; gap: 25px; align-items: flex-start; padding: 40px;">
+                                <div style="font-size: 40px;">${item.icon || '✨'}</div>
+                                <div>
+                                    <h3 style="margin-bottom: 15px;">${item.title}</h3>
+                                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.7;">${item.desc}</p>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                // Technologies (4 karty)
+                if (h.technologies && h.technologies.length > 0) {
+                    const techGrid = document.getElementById('homeTechGrid');
+                    if (techGrid) {
+                        techGrid.innerHTML = h.technologies.map(item => `
+                            <div class="card" style="text-align: center; padding: 40px; background: linear-gradient(145deg, #1c1c1e, #0a0a0a);">
+                                <div style="font-size: 50px; margin-bottom: 20px;">${item.icon || '💻'}</div>
+                                <h3 style="margin-bottom: 15px;">${item.title}</h3>
+                                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">${item.desc}</p>
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                // CTA
+                if (h.cta) {
+                    const ct = document.getElementById('homeCtaTitle');
+                    if (ct && h.cta.title) ct.textContent = h.cta.title;
+                    const cd = document.getElementById('homeCtaDesc');
+                    if (cd && h.cta.desc) cd.textContent = h.cta.desc;
+                    const cas = document.getElementById('homeCtaAppStore');
+                    if (cas && h.cta.appStoreUrl) cas.href = h.cta.appStoreUrl;
+                }
+            }
+
+            // 3. Projects Grid
+            if (data.apps && data.apps.length > 0) {
+                const pGrid = document.getElementById('homeProjectsGrid');
+                if (pGrid) {
+                    pGrid.innerHTML = data.apps.map(app => {
+                        const detailHref = app.detailUrl || `apps/app.html?id=${app.id}`;
+                        const accentColor = app.accentColor || 'var(--accent-color)';
+                        const badgeColor = app.badgeColor || accentColor;
+                        let previewContent = '';
+                        if (app.image) {
+                            previewContent = `<img src="${app.image}" alt="${app.title}" style="width: 120px; transform: rotate(${app.imageRotate || '0deg'}); transition: transform 0.5s ease;">`;
+                        } else {
+                            previewContent = `<div style="font-size: 55px; text-shadow: 0 10px 20px rgba(0,0,0,0.5);">${app.iconEmoji || '📱'}</div>`;
+                        }
+                        return `
+                            <div class="card" onclick="window.location.href='${detailHref}'" style="border-color: ${accentColor}; cursor: pointer; text-align: left;">
+                                <div style="height: 200px; background: linear-gradient(135deg, #1c1c1e, #0a0a0a); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+                                    ${previewContent}
+                                    <div style="position: absolute; bottom: 10px; right: 10px; background: ${badgeColor}; color: white; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700;">${app.badge || 'ACTIVE'}</div>
+                                </div>
+                                <h3 style="font-size: 22px; margin-bottom: 10px;">${app.title}</h3>
+                                <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 20px;">${app.tagline || ''}</p>
+                                <a href="${detailHref}" class="btn" style="font-size: 13px; padding: 8px 18px; background: ${accentColor}; color: #fff;">Zobrazit detail aplikace →</a>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+        }
     </script>
 </body>
 </html>

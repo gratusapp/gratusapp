@@ -27,40 +27,42 @@
     </nav>
 
     <section style="padding-top: 100px; text-align: center;" class="fade-in">
-        <h1 class="section-title">Podpora a Kontakt</h1>
-        <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 40px; font-size: 18px;">Máte dotaz k aplikaci nebo potřebujete pomoci s technickým problémem? Jsme tu pro vás.</p>
+        <h1 id="supportTitle" class="section-title">Podpora a Kontakt</h1>
+        <p id="supportSubtitle" style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 40px; font-size: 18px;">Máte dotaz k aplikaci nebo potřebujete pomoci s technickým problémem? Jsme tu pro vás.</p>
 
         <div class="grid" style="max-width: 900px; margin: 0 auto; text-align: left;">
             <div class="card">
                 <h3>Často kladené otázky</h3>
-                <br>
-                <p><strong>Jak obnovím své předplatné?</strong><br>
-                Stačí v aplikaci kliknout na 'Obnovit nákupy' v sekci nastavení.</p>
-                <br>
-                <p><strong>Kam se ukládají moje data?</strong><br>
-                Záznamy z aplikace jsou v telefonu (lokálně). Vývojář k nim nemá přístup. Do iCloudu se dostanou jen tehdy, pokud máte zapnutou zálohu iPhonu do iCloudu — podle nastavení u Apple.</p>
+                <div id="faqContainer" style="margin-top: 15px;">
+                    <p><strong>Jak obnovím své předplatné?</strong><br>
+                    Stačí v aplikaci kliknout na 'Obnovit nákupy' v sekci nastavení.</p>
+                    <br>
+                    <p><strong>Kam se ukládají moje data?</strong><br>
+                    Záznamy z aplikace jsou v telefonu (lokálně). Vývojář k nim nemá přístup. Do iCloudu se dostanou jen tehdy, pokud máte zapnutou zálohu iPhonu do iCloudu — podle nastavení u Apple.</p>
+                </div>
             </div>
             
             <div class="card" style="border-color: var(--accent-color);">
                 <h3>Kontakt a fakturační údaje</h3>
-                <p style="margin-bottom: 6px;"><strong>Veronika Mikovcová</strong></p>
-                <p style="color: var(--text-secondary); margin-bottom: 6px;">IČO: <strong style="color: #fff;">29851106</strong></p>
-                <p style="color: var(--text-secondary); margin-bottom: 14px;">Sídlo: Praha, Česká republika</p>
-                <p>Dotazy, technická podpora a konzultace:</p>
-                <a href="mailto:gratusapp@icloud.com" style="font-size: 22px; font-weight: 600; margin-top: 10px; display: block; color: white;">gratusapp@icloud.com</a>
-                <p style="margin-top: 14px; color: var(--text-secondary); font-size: 14px;">Zpravidla odpovídáme do 24 hodin.</p>
+                <p style="margin-bottom: 6px;"><strong id="contactName">Veronika Mikovcová</strong></p>
+                <p style="color: var(--text-secondary); margin-bottom: 6px;">IČO: <strong id="contactIco" style="color: #fff;">29851106</strong></p>
+                <p style="color: var(--text-secondary); margin-bottom: 14px;">Sídlo: <span id="contactLocation">Praha, Česká republika</span></p>
+                <p id="contactNote">Dotazy, technická podpora a konzultace:</p>
+                <a id="contactEmail" href="mailto:gratusapp@icloud.com" style="font-size: 22px; font-weight: 600; margin-top: 10px; display: block; color: white;">gratusapp@icloud.com</a>
+                <p id="contactResponseTime" style="margin-top: 14px; color: var(--text-secondary); font-size: 14px;">Zpravidla odpovídáme do 24 hodin.</p>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-content">
-            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
+            <p id="supportFooterCopyright">&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
             <div class="footer-links" style="margin-top: 20px;">
                 <a href="support.html">Kontakt a podpora</a> | 
                 <a href="legal/terms.html">Obchodní podmínky</a> | 
                 <a href="legal/privacy.html">Ochrana soukromí</a> | 
-                <a href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a>
+                <a id="supportFooterLinkedin" href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a> | 
+                <a href="admin.html" style="opacity: 0.4;">Admin</a>
             </div>
         </div>
     </footer>
@@ -70,7 +72,76 @@
             document.querySelectorAll('.fade-in').forEach((el) => {
                 el.classList.add('visible');
             });
+            loadDynamicSupport();
         });
+
+        async function loadDynamicSupport() {
+            let data = null;
+            try {
+                const localDraft = localStorage.getItem('gratus_admin_content');
+                if (localDraft) data = JSON.parse(localDraft);
+            } catch(e) {}
+
+            if (!data) {
+                try {
+                    const res = await fetch(`data/content.json?v=${Date.now()}`);
+                    if (res.ok) data = await res.json();
+                } catch(e) {}
+            }
+
+            if (!data) return;
+
+            // Settings
+            if (data.settings) {
+                const s = data.settings;
+                const cr = document.getElementById('supportFooterCopyright');
+                if (cr && s.footerCopyright) cr.textContent = s.footerCopyright;
+                const li = document.getElementById('supportFooterLinkedin');
+                if (li && s.linkedinUrl) li.href = s.linkedinUrl;
+            }
+
+            // Support
+            if (data.support) {
+                const sp = data.support;
+                const st = document.getElementById('supportTitle');
+                if (st && sp.title) st.textContent = sp.title;
+                const ss = document.getElementById('supportSubtitle');
+                if (ss && sp.subtitle) ss.textContent = sp.subtitle;
+
+                // FAQ items
+                if (sp.faq && sp.faq.length > 0) {
+                    const faqContainer = document.getElementById('faqContainer');
+                    if (faqContainer) {
+                        faqContainer.innerHTML = sp.faq.map(item => `
+                            <div style="margin-bottom: 20px;">
+                                <p><strong>${item.question}</strong><br>
+                                ${item.answer}</p>
+                            </div>
+                        `).join('');
+                    }
+                }
+
+                // Contact
+                if (sp.contact) {
+                    const c = sp.contact;
+                    const cn = document.getElementById('contactName');
+                    if (cn && c.name) cn.textContent = c.name;
+                    const ci = document.getElementById('contactIco');
+                    if (ci && c.ico) ci.textContent = c.ico;
+                    const cl = document.getElementById('contactLocation');
+                    if (cl && c.location) cl.textContent = c.location;
+                    const ce = document.getElementById('contactEmail');
+                    if (ce && c.email) {
+                        ce.textContent = c.email;
+                        ce.href = `mailto:${c.email}`;
+                    }
+                    const crt = document.getElementById('contactResponseTime');
+                    if (crt && c.responseTime) crt.textContent = c.responseTime;
+                    const cnot = document.getElementById('contactNote');
+                    if (cnot && c.note) cnot.textContent = c.note;
+                }
+            }
+        }
     </script>
 </body>
 </html>

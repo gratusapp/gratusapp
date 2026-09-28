@@ -1,0 +1,3520 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrace | Gratus App</title>
+    <link rel="stylesheet" href="index.css?v=20260501-1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --admin-panel-bg: #141416;
+            --admin-card-bg: #1c1c1e;
+            --admin-card-hover: #242428;
+            --admin-border: rgba(255, 255, 255, 0.1);
+            --admin-input-bg: #0d0d0f;
+            --admin-success: #10B981;
+            --admin-warning: #F59E0B;
+            --admin-danger: #EF4444;
+        }
+
+        body {
+            background-color: #09090b;
+            color: #f4f4f5;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            padding-top: 60px;
+        }
+
+        /* Top Admin Bar */
+        .admin-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(18, 18, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--admin-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+        }
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .admin-badge {
+            background: rgba(0, 113, 227, 0.2);
+            color: #2997ff;
+            border: 1px solid rgba(41, 151, 255, 0.3);
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .save-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--admin-success);
+        }
+        .dot.dirty {
+            background: var(--admin-warning);
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+        }
+
+        /* Layout & Sidebar */
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px 80px;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid var(--admin-border);
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        .admin-tab {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 500;
+            padding: 12px 18px;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .admin-tab:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .admin-tab.active {
+            color: #fff;
+            border-bottom-color: var(--accent-color);
+            background: rgba(0, 113, 227, 0.08);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: #0071e3;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background: #0077ED;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: #f4f4f5;
+            border: 1px solid var(--admin-border);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #F87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.25);
+        }
+
+        /* App Cards Grid */
+        .app-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .admin-app-card {
+            background: var(--admin-card-bg);
+            border: 1px solid var(--admin-border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .admin-app-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: var(--admin-card-hover);
+        }
+
+        .card-header-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+
+        .card-icon-preview {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+        }
+        .card-icon-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-title-box h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .card-tag {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #d4d4d8;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: var(--admin-input-bg);
+            border: 1px solid var(--admin-border);
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-window {
+            background: #18181b;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 680px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--admin-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            background: #18181b;
+            z-index: 10;
+        }
+        .modal-header h2 {
+            font-size: 18px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+        }
+        .modal-close:hover {
+            color: white;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--admin-border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            position: sticky;
+            bottom: 0;
+            background: #18181b;
+        }
+
+        /* Upload Area */
+        .upload-dropzone {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.2s;
+        }
+        .upload-dropzone:hover {
+            border-color: var(--accent-color);
+            background: rgba(0, 113, 227, 0.05);
+        }
+
+        /* Notification Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #27272a;
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--admin-border);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 3000;
+            font-size: 14px;
+        }
+        .toast.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Feature items in editor */
+        .feature-item-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--admin-border);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: border-color 0.2s;
+        }
+        .feature-item-row:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Auth Screen */
+        .auth-container {
+            max-width: 480px;
+            margin: 80px auto;
+            background: #18181b;
+            border: 1px solid var(--admin-border);
+            border-radius: 18px;
+            padding: 36px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+        .auth-help {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .auth-help a {
+            color: #38bdf8;
+            text-decoration: underline;
+        }
+
+        /* Section Cards */
+        .section-box {
+            background: var(--admin-card-bg);
+            border: 1px solid var(--admin-border);
+            border-radius: 14px;
+            padding: 22px;
+            margin-bottom: 24px;
+        }
+        .section-box h3 {
+            font-size: 17px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAVIGATION -->
+    <header class="admin-nav">
+        <div class="admin-logo">
+            <a href="index.html" style="color: white; font-weight: 700; text-decoration: none;">Gratus App</a>
+            <span class="admin-badge">ADMIN</span>
+        </div>
+
+        <div class="admin-actions">
+            <div class="save-indicator">
+                <span class="dot" id="saveDot"></span>
+                <span id="saveStatusText">Vše uloženo</span>
+            </div>
+            <button class="btn-secondary" onclick="openTokenModal()" style="border-color: #0071e3; color: #2997ff;" title="Zadat nebo změnit GitHub token">
+                🔑 GitHub Token
+            </button>
+            <button class="btn-primary" id="btnPublish" onclick="publishToGitHub()">
+                <span>🚀 Publikovat na GitHub</span>
+            </button>
+            <a href="apps.html" target="_blank" class="btn-secondary" style="text-decoration: none;">
+                👁️ Zobrazit web
+            </a>
+            <button class="btn-secondary" onclick="logout()" title="Odhlásit a vymazat data">
+                Odhlásit
+            </button>
+        </div>
+    </header>
+
+    <!-- TOKEN MODAL (Accessible anywhere) -->
+    <div id="tokenModal" class="modal-overlay">
+        <div class="modal-window" style="max-width: 520px;">
+            <div class="modal-header">
+                <h2>🔑 Vložení GitHub Tokenu</h2>
+                <button class="modal-close" onclick="closeModal('tokenModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 16px;">
+                    Sem vložte váš vygenerovaný GitHub Personal Access Token (začíná písmeny <code>ghp_...</code>):
+                </p>
+                <div class="form-group">
+                    <label for="modalTokenInput">Váš GitHub Token (PAT):</label>
+                    <input type="password" id="modalTokenInput" class="form-control" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="font-size: 15px; letter-spacing: 1px;">
+                </div>
+                <div class="auth-help" style="margin-top: 14px;">
+                    <strong>Nemáte ještě token?</strong><br>
+                    Vygenerujte si ho za 1 minutu na <a href="https://github.com/settings/tokens/new?scopes=repo&description=GratusApp+Admin" target="_blank">GitHub Settings (Tokens)</a>. Zaškrtněte kolonku <strong>repo</strong> a klikněte na <em>Generate token</em>.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('tokenModal')">Zavřít</button>
+                <button class="btn-primary" onclick="saveTokenFromModal()">Uložit a připojit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUTHENTICATION SCREEN (Shown when token is missing) -->
+    <div id="authScreen" class="auth-container">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <div style="font-size: 40px; margin-bottom: 12px;">🔐</div>
+            <h1 style="font-size: 22px; margin-bottom: 8px;">Přihlášení do administrace</h1>
+            <p style="color: var(--text-secondary); font-size: 14px;">Zadejte váš GitHub Personal Access Token pro přístup k repozitáři <strong>gratusapp/gratusapp</strong>.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="githubTokenInput">GitHub Personal Access Token (PAT):</label>
+            <input type="password" id="githubTokenInput" class="form-control" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="font-size: 15px; letter-spacing: 1px;">
+        </div>
+
+        <button class="btn-primary" style="width: 100%; justify-content: center; padding: 12px;" onclick="saveTokenAndLogin()">
+            Připojit k repozitáři
+        </button>
+
+        <div class="auth-help">
+            <strong>Jak získat token za 1 minutu:</strong><br>
+            1. Přejděte na <a href="https://github.com/settings/tokens/new?scopes=repo&description=GratusApp+Admin" target="_blank">Vytvoření nového tokenu na GitHubu</a>.<br>
+            2. Zaškrtněte oprávnění <strong>repo</strong> (plný přístup k repozitářům).<br>
+            3. Klikněte dole na <em>Generate token</em> a zkopírujte ho sem.<br>
+            <em>Token zůstává bezpečně uložen pouze ve vašem lokálním prohlížeči (localStorage).</em>
+        </div>
+    </div>
+
+    <!-- MAIN ADMIN INTERFACE -->
+    <main id="mainApp" class="admin-container" style="display: none;">
+        
+        <!-- NO TOKEN BANNER (Shown if token is invalid or missing) -->
+        <div id="tokenWarningBanner" style="display: none; background: rgba(245, 158, 11, 0.12); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 12px; padding: 14px 20px; margin-bottom: 24px; align-items: center; justify-content: space-between;">
+            <div>
+                <strong style="color: #fbbf24;">⚠️ GitHub Token není nastaven</strong>
+                <div style="color: var(--text-secondary); font-size: 13px; margin-top: 2px;">Pro ukládání na GitHub a nahrávání screenshotů vložte váš přístupový token.</div>
+            </div>
+            <button class="btn-primary" style="background: #f59e0b; color: #000; font-weight: 700;" onclick="openTokenModal()">
+                🔑 Vložit token
+            </button>
+        </div>
+        
+        <!-- NAVIGATION TABS -->
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchTab('home')">
+                🏠 Domů (Hlavní webovka)
+            </button>
+            <button class="admin-tab" onclick="switchTab('apps')">
+                📱 Moje Aplikace & Projekty
+            </button>
+            <button class="admin-tab" onclick="switchTab('pricing')">
+                💰 Ceník služeb
+            </button>
+            <button class="admin-tab" onclick="switchTab('support')">
+                🛟 Podpora & FAQ
+            </button>
+            <button class="admin-tab" onclick="switchTab('legal')">
+                🛡️ Právní texty (GDPR & EULA)
+            </button>
+            <button class="admin-tab" onclick="switchTab('media')">
+                🖼️ Média & Galerie
+            </button>
+            <button class="admin-tab" onclick="switchTab('settings')">
+                ⚙️ Nastavení webu
+            </button>
+        </div>
+
+        <!-- TAB: DOMOVSKÁ STRÁNKA -->
+        <section id="tab-home" style="display: block;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h2 style="font-size: 24px; margin-bottom: 6px;">🏠 Domovská stránka (Hlavní webovka)</h2>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Kompletní správa všech textů, tlačítek, pilířů, vize a technologií na úvodní stránce <code>index.html</code>.</p>
+                </div>
+                <a href="index.html" target="_blank" class="btn-secondary" style="text-decoration: none;">👁️ Zobrazit domovskou stránku</a>
+            </div>
+
+            <!-- Sekce 1: Hero (Úvodní obrazovka) -->
+            <div class="section-box">
+                <h3>🚀 Úvodní sekce (Hero banner)</h3>
+                <div class="form-group">
+                    <label>Hlavní nadpis (H1):</label>
+                    <input type="text" id="homeHeroTitleInput" class="form-control" onchange="autoSaveField('home.hero.title', this.value)">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tlačítko 1 (Bílé) - Text:</label>
+                        <input type="text" id="homeHeroBtn1TextInput" class="form-control" onchange="autoSaveField('home.hero.btn1Text', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Tlačítko 1 - Odkaz (kotva/URL):</label>
+                        <input type="text" id="homeHeroBtn1LinkInput" class="form-control" onchange="autoSaveField('home.hero.btn1Link', this.value)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tlačítko 2 (Tmavé) - Text:</label>
+                        <input type="text" id="homeHeroBtn2TextInput" class="form-control" onchange="autoSaveField('home.hero.btn2Text', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Tlačítko 2 - Odkaz:</label>
+                        <input type="text" id="homeHeroBtn2LinkInput" class="form-control" onchange="autoSaveField('home.hero.btn2Link', this.value)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Odkaz na App Store (tlačítko "Download on the App Store"):</label>
+                    <input type="text" id="homeHeroAppStoreInput" class="form-control" onchange="autoSaveField('home.hero.appStoreUrl', this.value)">
+                </div>
+                <div class="form-group" style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 8px; border: 1px solid var(--admin-border);">
+                    <label style="margin-bottom: 8px;">3 prezentační telefony v záhlaví (cesty k obrázkům v <code>assets/</code>):</label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label style="font-size: 12px; color: var(--text-secondary);">Levý telefon:</label>
+                            <input type="text" id="homeShowcaseLeftInput" class="form-control" onchange="autoSaveField('home.hero.showcaseLeft', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 12px; color: var(--text-secondary);">Středový telefon:</label>
+                            <input type="text" id="homeShowcaseCenterInput" class="form-control" onchange="autoSaveField('home.hero.showcaseCenter', this.value)">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 12px; color: var(--text-secondary);">Pravý telefon:</label>
+                        <input type="text" id="homeShowcaseRightInput" class="form-control" onchange="autoSaveField('home.hero.showcaseRight', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sekce 2: Přístup & O mně -->
+            <div class="section-box">
+                <h3>💡 Přístup & O mně</h3>
+                <div class="form-group">
+                    <label>Nadpis sekce:</label>
+                    <input type="text" id="homeApproachTitleInput" class="form-control" onchange="autoSaveField('home.approach.title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>První odstavec:</label>
+                    <textarea id="homeApproachP1Input" class="form-control" style="min-height: 70px;" onchange="autoSaveField('home.approach.p1', this.value)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Druhý odstavec:</label>
+                    <textarea id="homeApproachP2Input" class="form-control" style="min-height: 60px;" onchange="autoSaveField('home.approach.p2', this.value)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label style="margin-bottom: 8px;">4 klíčové pilíře (Preciznost, AI Efektivita, UI Design, Marketing):</label>
+                    <div id="homePillarsContainer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
+                </div>
+            </div>
+
+            <!-- Sekce 3: Moje Vize -->
+            <div class="section-box">
+                <h3>🔭 Moje vize & Inovace</h3>
+                <div class="form-group">
+                    <label>Nadpis sekce vize:</label>
+                    <input type="text" id="homeVisionTitleInput" class="form-control" onchange="autoSaveField('home.vision.title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Hlavní citát vize:</label>
+                    <textarea id="homeVisionQuoteInput" class="form-control" style="min-height: 60px;" onchange="autoSaveField('home.vision.mainQuote', this.value)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>3 odrážky vize (každý bod na nový řádek):</label>
+                    <textarea id="homeVisionPointsInput" class="form-control" style="min-height: 80px;" onchange="saveHomeVisionPointsFromTextarea()"></textarea>
+                </div>
+                <div class="form-group" style="background: rgba(255, 154, 139, 0.04); border: 1px solid rgba(255, 154, 139, 0.2); padding: 14px; border-radius: 8px;">
+                    <label style="color: #FF9A8B; font-weight: 600; margin-bottom: 8px;">Postranní box (Inovace):</label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label style="font-size: 12px;">Ikona / Emoji:</label>
+                            <input type="text" id="homeVisionSideEmojiInput" class="form-control" onchange="autoSaveField('home.vision.sideBoxEmoji', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: 12px;">Nadpis:</label>
+                            <input type="text" id="homeVisionSideTitleInput" class="form-control" onchange="autoSaveField('home.vision.sideBoxTitle', this.value)">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 12px;">Popis:</label>
+                        <input type="text" id="homeVisionSideDescInput" class="form-control" onchange="autoSaveField('home.vision.sideBoxDesc', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sekce 4: Specializace & Know-how -->
+            <div class="section-box">
+                <h3>🎓 Specializace & Know-how (6 karet)</h3>
+                <div id="homeExpertiseList" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;"></div>
+            </div>
+
+            <!-- Sekce 5: Využívané technologie -->
+            <div class="section-box">
+                <h3>💻 Využívané technologie (4 karty)</h3>
+                <div id="homeTechList" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;"></div>
+            </div>
+
+            <!-- Sekce 6: Spodní výzva ke stažení (CTA) -->
+            <div class="section-box">
+                <h3>📲 Spodní výzva ke stažení (CTA blok)</h3>
+                <div class="form-group">
+                    <label>Nadpis výzvy:</label>
+                    <input type="text" id="homeCtaTitleInput" class="form-control" onchange="autoSaveField('home.cta.title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Podtitulek / text výzvy:</label>
+                    <input type="text" id="homeCtaDescInput" class="form-control" onchange="autoSaveField('home.cta.desc', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Odkaz na App Store:</label>
+                    <input type="text" id="homeCtaAppStoreInput" class="form-control" onchange="autoSaveField('home.cta.appStoreUrl', this.value)">
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: APPS & PROJECTS -->
+        <section id="tab-apps" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <div>
+                    <h2 style="font-size: 24px; margin-bottom: 6px;">📱 Moje Aplikace & Detailní stránky</h2>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Přidávejte, upravujte a spravujte aplikace i veškerý obsah jejich detailních stránek (včetně <strong>Deníku vděčnosti</strong> na <code>apps/denik-vdecnosti.html</code>).</p>
+                </div>
+                <button class="btn-primary" onclick="openAppModal(null)">
+                    <span>+ Přidat novou aplikaci</span>
+                </button>
+            </div>
+
+            <div style="background: rgba(0, 113, 227, 0.08); border: 1px solid rgba(0, 113, 227, 0.25); border-radius: 12px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px; line-height: 1.6; color: #d4d4d8;">
+                <strong>💡 Kompletní úprava stránek aplikací:</strong><br>
+                Kliknutím na tlačítko <strong>✏️ Upravit</strong> u libovolné aplikace (např. <em>Deník vděčnosti</em>) můžete přímo editovat záhlaví, všech 11 funkcí a jejich stavové štítky, screenshoty v galerii, informační box PLUS verze i odkazy ke stažení. Změny se okamžitě promítnou do detailní stránky <code>apps/denik-vdecnosti.html</code> a po kliknutí na <em>Publikovat na GitHub</em> se nahrají na živý web.
+            </div>
+
+            <div class="app-list-grid" id="appsGrid">
+                <!-- Dynamicky generováno -->
+            </div>
+        </section>
+
+        <!-- TAB: CENÍK SLUŽEB -->
+        <section id="tab-pricing" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h2 style="font-size: 24px; margin-bottom: 6px;">💰 Ceník služeb</h2>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Správa měsíčních balíčků péče, jednorázových projektů a poznámek na stránce <code>cenik.html</code>.</p>
+                </div>
+                <a href="cenik.html" target="_blank" class="btn-secondary" style="text-decoration: none;">👁️ Zobrazit ceník</a>
+            </div>
+
+            <!-- Hlavička stránky -->
+            <div class="section-box">
+                <h3>Titulek a úvod ceníku</h3>
+                <div class="form-group">
+                    <label>Hlavní nadpis stránky:</label>
+                    <input type="text" id="pricingPageTitleInput" class="form-control" onchange="autoSaveField('pricing.title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Podtitul stránky:</label>
+                    <textarea id="pricingPageSubtitleInput" class="form-control" style="min-height: 60px;" onchange="autoSaveField('pricing.subtitle', this.value)"></textarea>
+                </div>
+            </div>
+
+            <!-- Měsíční správa -->
+            <div class="section-box">
+                <h3>📅 Měsíční správa a podpora (4 balíčky)</h3>
+                <div class="form-group">
+                    <label>Nadpis sekce:</label>
+                    <input type="text" id="pricingMonthlyTitleInput" class="form-control" onchange="autoSaveField('pricing.monthlyTitle', this.value)">
+                </div>
+                <div id="pricingMonthlyPackagesList"></div>
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Poznámka pod měsíčními balíčky (hvězdičky):</label>
+                    <textarea id="pricingMonthlyNoteInput" class="form-control" style="min-height: 70px;" onchange="autoSaveField('pricing.monthlyNote', this.value)"></textarea>
+                </div>
+            </div>
+
+            <!-- Jednorázové projekty -->
+            <div class="section-box">
+                <h3>⚡ Jednorázové projekty</h3>
+                <div class="form-group">
+                    <label>Nadpis sekce jednorázových projektů:</label>
+                    <input type="text" id="pricingOneTimeTitleInput" class="form-control" onchange="autoSaveField('pricing.oneTimeTitle', this.value)">
+                </div>
+                <div id="pricingOneTimePackagesList"></div>
+            </div>
+
+            <!-- Vlastní nabídka -->
+            <div class="section-box" style="border: 1px dashed #555;">
+                <h3>🤝 Box "Nenašli jste, co jste hledali?"</h3>
+                <div class="form-group">
+                    <label>Nadpis boxu:</label>
+                    <input type="text" id="pricingCustomTitleInput" class="form-control" onchange="autoSaveField('pricing.customOffer.title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Text boxu:</label>
+                    <textarea id="pricingCustomTextInput" class="form-control" style="min-height: 60px;" onchange="autoSaveField('pricing.customOffer.text', this.value)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Text tlačítka:</label>
+                    <input type="text" id="pricingCustomBtnInput" class="form-control" onchange="autoSaveField('pricing.customOffer.buttonText', this.value)">
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: PODPORA & FAQ -->
+        <section id="tab-support" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                    <h2 style="font-size: 24px; margin-bottom: 6px;">🛟 Podpora & FAQ</h2>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Správa často kladených otázek a kontaktních / fakturačních údajů na stránce <code>support.html</code>.</p>
+                </div>
+                <a href="support.html" target="_blank" class="btn-secondary" style="text-decoration: none;">👁️ Zobrazit podporu</a>
+            </div>
+
+            <!-- Hlavička -->
+            <div class="section-box">
+                <h3>Záhlaví stránky podpory</h3>
+                <div class="form-group">
+                    <label>Hlavní nadpis:</label>
+                    <input type="text" id="supportTitleInput" class="form-control" onchange="autoSaveField('support.title', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Podtitulek:</label>
+                    <textarea id="supportSubtitleInput" class="form-control" style="min-height: 60px;" onchange="autoSaveField('support.subtitle', this.value)"></textarea>
+                </div>
+            </div>
+
+            <!-- FAQ položky -->
+            <div class="section-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="margin: 0;">❓ Často kladené otázky (FAQ)</h3>
+                    <button class="btn-secondary" onclick="addFaqItem()">+ Přidat otázku</button>
+                </div>
+                <div id="faqItemsAdminList"></div>
+            </div>
+
+            <!-- Kontaktní a fakturační údaje -->
+            <div class="section-box" style="border: 1px solid rgba(0, 113, 227, 0.35);">
+                <h3>📍 Kontakt a fakturační údaje</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Jméno vývojáře / firmy:</label>
+                        <input type="text" id="supportContactNameInput" class="form-control" onchange="autoSaveField('support.contact.name', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>IČO:</label>
+                        <input type="text" id="supportContactIcoInput" class="form-control" onchange="autoSaveField('support.contact.ico', this.value)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sídlo / Město:</label>
+                        <input type="text" id="supportContactLocationInput" class="form-control" onchange="autoSaveField('support.contact.location', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Kontaktní e-mail:</label>
+                        <input type="email" id="supportContactEmailInput" class="form-control" onchange="autoSaveField('support.contact.email', this.value)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Poznámka před e-mailem:</label>
+                        <input type="text" id="supportContactNoteInput" class="form-control" onchange="autoSaveField('support.contact.note', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Garantovaná doba odezvy:</label>
+                        <input type="text" id="supportContactResponseTimeInput" class="form-control" onchange="autoSaveField('support.contact.responseTime', this.value)">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: LEGAL & GDPR -->
+        <section id="tab-legal" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div>
+                    <h2 style="font-size: 24px; margin-bottom: 6px;">Ochrana soukromí a osobních údajů</h2>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Upravujte informace o zpracování osobních údajů (GDPR) pro web i jednotlivé aplikace.</p>
+                </div>
+            </div>
+
+            <!-- Správce údajů -->
+            <div class="section-box">
+                <h3>Údaje o správci (Záhlaví GDPR)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Jméno správce / Subjekt:</label>
+                        <input type="text" id="legalAdminName" class="form-control" onchange="markDirty()">
+                    </div>
+                    <div class="form-group">
+                        <label>IČO:</label>
+                        <input type="text" id="legalAdminIco" class="form-control" onchange="markDirty()">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sídlo / Místo podnikání:</label>
+                        <input type="text" id="legalAdminAddress" class="form-control" onchange="markDirty()">
+                    </div>
+                    <div class="form-group">
+                        <label>Kontaktní e-mail:</label>
+                        <input type="email" id="legalAdminEmail" class="form-control" onchange="markDirty()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Datum poslední aktualizace:</label>
+                    <input type="text" id="legalLastUpdated" class="form-control" onchange="markDirty()">
+                </div>
+            </div>
+
+            <!-- Sekce soukromí pro jednotlivé aplikace -->
+            <div class="section-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="margin: 0;">Pravidla soukromí pro jednotlivé aplikace (DaněPro, Deník vděčnosti apod.)</h3>
+                    <button class="btn-secondary" onclick="openAppPrivacyModal(null)">+ Přidat pravidla pro aplikaci</button>
+                </div>
+                <div id="appPrivacyList">
+                    <!-- Dynamicky generováno -->
+                </div>
+            </div>
+
+            <!-- Sekce Podmínky použití, předplatné a EULA (Apple & Google) -->
+            <div class="section-box" style="border: 1px solid rgba(255, 154, 139, 0.35); background: rgba(255, 154, 139, 0.02);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <h3 style="margin: 0; color: #FF9A8B;">⚖️ Podmínky předplatného a EULA (Apple App Store & Google Play)</h3>
+                        <p style="color: var(--text-secondary); font-size: 13px; margin-top: 4px;">Pravidla pro placené prostředí vyžadovaná společností Apple a Google pro schválení v obchodech.</p>
+                    </div>
+                    <button class="btn-secondary" style="border-color: #FF9A8B; color: #FF9A8B;" onclick="openAppTermsModal(null)">+ Přidat EULA pro aplikaci</button>
+                </div>
+                <div id="appTermsList">
+                    <!-- Dynamicky generováno -->
+                </div>
+            </div>
+
+            <!-- Obecné články GDPR -->
+            <div class="section-box">
+                <h3 style="margin-bottom: 16px;">Obecné články GDPR na stránce</h3>
+                <div id="generalLegalSections">
+                    <!-- Dynamicky generováno -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: MEDIA UPLOAD -->
+        <section id="tab-media" style="display: none;">
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 24px; margin-bottom: 6px;">Nahrávání obrázků a screenshotů</h2>
+                <p style="color: var(--text-secondary); font-size: 14px;">Nahrajte nové obrázky nebo screenshoty přímo do repozitáře (složka <code>assets/</code>) přes GitHub API.</p>
+            </div>
+
+            <div class="section-box">
+                <div class="upload-dropzone" onclick="document.getElementById('mediaFileInput').click()">
+                    <div style="font-size: 44px; margin-bottom: 12px;">📤</div>
+                    <p style="font-weight: 600; font-size: 16px; margin-bottom: 6px;">Klikněte pro výběr obrázku nebo ho přetáhněte sem</p>
+                    <p style="color: var(--text-secondary); font-size: 13px;">Podporovány formáty PNG, JPG, WEBP, SVG</p>
+                    <input type="file" id="mediaFileInput" accept="image/*" style="display: none;" onchange="handleDirectImageUpload(event)">
+                </div>
+                <div id="uploadProgress" style="display: none; margin-top: 15px; text-align: center; color: var(--accent-color);">
+                    ⏳ Nahrávám obrázek na GitHub...
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h3>Poslední nahrané obrázky v projektu</h3>
+                <div id="mediaGallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-top: 16px;">
+                    <!-- Dynamicky generováno -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: REPOSITORY SETTINGS -->
+        <section id="tab-settings" style="display: none;">
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 24px; margin-bottom: 6px;">Nastavení propojení s GitHubem</h2>
+                <p style="color: var(--text-secondary); font-size: 14px;">Informace o repozitáři, tokenu a stavu synchronizace.</p>
+            </div>
+
+            <div class="section-box" style="border: 1px solid rgba(0, 113, 227, 0.4); background: rgba(0, 113, 227, 0.04);">
+                <h3 style="color: #2997ff;">🔑 GitHub Přístupový Token</h3>
+                <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 14px;">Zde můžete zkontrolovat, vložit nebo změnit váš GitHub Personal Access Token (PAT):</p>
+                <div style="display: flex; gap: 10px; max-width: 600px; margin-bottom: 12px; flex-wrap: wrap;">
+                    <input type="password" id="settingsTokenInput" class="form-control" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="flex: 1; min-width: 260px; font-size: 15px; letter-spacing: 1px;">
+                    <button class="btn-primary" onclick="saveTokenFromSettings()">Uložit token</button>
+                </div>
+                <div style="font-size: 12px; color: var(--text-secondary);">
+                    Stav: <span id="settingsTokenStatus" style="color: #10b981; font-weight: 600;">Aktivní</span>
+                </div>
+            </div>
+
+            <!-- Globální nastavení celého webu -->
+            <div class="section-box">
+                <h3>🌐 Hlavní nastavení webu a zápatí</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Titulek webu (Logo / Brand):</label>
+                        <input type="text" id="settingsSiteTitleInput" class="form-control" onchange="autoSaveField('settings.siteTitle', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Jméno vývojáře / autora:</label>
+                        <input type="text" id="settingsDevNameInput" class="form-control" onchange="autoSaveField('settings.developerName', this.value)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Kontaktní e-mail:</label>
+                        <input type="email" id="settingsEmailInput" class="form-control" onchange="autoSaveField('settings.contactEmail', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>IČO:</label>
+                        <input type="text" id="settingsIcoInput" class="form-control" onchange="autoSaveField('settings.ico', this.value)">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sídlo / Lokalita:</label>
+                        <input type="text" id="settingsLocationInput" class="form-control" onchange="autoSaveField('settings.location', this.value)">
+                    </div>
+                    <div class="form-group">
+                        <label>Odkaz na LinkedIn profil:</label>
+                        <input type="url" id="settingsLinkedinInput" class="form-control" onchange="autoSaveField('settings.linkedinUrl', this.value)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Copyright text v zápatí (Footer):</label>
+                    <input type="text" id="settingsCopyrightInput" class="form-control" onchange="autoSaveField('settings.footerCopyright', this.value)">
+                </div>
+            </div>
+
+            <div class="section-box">
+                <h3>Aktivní repozitář</h3>
+                <p style="margin-bottom: 12px;"><strong>Repozitář:</strong> <code>gratusapp/gratusapp</code> (větev: <code>main</code>)</p>
+                <p style="margin-bottom: 12px;"><strong>Cesta k databázi:</strong> <code>data/content.json</code></p>
+                <div style="margin-top: 20px;">
+                    <button class="btn-secondary" onclick="exportDataJson()">💾 Stáhnout zálohu dat (JSON)</button>
+                    <button class="btn-danger" style="margin-left: 10px;" onclick="logout()">🔑 Odhlásit a vymazat token z prohlížeče</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL: ADD / EDIT APP -->
+    <div id="appModal" class="modal-overlay">
+        <div class="modal-window" style="max-width: 860px;">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalAppHeading" style="margin-bottom: 2px;">Upravit aplikaci a detail</h2>
+                    <div id="modalAppDetailLinkBox" style="font-size: 12px; color: var(--text-secondary);"></div>
+                </div>
+                <button class="modal-close" onclick="closeModal('appModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editAppIndex">
+
+                <!-- SEKCE 1: ZÁKLADNÍ ÚDAJE A HLAVIČKA STRÁNKY -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--admin-border); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+                    <h3 style="font-size: 15px; margin-bottom: 14px; color: #fff; display: flex; align-items: center; gap: 8px;">
+                        <span>📱</span> Základní informace o aplikaci a záhlaví stránky
+                    </h3>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ID / Identifikátor (slug):</label>
+                            <input type="text" id="appFieldId" class="form-control" placeholder="napr-denik-vdecnosti">
+                        </div>
+                        <div class="form-group">
+                            <label>Název aplikace:</label>
+                            <input type="text" id="appFieldTitle" class="form-control" placeholder="Deník vděčnosti">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Krátký popis (podtitul pro kartičku na hlavní stránce / v katalogu):</label>
+                        <textarea id="appFieldTagline" class="form-control" style="min-height: 50px;" placeholder="Krátké představení aplikace pro návštěvníky webu..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Detailní podtitul nahoře na stránce aplikace (Hero text):</label>
+                        <textarea id="appFieldHeroSubtitle" class="form-control" style="min-height: 55px;" placeholder="Osobní deník a nástroje pro každodenní záznamy a reflexi — inspirované mindfulness, v jedné aplikaci. Nenahrazuje odbornou péči."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Upozornění / Zdravotní doložka (rámeček pod podtitulem na detailní stránce):</label>
+                        <textarea id="appFieldMedicalNotice" class="form-control" style="min-height: 50px;" placeholder="Důležité: Aplikace není zdravotnický prostředek ani terapie..."></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Stavový štítek:</label>
+                            <input type="text" id="appFieldBadge" class="form-control" placeholder="ACTIVE / COMING SOON / NOVINKA">
+                        </div>
+                        <div class="form-group">
+                            <label>Barva štítku a akcentu:</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="color" id="appFieldColorPicker" style="height: 42px; width: 50px; background: none; border: 1px solid var(--admin-border); border-radius: 8px; cursor: pointer;" onchange="document.getElementById('appFieldAccentColor').value = this.value">
+                                <input type="text" id="appFieldAccentColor" class="form-control" placeholder="#FF9A8B" oninput="document.getElementById('appFieldColorPicker').value = this.value">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Emoji ikona (pokud nemá obrázek):</label>
+                            <input type="text" id="appFieldEmoji" class="form-control" placeholder="✨">
+                        </div>
+                        <div class="form-group">
+                            <label>Odkaz do App Store / na web:</label>
+                            <input type="url" id="appFieldAppStore" class="form-control" placeholder="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hlavní ikona / Náhledový obrázek (assets/...):</label>
+                        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                            <input type="text" id="appFieldImage" class="form-control" placeholder="assets/app-home-clean.png">
+                            <button type="button" class="btn-secondary" onclick="document.getElementById('appImageUploadInput').click()">Nahrát nový</button>
+                            <input type="file" id="appImageUploadInput" accept="image/*" style="display: none;" onchange="handleAppImageSelect(event)">
+                        </div>
+                        <div id="appImagePreviewBox" style="height: 90px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--admin-border);">
+                            <img id="appImagePreviewImg" src="" style="max-height: 80px; max-width: 90%; display: none;">
+                            <span id="appImagePreviewPlaceholder" style="color: var(--text-secondary); font-size: 13px;">Náhled obrázku</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SEKCE 2: FUNKCE APLIKACE (FEATURES) -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--admin-border); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div>
+                            <h3 style="font-size: 15px; margin-bottom: 2px; color: #fff; display: flex; align-items: center; gap: 8px;">
+                                <span>✨</span> Klíčové funkce aplikace ("Co všechno aplikace umí?")
+                            </h3>
+                            <div style="font-size: 12px; color: var(--text-secondary);">Můžete libovolně přidávat, mazat a upravovat funkce, jejich štítky i stav.</div>
+                        </div>
+                        <button type="button" class="btn-secondary" style="font-size: 12px; padding: 6px 12px;" onclick="addFeatureRow()">+ Přidat funkci</button>
+                    </div>
+                    <div id="featuresContainer">
+                        <!-- Dynamicky generováno -->
+                    </div>
+                </div>
+
+                <!-- SEKCE 3: SCREENSHOTY A GALERIE -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--admin-border); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div>
+                            <h3 style="font-size: 15px; margin-bottom: 2px; color: #fff; display: flex; align-items: center; gap: 8px;">
+                                <span>🖼️</span> Ukázky z aplikace ("Jak to vypadá?")
+                            </h3>
+                            <div style="font-size: 12px; color: var(--text-secondary);">Screenshoty telefonů zobrazené v galerii na stránce aplikace.</div>
+                        </div>
+                        <button type="button" class="btn-secondary" style="font-size: 12px; padding: 6px 12px;" onclick="addScreenshotRow()">+ Přidat screenshot</button>
+                    </div>
+                    <input type="file" id="rowScreenshotUploadInput" accept="image/*" style="display: none;" onchange="handleRowScreenshotUpload(event)">
+                    <div id="screenshotsContainerAdmin">
+                        <!-- Dynamicky generováno -->
+                    </div>
+                </div>
+
+                <!-- SEKCE 4: INFORMAČNÍ BOX (PLUS VERZE) -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--admin-border); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+                    <h3 style="font-size: 15px; margin-bottom: 2px; color: #fff; display: flex; align-items: center; gap: 8px;">
+                        <span>💎</span> Informační box (např. "Deník v PLUS verzi")
+                    </h3>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">Zobrazuje se pod screenshoty jako oznámení o prémiových funkcích a aktualizacích.</div>
+
+                    <div class="form-group">
+                        <label>Nadpis boxu:</label>
+                        <input type="text" id="appFieldPlusTitle" class="form-control" placeholder="Deník v PLUS verzi">
+                    </div>
+                    <div class="form-group">
+                        <label>Hlavní text boxu:</label>
+                        <textarea id="appFieldPlusText" class="form-control" style="min-height: 50px;" placeholder="Postupně budeme uvolňovat prémiové funkce jako pokročilé statistiky, PDF exporty a relaxační zvukové terapie..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Doplňující poznámka (dole v boxu):</label>
+                        <input type="text" id="appFieldPlusNote" class="form-control" placeholder="Aktuálně se soustředíme na to, aby vaše základní zkušenost s Deníkem vděčnosti byla co nejdokonalejší.">
+                    </div>
+                </div>
+
+                <!-- SEKCE 5: SPODNÍ CTA SEKCE -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--admin-border); border-radius: 12px; padding: 18px;">
+                    <h3 style="font-size: 15px; margin-bottom: 2px; color: #fff; display: flex; align-items: center; gap: 8px;">
+                        <span>🚀</span> Výzva ke stažení (Spodní sekce)
+                    </h3>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;">Texty nad velkým tlačítkem ke stažení na konci stránky.</div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nadpis výzvy:</label>
+                            <input type="text" id="appFieldCtaTitle" class="form-control" placeholder="Začněte svou cestu k vděčnosti ještě dnes">
+                        </div>
+                        <div class="form-group">
+                            <label>Text výzvy:</label>
+                            <input type="text" id="appFieldCtaText" class="form-control" placeholder="Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('appModal')">Zrušit</button>
+                <button class="btn-primary" onclick="saveAppFromModal()">Uložit aplikaci a detail</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: APP PRIVACY SECTION -->
+    <div id="appPrivacyModal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <h2 id="modalAppPrivacyHeading">Upravit pravidla soukromí aplikace</h2>
+                <button class="modal-close" onclick="closeModal('appPrivacyModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editAppPrivacyIndex">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Přiřazená aplikace:</label>
+                        <select id="privacyAppSelect" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Barva štítku:</label>
+                        <input type="text" id="privacyBadgeColor" class="form-control" placeholder="#10B981">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nadpis sekce soukromí:</label>
+                    <input type="text" id="privacySectionTitle" class="form-control" placeholder="Aplikace DaněPro – 100% Soukromí a Finanční Data">
+                </div>
+
+                <div class="form-group">
+                    <label>Jednotlivé body soukromí (každý bod na nový řádek):</label>
+                    <textarea id="privacyPointsText" class="form-control" style="min-height: 180px;" placeholder="Lokální uložení a Apple iCloud: ...&#10;Žádné servery vývojáře: ...&#10;Žádné sledování ani reklamy: ..."></textarea>
+                    <small style="color: var(--text-secondary); display: block; margin-top: 4px;">Každý nový řádek se na webu zobrazí jako samostatný přehledný bod s odrážkou.</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('appPrivacyModal')">Zrušit</button>
+                <button class="btn-primary" onclick="saveAppPrivacyFromModal()">Uložit pravidla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: APP TERMS & EULA (Apple & Google) -->
+    <div id="appTermsModal" class="modal-overlay">
+        <div class="modal-window" style="max-width: 760px;">
+            <div class="modal-header">
+                <h2 id="modalAppTermsHeading">Upravit podmínky předplatného a EULA</h2>
+                <button class="modal-close" onclick="closeModal('appTermsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editAppTermsIndex">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Přiřazená aplikace:</label>
+                        <select id="termsAppSelect" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Barva štítku:</label>
+                        <input type="text" id="termsBadgeColor" class="form-control" placeholder="#FF9A8B">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nadpis sekce podmínek / EULA:</label>
+                    <input type="text" id="termsSectionTitle" class="form-control" placeholder="Aplikace Deník vděčnosti – Podmínky předplatného a EULA (Apple & Google)">
+                </div>
+
+                <!-- Apple App Store body -->
+                <div class="form-group" style="background: rgba(41, 151, 255, 0.05); border: 1px solid rgba(41, 151, 255, 0.25); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                    <label style="color: #2997ff; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        🍎 Pravidla předplatného a EULA pro Apple iOS (App Store)
+                    </label>
+                    <small style="color: var(--text-secondary); display: block; margin-bottom: 10px;">Každý bod na nový řádek (automatická obnova, zrušení v Nastavení Apple ID, odkaz na Apple Standard EULA...):</small>
+                    <textarea id="termsApplePointsText" class="form-control" style="min-height: 140px; line-height: 1.5;" placeholder="Automaticky obnovitelné předplatné...&#10;Platba je účtována na účet Apple ID...&#10;Zrušení předplatného v Nastavení iOS...&#10;Apple Standard EULA: https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"></textarea>
+                </div>
+
+                <!-- Google Play body -->
+                <div class="form-group" style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.25); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                    <label style="color: #34d399; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                        🤖 Pravidla předplatného a EULA pro Google Android (Google Play)
+                    </label>
+                    <small style="color: var(--text-secondary); display: block; margin-bottom: 10px;">Každý bod na nový řádek (Google Play Billing, automatická obnova, zrušení v Google Play Store...):</small>
+                    <textarea id="termsGooglePointsText" class="form-control" style="min-height: 140px; line-height: 1.5;" placeholder="Platba přes Google Play Billing...&#10;Automatická obnova na Google Play...&#10;Zrušení v aplikaci Google Play → Platby a předplatná..."></textarea>
+                </div>
+
+                <!-- Obecná ustanovení -->
+                <div class="form-group">
+                    <label>Obecná ustanovení (povaha aplikace, ukládání dat):</label>
+                    <small style="color: var(--text-secondary); display: block; margin-bottom: 8px;">Každý bod na nový řádek (např. povaha aplikace - není náhradou lékařské péče, data lokálně):</small>
+                    <textarea id="termsGeneralPointsText" class="form-control" style="min-height: 90px; line-height: 1.5;" placeholder="Povaha aplikace: Osobní reflexe, není lékařským prostředkem...&#10;Soukromí dat: Záznamy jsou uloženy výhradně lokálně..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('appTermsModal')">Zrušit</button>
+                <button class="btn-primary" onclick="saveAppTermsFromModal()">Uložit EULA podmínky</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast">
+        <span id="toastIcon">✅</span>
+        <span id="toastMessage">Operace proběhla úspěšně</span>
+    </div>
+
+    <script>
+        // CONFIG & STATE
+        const GITHUB_OWNER = 'gratusapp';
+        const GITHUB_REPO = 'gratusapp';
+        const CONTENT_PATH = 'data/content.json';
+        const BRANCH = 'main';
+
+        // DEFAULT CONTENT EMBEDDED (Safe fallback for file:// and offline)
+        const DEFAULT_CONTENT = {
+          "settings": {
+            "siteTitle": "Gratus App",
+            "developerName": "Veronika Mikovcová",
+            "contactEmail": "gratusapp@icloud.com",
+            "ico": "29851106",
+            "location": "Praha, Česká republika",
+            "footerCopyright": "© 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.",
+            "linkedinUrl": "https://www.linkedin.com/in/veronika-m-52420322b"
+          },
+          "home": {
+            "hero": {
+              "title": "Digitální řešení na míru",
+              "btn1Text": "Moje vize",
+              "btn1Link": "#vision",
+              "btn2Text": "Prohlédnout projekty",
+              "btn2Link": "apps.html",
+              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+              "showcaseLeft": "assets/app-inspiration-clean.png",
+              "showcaseCenter": "assets/app-home-clean.png",
+              "showcaseRight": "assets/app-journey-clean.png"
+            },
+            "approach": {
+              "title": "Kreativita poháněná technologií",
+              "p1": "Věřím, že digitální produkt by měl být víc než jen kód. Měl by vyprávět příběh a vzbuzovat emoce. Má cesta začala vášní pro design a postupně se prolnula s precizností softwarového testování a efektivitou programování s AI.",
+              "p2": "Dnes pomáhám podnikatelům růst tím, že z jejich vizí dělám hmatatelnou realitu. Můj přístup je postaven na detailech, které dělají rozdíl.",
+              "pillars": [
+                { "title": "Preciznost", "color": "#FF9A8B", "desc": "Odzkoušené a spolehlivé projekty bez chyb." },
+                { "title": "AI Efektivita", "color": "#0071e3", "desc": "Rychlejší doručení bez ztráty kvality." },
+                { "title": "UI Design", "color": "#ffffff", "desc": "Minimalismus inspirovaný Apple estetikou." },
+                { "title": "Marketing", "color": "#ffffff", "desc": "Obsah, který lidi baví a prodává." }
+              ]
+            },
+            "vision": {
+              "title": "Moje vize",
+              "mainQuote": "Budoucnost leží v symbióze lidského nápadu a AI. Jako nezávislý vývojář doručuji výsledky, na které by agentura potřebovala celý tým.",
+              "points": [
+                "Rychlost: AI nám dává křídla v základech.",
+                "Flexibilita: Komunikujete přímo se mnou.",
+                "Kvalita: Agenturní standard za férovou cenu."
+              ],
+              "sideBoxEmoji": "💡",
+              "sideBoxTitle": "Innovation starts here.",
+              "sideBoxDesc": "Každý projekt je pro mě příležitostí ukázat, že i malý tým dokáže překonat velké agentury."
+            },
+            "expertise": [
+              { "icon": "🎓", "title": "Google AI Essentials", "desc": "Ovládám techniky Prompt Engineeringu a vím, jak pomocí AI doručovat výsledky v rekordním čase." },
+              { "icon": "🎨", "title": "Creative UX/UI", "desc": "Design v Canvě a Figma, který lidi baví. Čistota, minimalismus a důraz na uživatelský prožitek." },
+              { "icon": "🧪", "title": "Software Testing", "desc": "Zkušenosti z QA zaručují, že vaše řešení bude stabilní, bezpečné a připravené na reálný nápor uživatelů." },
+              { "icon": "🔍", "title": "SEO & Analytika", "desc": "Váš web nezapadne. Nastavím technické SEO a analytiku tak, abyste byli vidět tam, kde vás lidé hledají." },
+              { "icon": "📍", "title": "Google & Domény", "desc": "Nabízím propojení vaší firmy s Google Maps, firemním profilem na Googlu a kompletní nastavení domén pro vaše weby." },
+              { "icon": "🤝", "title": "Spolupráce", "desc": "Hledáte parťáka pro projekt? Pojďme se propojit na LinkedInu a probrat vaše nápady." }
+            ],
+            "technologies": [
+              { "icon": "🍎", "title": "iOS & Swift", "desc": "Vývoj nativních aplikací pro ekosystém Apple s důrazem na plynulost, bezpečnost a čistý Swift kód." },
+              { "icon": "🤖", "title": "AI Integration", "desc": "Implementace GPT modelů a pokročilého Prompt Engineeringu pro chytřejší a efektivnější funkce." },
+              { "icon": "🌐", "title": "Modern Web", "desc": "Stavba rychlých a responzivních webů využívajících HTML5, CSS3 a moderní JavaScriptové frameworky." },
+              { "icon": "☁️", "title": "iCloud & Cloud", "desc": "Lokální úložiště v zařízení, volitelné zálohy přes Apple podle nastavení uživatele — bez vlastního „datového cloudu“ vývojáře u obsahu aplikace." }
+            ],
+            "cta": {
+              "title": "Začněte svou cestu k vděčnosti ještě dnes",
+              "desc": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.",
+              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs"
+            }
+          },
+          "pricing": {
+            "title": "Možnosti spolupráce",
+            "subtitle": "Férové ceny a individuální přístup pro každý projekt. Vyberte si úroveň měsíční péče nebo jednorázové řešení.",
+            "monthlyTitle": "Měsíční správa a podpora",
+            "monthlyPackages": [
+              {
+                "id": "basic",
+                "title": "BASIC Podpora",
+                "price": "1 000 Kč",
+                "period": "/ měsíc",
+                "badge": "",
+                "badgeColor": "",
+                "borderColor": "",
+                "tagline": "Změny 1x měsíčně",
+                "features": [
+                  "Kontrola funkčnosti webu",
+                  "Vložení dodaných textů a fotek",
+                  "Základní technický dohled"
+                ],
+                "buttonText": "Zvolit balíček"
+              },
+              {
+                "id": "weekly",
+                "title": "WEEKLY Péče",
+                "price": "3 500 Kč",
+                "period": "/ měsíc",
+                "badge": "OBLÍBENÉ",
+                "badgeColor": "#0071e3",
+                "borderColor": "#0071e3",
+                "tagline": "Úpravy každý týden",
+                "features": [
+                  "Týdenní aktualizace obsahu",
+                  "Design 1x newsletteru měsíčně",
+                  "2x grafika pro sítě (Canva)",
+                  "Přednostní podpora"
+                ],
+                "buttonText": "Zvolit balíček"
+              },
+              {
+                "id": "premium",
+                "title": "PREMIUM Podpora",
+                "price": "7 000 Kč",
+                "period": "/ měsíc",
+                "badge": "",
+                "badgeColor": "",
+                "borderColor": "#FF9A8B",
+                "tagline": "Pro aktivní projekty",
+                "features": [
+                  "Pravidelné vkládání obsahu",
+                  "Rychlá pomoc na telefonu",
+                  "Tvorba 2x newsletteru měsíčně",
+                  "Slevy na nové featury"
+                ],
+                "buttonText": "Zvolit balíček"
+              },
+              {
+                "id": "ultimate",
+                "title": "ULTIMATE Správa",
+                "price": "10 000 Kč",
+                "period": "/ měsíc",
+                "badge": "",
+                "badgeColor": "",
+                "borderColor": "#ffffff",
+                "tagline": "Full-service bez starostí",
+                "features": [
+                  "Vymýšlení a tvorba obsahu",
+                  "Měsíční strategická konzultace",
+                  "Kompletní péče o digitální tvář",
+                  "Neomezené technické úpravy"
+                ],
+                "buttonText": "Zvolit balíček"
+              }
+            ],
+            "monthlyNote": "* U balíčků správy se předpokládá dodání podkladů (texty, fotky) od klienta, pokud není sjednána i tvorba obsahu (např. v balíčku ULTIMATE).\n** Ceny nezahrnují náklady na webhosting, doménu nebo licence za software třetích stran.",
+            "oneTimeTitle": "Jednorázové projekty",
+            "oneTimePackages": [
+              {
+                "id": "landing",
+                "title": "Landing Page",
+                "price": "Již od 5 000 Kč",
+                "borderColor": "",
+                "features": [
+                  "Moderní jednostránkový web",
+                  "Plně responzivní design",
+                  "Základní SEO optimalizace"
+                ],
+                "buttonText": "Mám zájem"
+              },
+              {
+                "id": "app",
+                "title": "Mobilní & Web aplikace",
+                "price": "Již od 25 000 Kč",
+                "borderColor": "#0071e3",
+                "features": [
+                  "Nativní iOS aplikace na míru",
+                  "Komplexní webové systémy",
+                  "Publikace v App Store"
+                ],
+                "buttonText": "Mám zájem"
+              },
+              {
+                "id": "seo",
+                "title": "Obsah & SEO",
+                "price": "Již od 3 000 Kč",
+                "borderColor": "#FF9A8B",
+                "features": [
+                  "Technické SEO webu",
+                  "Tvorba moderních newsletterů",
+                  "Obsahová strategie a textace"
+                ],
+                "buttonText": "Mám zájem"
+              }
+            ],
+            "customOffer": {
+              "title": "Nenašli jste, co jste hledali?",
+              "text": "Každá spolupráce je unikátní. Napište mi své představy a já vám připravím nabídku na míru vašim potřebám.",
+              "buttonText": "Nezávazně poptat"
+            }
+          },
+          "support": {
+            "title": "Podpora a Kontakt",
+            "subtitle": "Máte dotaz k aplikaci nebo potřebujete pomoci s technickým problémem? Jsme tu pro vás.",
+            "faq": [
+              {
+                "question": "Jak obnovím své předplatné?",
+                "answer": "Stačí v aplikaci kliknout na 'Obnovit nákupy' v sekci nastavení."
+              },
+              {
+                "question": "Kam se ukládají moje data?",
+                "answer": "Záznamy z aplikace jsou v telefonu (lokálně). Vývojář k nim nemá přístup. Do iCloudu se dostanou jen tehdy, pokud máte zapnutou zálohu iPhonu do iCloudu — podle nastavení u Apple."
+              }
+            ],
+            "contact": {
+              "name": "Veronika Mikovcová",
+              "ico": "29851106",
+              "location": "Praha, Česká republika",
+              "email": "gratusapp@icloud.com",
+              "responseTime": "Zpravidla odpovídáme do 24 hodin.",
+              "note": "Dotazy, technická podpora a konzultace:"
+            }
+          },
+          "apps": [
+            {
+              "id": "denik-vdecnosti",
+              "title": "Deník vděčnosti",
+              "tagline": "Vaše každodenní dávka pozitivity. Moderní iOS aplikace inspirovaná klidem a minimalismem. Sledujte svůj pokrok a budujte nové návyky.",
+              "heroSubtitle": "Osobní deník a nástroje pro každodenní záznamy a reflexi — inspirované mindfulness, v jedné aplikaci. Nenahrazuje odbornou péči.",
+              "medicalNotice": "Důležité: Aplikace není zdravotnický prostředek ani terapie. V akutní psychické tísni volejte 155 nebo 158, při ohrožení života 112.",
+              "badge": "ACTIVE",
+              "badgeColor": "#FF9A8B",
+              "accentColor": "#FF9A8B",
+              "image": "assets/app-home-clean.png",
+              "imageRotate": "5deg",
+              "iconEmoji": "✨",
+              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+              "detailUrl": "apps/denik-vdecnosti.html",
+              "features": [
+                {
+                  "icon": "🌿",
+                  "title": "Zahrada Vděčnosti",
+                  "description": "Unikátní vizuální systém, kde vaše vděčnost doslova roste. Čím pravidelněji si zapisujete, tím košatější a krásnější je vaše digitální zahrada.",
+                  "badge": "SOUČÁST VERZE 1.0",
+                  "status": "included"
+                },
+                {
+                  "icon": "🧘‍♀️",
+                  "title": "Oáza klidu",
+                  "description": "Váš osobní prostor pro relaxaci. Obsahuje ambientní zvuky a vedená dechová cvičení.",
+                  "badge": "JIŽ BRZY V AKTUALIZACI",
+                  "status": "upcoming"
+                },
+                {
+                  "icon": "🌑",
+                  "title": "Můj prostor & Stíny",
+                  "description": "Bezpečné místo nejen pro radost, ale i pro těžké chvíle. Sekce pro vypsání se z negativních emocí.",
+                  "badge": "SOUČÁST VERZE 1.0",
+                  "status": "included"
+                },
+                {
+                  "icon": "📈",
+                  "title": "Moje cesta PLUS",
+                  "description": "Interaktivní grafy, kalendář nálady a měsíční PDF reporty pro hlubší pochopení sebe sama.",
+                  "badge": "PŘIPRAVUJEME PRO PREMIUM",
+                  "status": "upcoming"
+                },
+                {
+                  "icon": "🏆",
+                  "title": "Mikro-vítězství",
+                  "description": "Oslavujte malé denní úspěchy. Pomáháme vám všímat si drobností, které dělají život lepším.",
+                  "badge": "PŘIPRAVUJEME",
+                  "status": "upcoming"
+                },
+                {
+                  "icon": "☀️",
+                  "title": "Atmosféra podle počasí",
+                  "description": "Aplikace žije s vámi. Prostředí a barvy se dynamicky mění podle aktuálního počasí ve vašem okolí, což umocňuje zážitek z každého zápisu.",
+                  "badge": "SOUČÁST VERZE 1.0",
+                  "status": "included"
+                },
+                {
+                  "icon": "📅",
+                  "title": "Kalendář nálady",
+                  "description": "Ucelený přehled vašich dnů v přehledném kalendáři. Sledujte, jak se vaše nálada mění v průběhu měsíců.",
+                  "badge": "PŘIPRAVUJEME PRO PREMIUM",
+                  "status": "upcoming"
+                },
+                {
+                  "icon": "🎙️",
+                  "title": "Hlasové zadávání",
+                  "description": "Nestíháte psát? Brzy budete moci své vděčnosti prostě nadiktovat. AI se postará o zbytek.",
+                  "badge": "PŘIPRAVUJEME",
+                  "status": "upcoming"
+                },
+                {
+                  "icon": "📸",
+                  "title": "Foto vzpomínky",
+                  "description": "Uchovejte si vizuální vzpomínky. Možnost vyfotit momentku nebo nahrát fotku přímo k vašemu zápisu.",
+                  "badge": "PŘIPRAVUJEME PRO PREMIUM",
+                  "status": "upcoming"
+                },
+                {
+                  "icon": "👁️",
+                  "title": "Přístupnost (VoiceOver)",
+                  "description": "Plná podpora pro nevidomé a slabozraké. Aplikace je plně navržena a optimalizována pro čtečku obrazovky VoiceOver, včetně dynamických výzev.",
+                  "badge": "SOUČÁST VERZE 1.0",
+                  "status": "included"
+                },
+                {
+                  "icon": "🔒",
+                  "title": "Soukromí na prvním místě",
+                  "description": "Vaše záznamy jsou v zařízení chráněné Face ID / Touch ID. Ukládají se lokálně v telefonu; do iCloudu se dostanou jen v rámci zálohy iPhonu, pokud ji máte u Apple zapnutou.",
+                  "badge": "SOUČÁST VERZE 1.0",
+                  "status": "included"
+                }
+              ],
+              "screenshots": [
+                {
+                  "url": "assets/app-home-clean.png",
+                  "alt": "Domů"
+                },
+                {
+                  "url": "assets/app-inspiration-clean.png",
+                  "alt": "Inspirace"
+                }
+              ],
+              "plusCard": {
+                "title": "Deník v PLUS verzi",
+                "text": "Postupně budeme uvolňovat prémiové funkce jako pokročilé statistiky, PDF exporty a relaxační zvukové terapie. Možnost předplatného bude přidána v rámci dalších aktualizací.",
+                "note": "Aktuálně se soustředíme na to, aby vaše základní zkušenost s Deníkem vděčnosti byla co nejdokonalejší."
+              },
+              "cta": {
+                "title": "Začněte svou cestu k vděčnosti ještě dnes",
+                "text": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti."
+              }
+            },
+            {
+              "id": "podlahy-holcak",
+              "title": "Podlahy Holčák",
+              "tagline": "Moderní a elegantní webová prezentace řemeslných služeb. Důraz na čistý design, funkční SEO a skvělý uživatelský zážitek.",
+              "badge": "ACTIVE",
+              "badgeColor": "#8c7a6b",
+              "accentColor": "#8c7a6b",
+              "image": "assets/podlahy-holcak-hero.png",
+              "iconEmoji": "🏡",
+              "appStoreUrl": "",
+              "webUrl": "https://www.podlahyholcak.cz",
+              "detailUrl": "apps/podlahy-holcak.html",
+              "features": [
+                { "icon": "🏡", "title": "Webová prezentace na míru", "description": "Čistý a funkční design zaměřený na konverzi a přehlednost pro zákazníky." },
+                { "icon": "⚡️", "title": "Rychlost a SEO", "description": "Bleskové načítání a optimalizace pro vyhledávače Google i Seznam." },
+                { "icon": "📱", "title": "Responzivní design", "description": "Dokonalé zobrazení na všech velikostech mobilních telefonů, tabletů i monitorů." }
+              ],
+              "screenshots": [
+                "assets/podlahy-holcak-hero.png",
+                "assets/podlahy-holcak-craft.png",
+                "assets/podlahy-holcak-mobile.png"
+              ]
+            },
+            {
+              "id": "dane-pro",
+              "title": "DaněPro",
+              "tagline": "Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí na iCloudu.",
+              "badge": "ACTIVE",
+              "badgeColor": "#10B981",
+              "accentColor": "#10B981",
+              "image": "assets/dane-pro-dashboard.png",
+              "imageRotate": "-5deg",
+              "iconEmoji": "📊",
+              "appStoreUrl": "",
+              "webUrl": "",
+              "detailUrl": "apps/dane-pro.html",
+              "features": [
+                { "icon": "⚖️", "title": "Live Daňový Souboj", "description": "Real-time porovnání reálných výdajů proti výdajovému paušálu (60 % / 40 % / 80 %)." },
+                { "icon": "💳", "title": "Revolut Pro & Multi-Currency", "description": "Bleskový import CSV výpisů a automatické přepočty měn dle oficiálních kurzů ČNB." },
+                { "icon": "🧾", "title": "Faktury & ARES Registr", "description": "Vystavení PDF faktury s QR platbou a načítání firemních údajů z registru ARES." },
+                { "icon": "🔒", "title": "100% Soukromí na iCloudu", "description": "Žádné externí servery, žádné sledování. Vaše účetní data jsou pouze vaše." }
+              ],
+              "screenshots": [
+                "assets/dane-pro-dashboard.png",
+                "assets/dane-pro-invoices.png",
+                "assets/dane-pro-import.png",
+                "assets/dane-pro-paywall.png"
+              ]
+            }
+          ],
+          "legal": {
+            "lastUpdated": "15. dubna 2026",
+            "admin": {
+              "name": "Veronika Mikovcová (fyzická osoba)",
+              "address": "Praha, Česká republika",
+              "ico": "29851106",
+              "email": "gratusapp@icloud.com",
+              "note": "Pro žádosti o přístup k údajům, opravu nebo výmaz pište na uvedený e-mail."
+            },
+            "appPrivacySections": [
+              {
+                "id": "dane-pro",
+                "appName": "DaněPro",
+                "title": "Aplikace DaněPro – 100% Soukromí a Finanční Data",
+                "badgeColor": "#10B981",
+                "points": [
+                  "Lokální uložení a Apple iCloud: Veškeré vámi zadané finanční doklady, faktury, výdaje, bankovní účty (Revolut Pro), IČO/DIČ a fotografie účtenek jsou ukládány výhradně na vašem zařízení a synchronizovány v rámci vašeho osobního soukromého iCloudu (Apple CloudKit).",
+                  "Žádné servery vývojáře: Poskytovatel aplikace neprovozuje žádný externí server, na který by se vaše účetní či osobní údaje odesílaly. K vašim fakturám ani finančním částkám nemá přístup vývojář ani jakákoliv třetí strana.",
+                  "Žádné sledování ani reklamy: Aplikace neobsahuje žádné reklamní trackery, analytické nástroje sledující vaše chování ani nástroje pro zpeněžování dat uživatelů.",
+                  "Veřejná API rozhraní: ČNB pro kurzy měn a ARES pro ověření IČO dle veřejných registrů ČR."
+                ]
+              },
+              {
+                "id": "denik-vdecnosti",
+                "appName": "Deník vděčnosti",
+                "title": "Aplikace Deník vděčnosti – Lokální data a počasí",
+                "badgeColor": "#FF9A8B",
+                "points": [
+                  "Lokální uložení: Záznamy vytvořené v aplikaci se ukládají lokálně v zařízení (iPhone/iPad). Vývojář k obsahu nemá přístup a neprovozuje žádný server.",
+                  "iCloud záloha: Data mohou být součástí standardní šifrované zálohy iCloudu spravované společností Apple dle vašeho účtu.",
+                  "Poloha a počasí (WeatherKit): Aplikace může požádat o přibližnou polohu pro zobrazení počasí přes Apple WeatherKit. Poloha se nikde neukládá ani nepředává."
+                ]
+              }
+            ],
+            "generalSections": [
+              {
+                "title": "1. Správce údajů",
+                "content": "Správcem osobních údajů je subjekt uvedený výše (může jít o fyzickou osobu i o podnikatele). Vaše údaje zpracováváme pouze pro nezbytné účely spojené s realizací zakázek a komunikací."
+              },
+              {
+                "title": "2. Rozsah zpracovávaných údajů",
+                "content": "Zpracováváme kontaktní údaje (jméno, e-mail, telefon) a fakturační údaje nezbytné pro plnění smlouvy a zákonné povinnosti."
+              },
+              {
+                "title": "3. Účel zpracování",
+                "content": "Vaše údaje využíváme k vyřízení poptávek, technické podpoře a správě vašich digitálních produktů. Vaše data nikdy neprodáváme třetím stranám."
+              },
+              {
+                "title": "4. Vaše práva",
+                "content": "Máte právo na přístup, opravu nebo výmaz svých údajů. V případě dotazů nás kontaktujte na kontaktním e-mailu."
+              }
+            ],
+            "appTermsSections": [
+              {
+                "id": "denik-vdecnosti",
+                "appName": "Deník vděčnosti",
+                "title": "Aplikace Deník vděčnosti – Podmínky předplatného a EULA (Apple & Google)",
+                "badgeColor": "#FF9A8B",
+                "applePoints": [
+                  "Automaticky obnovitelné předplatné (Apple App Store): Předplatné prémiových funkcí aplikace Deník vděčnosti se automaticky obnovuje za cenu zvoleného tarifu (měsíční nebo roční), pokud není zrušeno alespoň 24 hodin před koncem aktuálního zúčtovacího období.",
+                  "Účtování a platba: Platba je stržena z vašeho Apple ID účtu při potvrzení nákupu, případně po skončení bezplatné zkušební doby (je-li nabízena).",
+                  "Zrušení a správa předplatného: Uživatel může své předplatné kdykoliv spravovat a zrušit v nastavení zařízení iOS (Nastavení → Apple ID → Předplatná → Deník vděčnosti → Zrušit předplatné).",
+                  "Bezplatné zkušební období: Nevyužitá část bezplatné zkušební doby propadá v okamžiku zakoupení předplatného.",
+                  "Standardní licenční smlouva Apple (EULA): Užívání aplikace na zařízeních Apple podléhá standardním licenčním podmínkám Apple pro koncové uživatele (https://www.apple.com/legal/internet-services/itunes/dev/stdeula/)."
+                ],
+                "googlePoints": [
+                  "Předplatné přes Google Play Billing: Transakce a předplatné pro Android probíhají přes oficiální systém Google Play a jsou účtovány na platební metodu spojenou s vaším Google účtem.",
+                  "Automatická obnova na Google Play: Předplatné se automaticky obnovuje ke konci každého fakturačního období za stejnou cenu, pokud ho nezrušíte nejpozději 24 hodin před koncem období.",
+                  "Správa a zrušení na Androidu: Předplatné můžete kdykoliv zrušit v aplikaci Google Play (otevřete aplikaci Google Play Store → profilová ikona vpravo nahoře → Platby a předplatná → Předplatná → Deník vděčnosti → Zrušit předplatné).",
+                  "Zásady vrácení peněz (Refunds): Žádosti o vrácení peněz a refundace se řídí oficiálními pravidly a zásadami Google Play."
+                ],
+                "generalPoints": [
+                  "Povaha aplikace: Aplikace Deník vděčnosti slouží pro osobní reflexi a budování pozitivních návyků. Není zdravotnickým prostředkem ani psychoterapeutickou službou a nenahrazuje odbornou lékařskou péči.",
+                  "Soukromí a data: Všechny záznamy v deníku zůstávají uloženy výhradně lokálně v zařízení uživatele. Poskytovatel nemá k osobním zápisům přístup a neprovozuje žádný server pro sběr osobních dat."
+                ]
+              },
+              {
+                "id": "dane-pro",
+                "appName": "DaněPro",
+                "title": "Aplikace DaněPro – Podmínky předplatného a licence (Apple App Store)",
+                "badgeColor": "#10B981",
+                "applePoints": [
+                  "Tarify: Měsíční předplatné, Roční předplatné se 14denní zkušební dobou zdarma a volitelná Doživotní licence.",
+                  "Automatické obnovení: Předplatné se automaticky obnovuje, pokud není zrušeno alespoň 24 hodin před koncem období v Nastavení → Apple ID → Předplatná.",
+                  "Licenční smlouva Apple (EULA): Řídí se standardními licenčními podmínkami Apple pro koncové uživatele (Apple Standard EULA).",
+                  "Daňová doložka: Aplikace slouží pro modelové srovnání a evidenci pro OSVČ a nenahrazuje služby certifikovaného daňového poradce."
+                ],
+                "googlePoints": [],
+                "generalPoints": [
+                  "Veškerá data jsou bezpečně uložena v zařízení a synchronizována pouze v osobním iCloudu uživatele bez externích serverů."
+                ]
+              }
+            ]
+          }
+        };
+
+        let appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+        let fileSha = null;
+        let isDirty = false;
+        let authToken = localStorage.getItem('gratusapp_admin_token') || '';
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            if (authToken) {
+                initAdmin();
+            } else {
+                showAuthScreen();
+            }
+        });
+
+        function showAuthScreen() {
+            document.getElementById('authScreen').style.display = 'block';
+            document.getElementById('mainApp').style.display = 'none';
+        }
+
+        function openTokenModal() {
+            const input = document.getElementById('modalTokenInput');
+            input.value = authToken || '';
+            openModal('tokenModal');
+        }
+
+        function saveTokenFromModal() {
+            const token = document.getElementById('modalTokenInput').value.trim();
+            if (!token) {
+                alert('Prosím zadejte GitHub Token.');
+                return;
+            }
+            authToken = token;
+            localStorage.setItem('gratusapp_admin_token', token);
+            closeModal('tokenModal');
+            showToast('✅ Token byl uložen', 'success');
+            initAdmin();
+        }
+
+        function saveTokenFromSettings() {
+            const token = document.getElementById('settingsTokenInput').value.trim();
+            if (!token) {
+                alert('Prosím zadejte GitHub Token.');
+                return;
+            }
+            authToken = token;
+            localStorage.setItem('gratusapp_admin_token', token);
+            showToast('✅ Token byl úspěšně aktualizován', 'success');
+            initAdmin();
+        }
+
+        function saveTokenAndLogin() {
+            const token = document.getElementById('githubTokenInput').value.trim();
+            if (!token) {
+                alert('Prosím zadejte GitHub Personal Access Token.');
+                return;
+            }
+            authToken = token;
+            localStorage.setItem('gratusapp_admin_token', token);
+            initAdmin();
+        }
+
+        function logout() {
+            if (confirm('Opravdu se chcete odhlásit? Token bude vymazán z vašeho prohlížeče.')) {
+                localStorage.removeItem('gratusapp_admin_token');
+                authToken = '';
+                location.reload();
+            }
+        }
+
+        async function initAdmin() {
+            if (!authToken) {
+                showAuthScreen();
+                return;
+            }
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            
+            const settingsInput = document.getElementById('settingsTokenInput');
+            if (settingsInput) settingsInput.value = authToken;
+            const banner = document.getElementById('tokenWarningBanner');
+            if (banner) banner.style.display = 'none';
+
+            await loadDataFromGitHub();
+            renderAll();
+        }
+
+        // LOAD DATA VIA GITHUB API
+        async function loadDataFromGitHub() {
+            if (!authToken) {
+                try {
+                    const localDraft = localStorage.getItem('gratus_admin_content');
+                    if (localDraft) appData = JSON.parse(localDraft);
+                    else appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                } catch(e) {
+                    appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                }
+                ensureAllRichContent();
+                markClean();
+                return;
+            }
+
+            showToast('🔄 Ověřuji připojení k GitHubu...', 'info');
+            try {
+                const response = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${CONTENT_PATH}?ref=${BRANCH}&v=${Date.now()}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (response.status === 401 || response.status === 403) {
+                    showToast('❌ Neplatný token. Zkontrolujte zadání.', 'error', 5000);
+                    const banner = document.getElementById('tokenWarningBanner');
+                    if (banner) {
+                        banner.style.display = 'flex';
+                        banner.querySelector('strong').innerText = '❌ Zadaný GitHub token není platný';
+                    }
+                    return;
+                }
+
+                if (response.ok) {
+                    const data = await response.json();
+                    fileSha = data.sha;
+                    const cleanBase64 = data.content.replace(/\s/g, '');
+                    const decodedContent = decodeURIComponent(escape(atob(cleanBase64)));
+                    appData = JSON.parse(decodedContent);
+                    showToast('✅ Data byla úspěšně načtena z GitHubu', 'success');
+                } else if (response.status === 404) {
+                    // File doesn't exist on remote yet, use local draft or embedded default content
+                    fileSha = null;
+                    try {
+                        const localDraft = localStorage.getItem('gratus_admin_content');
+                        if (localDraft) appData = JSON.parse(localDraft);
+                        else appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                    } catch(e) {
+                        appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                    }
+                    showToast('ℹ️ Databáze bude uložena při první publikaci', 'info');
+                }
+            } catch (err) {
+                console.warn('GitHub API fetch failed, using local/embedded content:', err);
+                try {
+                    const localDraft = localStorage.getItem('gratus_admin_content');
+                    if (localDraft) appData = JSON.parse(localDraft);
+                    else appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                } catch(e) {
+                    appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                }
+            }
+
+            ensureAllRichContent();
+            markClean();
+        }
+
+        function ensureAllRichContent() {
+            if (!appData) appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+
+            if (!appData.settings) appData.settings = JSON.parse(JSON.stringify(DEFAULT_CONTENT.settings));
+            if (!appData.settings.footerCopyright) appData.settings.footerCopyright = DEFAULT_CONTENT.settings.footerCopyright;
+            if (!appData.settings.linkedinUrl) appData.settings.linkedinUrl = DEFAULT_CONTENT.settings.linkedinUrl;
+
+            if (!appData.home) appData.home = JSON.parse(JSON.stringify(DEFAULT_CONTENT.home));
+            if (!appData.pricing) appData.pricing = JSON.parse(JSON.stringify(DEFAULT_CONTENT.pricing));
+            if (!appData.support) appData.support = JSON.parse(JSON.stringify(DEFAULT_CONTENT.support));
+
+            if (!appData.apps) appData.apps = JSON.parse(JSON.stringify(DEFAULT_CONTENT.apps));
+            const denik = appData.apps.find(a => a.id === 'denik-vdecnosti');
+            const defDenik = DEFAULT_CONTENT.apps.find(a => a.id === 'denik-vdecnosti');
+            if (denik && defDenik) {
+                if (!denik.features || denik.features.length < 5) denik.features = defDenik.features;
+                if (!denik.heroSubtitle) denik.heroSubtitle = defDenik.heroSubtitle;
+                if (!denik.medicalNotice) denik.medicalNotice = defDenik.medicalNotice;
+                if (!denik.screenshots || denik.screenshots.length === 0) denik.screenshots = defDenik.screenshots;
+                if (!denik.plusCard) denik.plusCard = defDenik.plusCard;
+                if (!denik.cta) denik.cta = defDenik.cta;
+            }
+        }
+
+        // AUTO-SAVE FIELD HELPER (Syncs into memory, localStorage, and marks dirty)
+        function autoSaveField(path, value) {
+            const parts = path.split('.');
+            let current = appData;
+            for (let i = 0; i < parts.length - 1; i++) {
+                if (!current[parts[i]]) current[parts[i]] = {};
+                current = current[parts[i]];
+            }
+            current[parts[parts.length - 1]] = value;
+            markDirty();
+            try {
+                localStorage.setItem('gratus_admin_content', JSON.stringify(appData));
+            } catch(e) {}
+        }
+
+        // PUBLISH TO GITHUB
+        async function publishToGitHub() {
+            const btn = document.getElementById('btnPublish');
+            btn.disabled = true;
+            btn.innerHTML = '<span>⏳ Publikuji na GitHub...</span>';
+
+            // Gather inputs from all tabs
+            syncInputsToData();
+
+            try {
+                // First get latest SHA in case it changed
+                const shaRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${CONTENT_PATH}?ref=${BRANCH}&v=${Date.now()}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                if (shaRes.ok) {
+                    const shaData = await shaRes.json();
+                    fileSha = shaData.sha;
+                }
+
+                const jsonString = JSON.stringify(appData, null, 2);
+                const encodedContent = btoa(unescape(encodeURIComponent(jsonString)));
+
+                const now = new Date();
+                const timestamp = `${now.getDate()}.${now.getMonth()+1}.${now.getFullYear()} ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+                const commitBody = {
+                    message: `Aktualizace obsahu z administrace [${timestamp}]`,
+                    content: encodedContent,
+                    branch: BRANCH
+                };
+                if (fileSha) {
+                    commitBody.sha = fileSha;
+                }
+
+                const putRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${CONTENT_PATH}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify(commitBody)
+                });
+
+                if (putRes.ok) {
+                    const putData = await putRes.json();
+                    fileSha = putData.content.sha;
+                    try {
+                        localStorage.setItem('gratus_admin_content', JSON.stringify(appData));
+                    } catch(e) {}
+                    markClean();
+                    showToast('🎉 Změny byly úspěšně publikovány na GitHub! Web se aktualizuje do 1-2 minut.', 'success', 6000);
+                } else {
+                    const errData = await putRes.json();
+                    throw new Error(errData.message || 'Chyba při ukládání');
+                }
+
+            } catch (err) {
+                console.error(err);
+                alert(`Nepodařilo se publikovat na GitHub: ${err.message}`);
+                showToast('Chyba při publikaci na GitHub', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<span>🚀 Publikovat na GitHub</span>';
+            }
+        }
+
+        // SYNC INPUTS TO DATA OBJECT
+        function syncInputsToData() {
+            ensureAllRichContent();
+
+            // Home
+            if (document.getElementById('homeHeroTitleInput')) {
+                appData.home.hero.title = document.getElementById('homeHeroTitleInput').value;
+                appData.home.hero.btn1Text = document.getElementById('homeHeroBtn1TextInput').value;
+                appData.home.hero.btn1Link = document.getElementById('homeHeroBtn1LinkInput').value;
+                appData.home.hero.btn2Text = document.getElementById('homeHeroBtn2TextInput').value;
+                appData.home.hero.btn2Link = document.getElementById('homeHeroBtn2LinkInput').value;
+                appData.home.hero.appStoreUrl = document.getElementById('homeHeroAppStoreInput').value;
+                appData.home.hero.showcaseLeft = document.getElementById('homeShowcaseLeftInput').value;
+                appData.home.hero.showcaseCenter = document.getElementById('homeShowcaseCenterInput').value;
+                appData.home.hero.showcaseRight = document.getElementById('homeShowcaseRightInput').value;
+
+                appData.home.approach.title = document.getElementById('homeApproachTitleInput').value;
+                appData.home.approach.p1 = document.getElementById('homeApproachP1Input').value;
+                appData.home.approach.p2 = document.getElementById('homeApproachP2Input').value;
+
+                appData.home.vision.title = document.getElementById('homeVisionTitleInput').value;
+                appData.home.vision.mainQuote = document.getElementById('homeVisionQuoteInput').value;
+                appData.home.vision.sideBoxEmoji = document.getElementById('homeVisionSideEmojiInput').value;
+                appData.home.vision.sideBoxTitle = document.getElementById('homeVisionSideTitleInput').value;
+                appData.home.vision.sideBoxDesc = document.getElementById('homeVisionSideDescInput').value;
+
+                appData.home.cta.title = document.getElementById('homeCtaTitleInput').value;
+                appData.home.cta.desc = document.getElementById('homeCtaDescInput').value;
+                appData.home.cta.appStoreUrl = document.getElementById('homeCtaAppStoreInput').value;
+            }
+
+            // Pricing
+            if (document.getElementById('pricingPageTitleInput')) {
+                appData.pricing.title = document.getElementById('pricingPageTitleInput').value;
+                appData.pricing.subtitle = document.getElementById('pricingPageSubtitleInput').value;
+                appData.pricing.monthlyTitle = document.getElementById('pricingMonthlyTitleInput').value;
+                appData.pricing.monthlyNote = document.getElementById('pricingMonthlyNoteInput').value;
+                appData.pricing.oneTimeTitle = document.getElementById('pricingOneTimeTitleInput').value;
+                if (!appData.pricing.customOffer) appData.pricing.customOffer = {};
+                appData.pricing.customOffer.title = document.getElementById('pricingCustomTitleInput').value;
+                appData.pricing.customOffer.text = document.getElementById('pricingCustomTextInput').value;
+                appData.pricing.customOffer.buttonText = document.getElementById('pricingCustomBtnInput').value;
+            }
+
+            // Support
+            if (document.getElementById('supportTitleInput')) {
+                appData.support.title = document.getElementById('supportTitleInput').value;
+                appData.support.subtitle = document.getElementById('supportSubtitleInput').value;
+                if (!appData.support.contact) appData.support.contact = {};
+                appData.support.contact.name = document.getElementById('supportContactNameInput').value;
+                appData.support.contact.ico = document.getElementById('supportContactIcoInput').value;
+                appData.support.contact.location = document.getElementById('supportContactLocationInput').value;
+                appData.support.contact.email = document.getElementById('supportContactEmailInput').value;
+                appData.support.contact.note = document.getElementById('supportContactNoteInput').value;
+                appData.support.contact.responseTime = document.getElementById('supportContactResponseTimeInput').value;
+            }
+
+            // Legal
+            if (!appData.legal) appData.legal = {};
+            if (!appData.legal.admin) appData.legal.admin = {};
+            if (document.getElementById('legalAdminName')) {
+                appData.legal.admin.name = document.getElementById('legalAdminName').value;
+                appData.legal.admin.ico = document.getElementById('legalAdminIco').value;
+                appData.legal.admin.address = document.getElementById('legalAdminAddress').value;
+                appData.legal.admin.email = document.getElementById('legalAdminEmail').value;
+                appData.legal.lastUpdated = document.getElementById('legalLastUpdated').value;
+            }
+
+            // Settings
+            if (document.getElementById('settingsSiteTitleInput')) {
+                appData.settings.siteTitle = document.getElementById('settingsSiteTitleInput').value;
+                appData.settings.developerName = document.getElementById('settingsDevNameInput').value;
+                appData.settings.contactEmail = document.getElementById('settingsEmailInput').value;
+                appData.settings.ico = document.getElementById('settingsIcoInput').value;
+                appData.settings.location = document.getElementById('settingsLocationInput').value;
+                appData.settings.linkedinUrl = document.getElementById('settingsLinkedinInput').value;
+                appData.settings.footerCopyright = document.getElementById('settingsCopyrightInput').value;
+            }
+
+            try {
+                localStorage.setItem('gratus_admin_content', JSON.stringify(appData));
+            } catch(e) {}
+        }
+
+        // RENDER ALL TABS
+        function renderAll() {
+            ensureAllRichContent();
+            renderHomeTab();
+            renderAppsGrid();
+            renderPricingTab();
+            renderSupportTab();
+            renderLegalTab();
+            renderMediaGallery();
+            renderSettingsTab();
+        }
+
+        // TAB: HOME RENDERER
+        function renderHomeTab() {
+            if (!appData.home) appData.home = JSON.parse(JSON.stringify(DEFAULT_CONTENT.home));
+            const h = appData.home;
+
+            // Hero
+            if (h.hero) {
+                const ht = document.getElementById('homeHeroTitleInput');
+                if (ht) ht.value = h.hero.title || '';
+                const b1t = document.getElementById('homeHeroBtn1TextInput');
+                if (b1t) b1t.value = h.hero.btn1Text || '';
+                const b1l = document.getElementById('homeHeroBtn1LinkInput');
+                if (b1l) b1l.value = h.hero.btn1Link || '';
+                const b2t = document.getElementById('homeHeroBtn2TextInput');
+                if (b2t) b2t.value = h.hero.btn2Text || '';
+                const b2l = document.getElementById('homeHeroBtn2LinkInput');
+                if (b2l) b2l.value = h.hero.btn2Link || '';
+                const asb = document.getElementById('homeHeroAppStoreInput');
+                if (asb) asb.value = h.hero.appStoreUrl || '';
+                const sl = document.getElementById('homeShowcaseLeftInput');
+                if (sl) sl.value = h.hero.showcaseLeft || '';
+                const sc = document.getElementById('homeShowcaseCenterInput');
+                if (sc) sc.value = h.hero.showcaseCenter || '';
+                const sr = document.getElementById('homeShowcaseRightInput');
+                if (sr) sr.value = h.hero.showcaseRight || '';
+            }
+
+            // Approach
+            if (h.approach) {
+                const at = document.getElementById('homeApproachTitleInput');
+                if (at) at.value = h.approach.title || '';
+                const ap1 = document.getElementById('homeApproachP1Input');
+                if (ap1) ap1.value = h.approach.p1 || '';
+                const ap2 = document.getElementById('homeApproachP2Input');
+                if (ap2) ap2.value = h.approach.p2 || '';
+
+                const pc = document.getElementById('homePillarsContainer');
+                if (pc && h.approach.pillars) {
+                    pc.innerHTML = h.approach.pillars.map((p, idx) => `
+                        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--admin-border); padding: 12px; border-radius: 8px;">
+                            <div class="form-row" style="margin-bottom: 8px;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-size: 11px;">Název pilíře:</label>
+                                    <input type="text" class="form-control" value="${escapeAttr(p.title)}" onchange="updateHomePillar(${idx}, 'title', this.value)">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label style="font-size: 11px;">Barva textu:</label>
+                                    <input type="text" class="form-control" value="${escapeAttr(p.color || '#fff')}" onchange="updateHomePillar(${idx}, 'color', this.value)">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label style="font-size: 11px;">Popis:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(p.desc)}" onchange="updateHomePillar(${idx}, 'desc', this.value)">
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Vision
+            if (h.vision) {
+                const vt = document.getElementById('homeVisionTitleInput');
+                if (vt) vt.value = h.vision.title || '';
+                const vq = document.getElementById('homeVisionQuoteInput');
+                if (vq) vq.value = h.vision.mainQuote || '';
+                const vp = document.getElementById('homeVisionPointsInput');
+                if (vp && h.vision.points) vp.value = h.vision.points.join('\n');
+                const ve = document.getElementById('homeVisionSideEmojiInput');
+                if (ve) ve.value = h.vision.sideBoxEmoji || '';
+                const vbt = document.getElementById('homeVisionSideTitleInput');
+                if (vbt) vbt.value = h.vision.sideBoxTitle || '';
+                const vbd = document.getElementById('homeVisionSideDescInput');
+                if (vbd) vbd.value = h.vision.sideBoxDesc || '';
+            }
+
+            // Expertise
+            const expList = document.getElementById('homeExpertiseList');
+            if (expList && h.expertise) {
+                expList.innerHTML = h.expertise.map((item, idx) => `
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--admin-border); padding: 14px; border-radius: 8px;">
+                        <div class="form-row" style="margin-bottom: 8px;">
+                            <div class="form-group" style="max-width: 80px; margin-bottom: 0;">
+                                <label style="font-size: 11px;">Emoji:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(item.icon)}" onchange="updateHomeExpertise(${idx}, 'icon', this.value)">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label style="font-size: 11px;">Název:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(item.title)}" onchange="updateHomeExpertise(${idx}, 'title', this.value)">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="font-size: 11px;">Popis:</label>
+                            <textarea class="form-control" style="min-height: 50px;" onchange="updateHomeExpertise(${idx}, 'desc', this.value)">${item.desc || ''}</textarea>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Technologies
+            const techList = document.getElementById('homeTechList');
+            if (techList && h.technologies) {
+                techList.innerHTML = h.technologies.map((item, idx) => `
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--admin-border); padding: 14px; border-radius: 8px;">
+                        <div class="form-row" style="margin-bottom: 8px;">
+                            <div class="form-group" style="max-width: 80px; margin-bottom: 0;">
+                                <label style="font-size: 11px;">Emoji:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(item.icon)}" onchange="updateHomeTech(${idx}, 'icon', this.value)">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label style="font-size: 11px;">Název:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(item.title)}" onchange="updateHomeTech(${idx}, 'title', this.value)">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label style="font-size: 11px;">Popis:</label>
+                            <textarea class="form-control" style="min-height: 50px;" onchange="updateHomeTech(${idx}, 'desc', this.value)">${item.desc || ''}</textarea>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // CTA
+            if (h.cta) {
+                const ct = document.getElementById('homeCtaTitleInput');
+                if (ct) ct.value = h.cta.title || '';
+                const cd = document.getElementById('homeCtaDescInput');
+                if (cd) cd.value = h.cta.desc || '';
+                const ca = document.getElementById('homeCtaAppStoreInput');
+                if (ca) ca.value = h.cta.appStoreUrl || '';
+            }
+        }
+
+        function updateHomePillar(idx, field, val) {
+            if (!appData.home || !appData.home.approach || !appData.home.approach.pillars) return;
+            appData.home.approach.pillars[idx][field] = val;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        function saveHomeVisionPointsFromTextarea() {
+            const val = document.getElementById('homeVisionPointsInput').value;
+            const points = val.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+            if (!appData.home) appData.home = {};
+            if (!appData.home.vision) appData.home.vision = {};
+            appData.home.vision.points = points;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        function updateHomeExpertise(idx, field, val) {
+            if (!appData.home || !appData.home.expertise) return;
+            appData.home.expertise[idx][field] = val;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        function updateHomeTech(idx, field, val) {
+            if (!appData.home || !appData.home.technologies) return;
+            appData.home.technologies[idx][field] = val;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        // TAB: PRICING RENDERER
+        function renderPricingTab() {
+            if (!appData.pricing) appData.pricing = JSON.parse(JSON.stringify(DEFAULT_CONTENT.pricing));
+            const p = appData.pricing;
+
+            const pt = document.getElementById('pricingPageTitleInput');
+            if (pt) pt.value = p.title || '';
+            const ps = document.getElementById('pricingPageSubtitleInput');
+            if (ps) ps.value = p.subtitle || '';
+
+            const mt = document.getElementById('pricingMonthlyTitleInput');
+            if (mt) mt.value = p.monthlyTitle || '';
+
+            const mList = document.getElementById('pricingMonthlyPackagesList');
+            if (mList && p.monthlyPackages) {
+                mList.innerHTML = p.monthlyPackages.map((pkg, idx) => `
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid ${pkg.borderColor || 'var(--admin-border)'}; padding: 18px; border-radius: 10px; margin-bottom: 14px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label style="font-weight: 600;">Název balíčku:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.title)}" onchange="updateMonthlyPkg(${idx}, 'title', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label>Cena:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.price)}" onchange="updateMonthlyPkg(${idx}, 'price', this.value)">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Období (např. "/ měsíc"):</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.period || '/ měsíc')}" onchange="updateMonthlyPkg(${idx}, 'period', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label>Zvýrazňující odznak (např. "OBLÍBENÉ"):</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.badge || '')}" onchange="updateMonthlyPkg(${idx}, 'badge', this.value)">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Barva ohraničení / odznaku (HEX):</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.borderColor || '')}" placeholder="#0071e3 nebo #FF9A8B" onchange="updateMonthlyPkgBorder(${idx}, this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label>Podtitulek (např. "Úpravy každý týden"):</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.tagline || '')}" onchange="updateMonthlyPkg(${idx}, 'tagline', this.value)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Odrážky výhod balíčku (každá výhoda na nový řádek):</label>
+                            <textarea class="form-control" style="min-height: 80px;" onchange="updateMonthlyPkgFeatures(${idx}, this.value)">${(pkg.features || []).join('\n')}</textarea>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Text tlačítka:</label>
+                            <input type="text" class="form-control" value="${escapeAttr(pkg.buttonText || 'Zvolit balíček')}" onchange="updateMonthlyPkg(${idx}, 'buttonText', this.value)">
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const mn = document.getElementById('pricingMonthlyNoteInput');
+            if (mn) mn.value = p.monthlyNote || '';
+
+            const ot = document.getElementById('pricingOneTimeTitleInput');
+            if (ot) ot.value = p.oneTimeTitle || '';
+
+            const oList = document.getElementById('pricingOneTimePackagesList');
+            if (oList && p.oneTimePackages) {
+                oList.innerHTML = p.oneTimePackages.map((pkg, idx) => `
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid ${pkg.borderColor || 'var(--admin-border)'}; padding: 18px; border-radius: 10px; margin-bottom: 14px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label style="font-weight: 600;">Název projektu:</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.title)}" onchange="updateOneTimePkg(${idx}, 'title', this.value)">
+                            </div>
+                            <div class="form-group">
+                                <label>Cena (např. "Již od 5 000 Kč"):</label>
+                                <input type="text" class="form-control" value="${escapeAttr(pkg.price)}" onchange="updateOneTimePkg(${idx}, 'price', this.value)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Odrážky projektu (každý bod na nový řádek):</label>
+                            <textarea class="form-control" style="min-height: 70px;" onchange="updateOneTimePkgFeatures(${idx}, this.value)">${(pkg.features || []).join('\n')}</textarea>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label>Text tlačítka:</label>
+                            <input type="text" class="form-control" value="${escapeAttr(pkg.buttonText || 'Mám zájem')}" onchange="updateOneTimePkg(${idx}, 'buttonText', this.value)">
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            if (p.customOffer) {
+                const cot = document.getElementById('pricingCustomTitleInput');
+                if (cot) cot.value = p.customOffer.title || '';
+                const cox = document.getElementById('pricingCustomTextInput');
+                if (cox) cox.value = p.customOffer.text || '';
+                const cob = document.getElementById('pricingCustomBtnInput');
+                if (cob) cob.value = p.customOffer.buttonText || '';
+            }
+        }
+
+        function updateMonthlyPkg(idx, field, val) {
+            if (!appData.pricing || !appData.pricing.monthlyPackages) return;
+            appData.pricing.monthlyPackages[idx][field] = val;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+        function updateMonthlyPkgBorder(idx, val) {
+            if (!appData.pricing || !appData.pricing.monthlyPackages) return;
+            appData.pricing.monthlyPackages[idx].borderColor = val;
+            appData.pricing.monthlyPackages[idx].badgeColor = val;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+        function updateMonthlyPkgFeatures(idx, text) {
+            if (!appData.pricing || !appData.pricing.monthlyPackages) return;
+            appData.pricing.monthlyPackages[idx].features = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+        function updateOneTimePkg(idx, field, val) {
+            if (!appData.pricing || !appData.pricing.oneTimePackages) return;
+            appData.pricing.oneTimePackages[idx][field] = val;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+        function updateOneTimePkgFeatures(idx, text) {
+            if (!appData.pricing || !appData.pricing.oneTimePackages) return;
+            appData.pricing.oneTimePackages[idx].features = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        // TAB: SUPPORT RENDERER
+        function renderSupportTab() {
+            if (!appData.support) appData.support = JSON.parse(JSON.stringify(DEFAULT_CONTENT.support));
+            const sp = appData.support;
+
+            const st = document.getElementById('supportTitleInput');
+            if (st) st.value = sp.title || '';
+            const ss = document.getElementById('supportSubtitleInput');
+            if (ss) ss.value = sp.subtitle || '';
+
+            // FAQ Items
+            const fList = document.getElementById('faqItemsAdminList');
+            if (fList && sp.faq) {
+                fList.innerHTML = sp.faq.map((item, idx) => `
+                    <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--admin-border); padding: 16px; border-radius: 10px; margin-bottom: 12px; position: relative;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <label style="font-weight: 600; color: #fff;">Otázka #${idx + 1}:</label>
+                            <button class="btn-danger" style="padding: 4px 10px; font-size: 12px;" onclick="deleteFaqItem(${idx})">🗑️ Smazat otázku</button>
+                        </div>
+                        <input type="text" class="form-control" style="margin-bottom: 10px;" value="${escapeAttr(item.question)}" placeholder="Např. Jak obnovím své předplatné?" onchange="updateFaqItem(${idx}, 'question', this.value)">
+                        <label style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: block;">Odpověď:</label>
+                        <textarea class="form-control" style="min-height: 60px;" placeholder="Text odpovědi..." onchange="updateFaqItem(${idx}, 'answer', this.value)">${item.answer || ''}</textarea>
+                    </div>
+                `).join('');
+            }
+
+            // Contact
+            if (sp.contact) {
+                const cn = document.getElementById('supportContactNameInput');
+                if (cn) cn.value = sp.contact.name || '';
+                const ci = document.getElementById('supportContactIcoInput');
+                if (ci) ci.value = sp.contact.ico || '';
+                const cl = document.getElementById('supportContactLocationInput');
+                if (cl) cl.value = sp.contact.location || '';
+                const ce = document.getElementById('supportContactEmailInput');
+                if (ce) ce.value = sp.contact.email || '';
+                const cnot = document.getElementById('supportContactNoteInput');
+                if (cnot) cnot.value = sp.contact.note || '';
+                const crt = document.getElementById('supportContactResponseTimeInput');
+                if (crt) crt.value = sp.contact.responseTime || '';
+            }
+        }
+
+        function addFaqItem() {
+            if (!appData.support) appData.support = {};
+            if (!appData.support.faq) appData.support.faq = [];
+            appData.support.faq.push({
+                question: 'Nová často kladená otázka',
+                answer: 'Zde zadejte podrobnou odpověď na otázku...'
+            });
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+            renderSupportTab();
+        }
+
+        function deleteFaqItem(idx) {
+            if (!confirm('Opravdu chcete tuto otázku smazat?')) return;
+            appData.support.faq.splice(idx, 1);
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+            renderSupportTab();
+        }
+
+        function updateFaqItem(idx, field, val) {
+            if (!appData.support || !appData.support.faq) return;
+            appData.support.faq[idx][field] = val;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        // TAB: SETTINGS RENDERER
+        function renderSettingsTab() {
+            if (!appData.settings) appData.settings = JSON.parse(JSON.stringify(DEFAULT_CONTENT.settings));
+            const s = appData.settings;
+
+            const st = document.getElementById('settingsSiteTitleInput');
+            if (st) st.value = s.siteTitle || '';
+            const sdn = document.getElementById('settingsDevNameInput');
+            if (sdn) sdn.value = s.developerName || '';
+            const se = document.getElementById('settingsEmailInput');
+            if (se) se.value = s.contactEmail || '';
+            const si = document.getElementById('settingsIcoInput');
+            if (si) si.value = s.ico || '';
+            const sl = document.getElementById('settingsLocationInput');
+            if (sl) sl.value = s.location || '';
+            const sli = document.getElementById('settingsLinkedinInput');
+            if (sli) sli.value = s.linkedinUrl || '';
+            const sc = document.getElementById('settingsCopyrightInput');
+            if (sc) sc.value = s.footerCopyright || '';
+
+            const sti = document.getElementById('settingsTokenInput');
+            if (sti) sti.value = authToken || '';
+        }
+
+        function escapeAttr(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        // TAB 1: RENDER APPS
+        function renderAppsGrid() {
+            const grid = document.getElementById('appsGrid');
+            grid.innerHTML = '';
+
+            if (!appData.apps || appData.apps.length === 0) {
+                grid.innerHTML = '<div style="color: var(--text-secondary); grid-column: 1/-1; text-align: center; padding: 40px;">Žádné aplikace zatím nebyly vytvořeny. Klikněte nahoře na "+ Přidat novou aplikaci".</div>';
+                return;
+            }
+
+            appData.apps.forEach((app, index) => {
+                const card = document.createElement('div');
+                card.className = 'admin-app-card';
+                card.style.borderColor = app.accentColor ? `${app.accentColor}55` : 'var(--admin-border)';
+
+                const iconHtml = app.image 
+                    ? `<img src="${app.image}" alt="${app.title}" onerror="this.src=''; this.parentElement.innerText='${app.iconEmoji || '📱'}';">` 
+                    : (app.iconEmoji || '📱');
+
+                const directLink = app.detailUrl 
+                    ? `<a href="${app.detailUrl}" target="_blank" class="btn-secondary" style="font-size: 12px; padding: 5px 10px; text-decoration: none; color: #fff;" title="Otevřít detailní stránku aplikace v novém okně">👁️ Stránka</a>` 
+                    : '';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="card-header-row">
+                            <div class="card-icon-preview">
+                                ${iconHtml}
+                            </div>
+                            <div class="card-title-box">
+                                <h3>${app.title}</h3>
+                                <span class="card-tag" style="background: ${app.badgeColor || '#0071e3'}; color: #fff;">${app.badge || 'ACTIVE'}</span>
+                            </div>
+                        </div>
+                        <p class="card-desc">${app.tagline || 'Bez popisu'}</p>
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
+                            <span>✨ Funkce: <strong>${(app.features || []).length}</strong></span> &bull; 
+                            <span>🖼️ Screenshoty: <strong>${(app.screenshots || []).length}</strong></span> &bull; 
+                            <span>ID: <code>${app.id}</code></span>
+                        </div>
+                    </div>
+                    <div class="card-footer-actions">
+                        <div>
+                            <button class="btn-secondary" style="font-size: 12px; padding: 4px 8px;" onclick="moveApp(${index}, -1)" ${index === 0 ? 'disabled' : ''} title="Posunout nahoru">⬆️</button>
+                            <button class="btn-secondary" style="font-size: 12px; padding: 4px 8px;" onclick="moveApp(${index}, 1)" ${index === appData.apps.length - 1 ? 'disabled' : ''} title="Posunout dolů">⬇️</button>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            ${directLink}
+                            <button class="btn-primary" style="font-size: 12px; padding: 5px 12px;" onclick="openAppModal(${index})">✏️ Upravit</button>
+                            <button class="btn-danger" style="font-size: 12px; padding: 5px 10px;" onclick="deleteApp(${index})">🗑️</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function moveApp(index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= appData.apps.length) return;
+            const temp = appData.apps[index];
+            appData.apps[index] = appData.apps[target];
+            appData.apps[target] = temp;
+            markDirty();
+            renderAppsGrid();
+        }
+
+        function deleteApp(index) {
+            const app = appData.apps[index];
+            if (confirm(`Opravdu chcete smazat aplikaci "${app.title}"?`)) {
+                appData.apps.splice(index, 1);
+                markDirty();
+                renderAppsGrid();
+                showToast(`Aplikace "${app.title}" byla smazána`, 'info');
+            }
+        }
+
+        // APP MODAL (ADD / EDIT)
+        function openAppModal(index) {
+            document.getElementById('editAppIndex').value = index !== null ? index : '';
+            const heading = document.getElementById('modalAppHeading');
+            const linkBox = document.getElementById('modalAppDetailLinkBox');
+            const previewImg = document.getElementById('appImagePreviewImg');
+            const placeholder = document.getElementById('appImagePreviewPlaceholder');
+
+            if (index !== null) {
+                const app = appData.apps[index];
+                heading.innerText = `Upravit aplikaci: ${app.title}`;
+                if (app.detailUrl) {
+                    linkBox.innerHTML = `Detailní stránka: <a href="${app.detailUrl}" target="_blank" style="color: var(--accent-color); font-weight: 600; text-decoration: underline;">${app.detailUrl} ↗</a>`;
+                } else {
+                    linkBox.innerText = '';
+                }
+
+                document.getElementById('appFieldId').value = app.id || '';
+                document.getElementById('appFieldTitle').value = app.title || '';
+                document.getElementById('appFieldTagline').value = app.tagline || '';
+                document.getElementById('appFieldHeroSubtitle').value = app.heroSubtitle || '';
+                document.getElementById('appFieldMedicalNotice').value = app.medicalNotice || '';
+                document.getElementById('appFieldBadge').value = app.badge || 'ACTIVE';
+                document.getElementById('appFieldAccentColor').value = app.accentColor || '#FF9A8B';
+                document.getElementById('appFieldColorPicker').value = app.accentColor || '#FF9A8B';
+                document.getElementById('appFieldEmoji').value = app.iconEmoji || '✨';
+                document.getElementById('appFieldAppStore').value = app.appStoreUrl || '';
+                document.getElementById('appFieldImage').value = app.image || '';
+
+                if (app.image) {
+                    previewImg.src = app.image;
+                    previewImg.style.display = 'block';
+                    placeholder.style.display = 'none';
+                } else {
+                    previewImg.style.display = 'none';
+                    placeholder.style.display = 'block';
+                }
+
+                renderFeaturesRows(app.features || []);
+                renderScreenshotsRowsAdmin(app.screenshots || []);
+
+                document.getElementById('appFieldPlusTitle').value = app.plusCard ? (app.plusCard.title || '') : '';
+                document.getElementById('appFieldPlusText').value = app.plusCard ? (app.plusCard.text || '') : '';
+                document.getElementById('appFieldPlusNote').value = app.plusCard ? (app.plusCard.note || '') : '';
+
+                document.getElementById('appFieldCtaTitle').value = app.cta ? (app.cta.title || '') : '';
+                document.getElementById('appFieldCtaText').value = app.cta ? (app.cta.text || '') : '';
+
+            } else {
+                heading.innerText = 'Přidat novou aplikaci';
+                linkBox.innerText = '';
+                document.getElementById('appFieldId').value = '';
+                document.getElementById('appFieldTitle').value = '';
+                document.getElementById('appFieldTagline').value = '';
+                document.getElementById('appFieldHeroSubtitle').value = '';
+                document.getElementById('appFieldMedicalNotice').value = '';
+                document.getElementById('appFieldBadge').value = 'ACTIVE';
+                document.getElementById('appFieldAccentColor').value = '#0071e3';
+                document.getElementById('appFieldColorPicker').value = '#0071e3';
+                document.getElementById('appFieldEmoji').value = '📱';
+                document.getElementById('appFieldAppStore').value = '';
+                document.getElementById('appFieldImage').value = '';
+                previewImg.style.display = 'none';
+                placeholder.style.display = 'block';
+
+                renderFeaturesRows([]);
+                renderScreenshotsRowsAdmin([]);
+
+                document.getElementById('appFieldPlusTitle').value = '';
+                document.getElementById('appFieldPlusText').value = '';
+                document.getElementById('appFieldPlusNote').value = '';
+                document.getElementById('appFieldCtaTitle').value = '';
+                document.getElementById('appFieldCtaText').value = '';
+            }
+
+            openModal('appModal');
+        }
+
+        function renderFeaturesRows(features) {
+            const container = document.getElementById('featuresContainer');
+            container.innerHTML = '';
+            if (!features || features.length === 0) {
+                container.innerHTML = '<div style="color: var(--text-secondary); font-size: 13px; padding: 14px; text-align: center; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px dashed var(--admin-border);">Zatím nejsou přidány žádné funkce. Klikněte nahoře na "+ Přidat funkci".</div>';
+                return;
+            }
+
+            features.forEach((feat, idx) => {
+                const row = document.createElement('div');
+                row.className = 'feature-item-row';
+                const isUpcoming = feat.status === 'upcoming';
+                row.innerHTML = `
+                    <!-- ŘÁDEK 1: Ikona, Název funkce a Tlačítko smazat -->
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="text" class="form-control feat-icon" style="width: 48px; text-align: center; font-size: 20px; flex-shrink: 0;" value="${escapeAttr(feat.icon || '✨')}" placeholder="Ikona" title="Emoji ikona" onchange="markDirty()">
+                        <input type="text" class="form-control feat-title" style="flex: 1; font-weight: 600; font-size: 14px;" value="${escapeAttr(feat.title || '')}" placeholder="Název funkce (např. Zahrada Vděčnosti)" onchange="markDirty()">
+                        <button type="button" class="btn-danger" style="padding: 7px 12px; font-size: 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;" onclick="this.closest('.feature-item-row').remove(); markDirty();" title="Smazat tuto funkci">✕ Smazat</button>
+                    </div>
+
+                    <!-- ŘÁDEK 2: Stav funkce a Libovolně přepisovatelný text štítku -->
+                    <div style="display: grid; grid-template-columns: 220px 1fr; gap: 12px; align-items: center; background: rgba(0,0,0,0.25); padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                        <div>
+                            <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 5px; letter-spacing: 0.5px;">
+                                Stav funkce:
+                            </label>
+                            <select class="form-control feat-status" style="width: 100%; font-size: 13px;" onchange="handleFeatureStatusChange(this)">
+                                <option value="included" ${!isUpcoming ? 'selected' : ''}>✅ Součást (Aktivní v 1.0)</option>
+                                <option value="upcoming" ${isUpcoming ? 'selected' : ''}>⏳ Připravujeme (Ve vývoji)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 5px; letter-spacing: 0.5px;">
+                                Text štítku / verze (libovolně přepište):
+                            </label>
+                            <input type="text" class="form-control feat-badge" value="${escapeAttr(feat.badge || '')}" placeholder="např. SOUČÁST VERZE 1.0 nebo PŘIPRAVUJEME" style="width: 100%; font-weight: 600; font-size: 13px;" onchange="markDirty()">
+                        </div>
+                    </div>
+
+                    <!-- ŘÁDEK 3: Popis funkce pro uživatele -->
+                    <div>
+                        <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 5px; letter-spacing: 0.5px;">
+                            Popis funkce:
+                        </label>
+                        <textarea class="form-control feat-desc" style="width: 100%; min-height: 54px; font-size: 13px; line-height: 1.5; resize: vertical;" placeholder="Popis funkce pro návštěvníky webu..." onchange="markDirty()">${escapeAttr(feat.description || '')}</textarea>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function addFeatureRow() {
+            const container = document.getElementById('featuresContainer');
+            if (container.children.length === 1 && !container.children[0].classList.contains('feature-item-row')) {
+                container.innerHTML = '';
+            }
+            const row = document.createElement('div');
+            row.className = 'feature-item-row';
+            row.innerHTML = `
+                <!-- ŘÁDEK 1: Ikona, Název funkce a Tlačítko smazat -->
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="text" class="form-control feat-icon" style="width: 48px; text-align: center; font-size: 20px; flex-shrink: 0;" value="✨" placeholder="Ikona" title="Emoji ikona" onchange="markDirty()">
+                    <input type="text" class="form-control feat-title" style="flex: 1; font-weight: 600; font-size: 14px;" value="" placeholder="Název nové funkce (např. Denní inspirace)" onchange="markDirty()">
+                    <button type="button" class="btn-danger" style="padding: 7px 12px; font-size: 12px; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;" onclick="this.closest('.feature-item-row').remove(); markDirty();" title="Smazat tuto funkci">✕ Smazat</button>
+                </div>
+
+                <!-- ŘÁDEK 2: Stav funkce a Libovolně přepisovatelný text štítku -->
+                <div style="display: grid; grid-template-columns: 220px 1fr; gap: 12px; align-items: center; background: rgba(0,0,0,0.25); padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div>
+                        <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 5px; letter-spacing: 0.5px;">
+                            Stav funkce:
+                        </label>
+                        <select class="form-control feat-status" style="width: 100%; font-size: 13px;" onchange="handleFeatureStatusChange(this)">
+                            <option value="included" selected>✅ Součást (Aktivní v 1.0)</option>
+                            <option value="upcoming">⏳ Připravujeme (Ve vývoji)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 5px; letter-spacing: 0.5px;">
+                            Text štítku / verze (libovolně přepište):
+                        </label>
+                        <input type="text" class="form-control feat-badge" value="SOUČÁST VERZE 1.0" placeholder="např. SOUČÁST VERZE 1.0 nebo PŘIPRAVUJEME" style="width: 100%; font-weight: 600; font-size: 13px;" onchange="markDirty()">
+                    </div>
+                </div>
+
+                <!-- ŘÁDEK 3: Popis funkce pro uživatele -->
+                <div>
+                    <label style="display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 5px; letter-spacing: 0.5px;">
+                        Popis funkce:
+                    </label>
+                    <textarea class="form-control feat-desc" style="width: 100%; min-height: 54px; font-size: 13px; line-height: 1.5; resize: vertical;" placeholder="Popis funkce pro návštěvníky webu..." onchange="markDirty()"></textarea>
+                </div>
+            `;
+            container.appendChild(row);
+            markDirty();
+        }
+
+        function handleFeatureStatusChange(selectEl) {
+            markDirty();
+            const row = selectEl.closest('.feature-item-row');
+            if (!row) return;
+            const badgeInput = row.querySelector('.feat-badge');
+            if (!badgeInput) return;
+
+            const val = selectEl.value;
+            const current = badgeInput.value.trim();
+            const upper = current.toUpperCase();
+
+            // Automaticky inteligentně předvyplníme doporučený text štítku, pokud je prázdný nebo standardní
+            if (val === 'upcoming') {
+                if (!current || upper.includes('SOUČÁST') || upper.includes('VERZE 1.0') || upper === 'AKTIVNÍ') {
+                    badgeInput.value = 'PŘIPRAVUJEME';
+                }
+            } else if (val === 'included') {
+                if (!current || upper.includes('PŘIPRAVUJEME') || upper.includes('BRZY') || upper.includes('VÝVOJ')) {
+                    badgeInput.value = 'SOUČÁST VERZE 1.0';
+                }
+            }
+        }
+
+        // SCREENSHOTS GALLERY HANDLERS
+        function renderScreenshotsRowsAdmin(screenshots) {
+            const container = document.getElementById('screenshotsContainerAdmin');
+            container.innerHTML = '';
+            if (!screenshots || screenshots.length === 0) {
+                container.innerHTML = '<div style="color: var(--text-secondary); font-size: 13px; padding: 10px; text-align: center;">Zatím nejsou přidány žádné screenshoty. Klikněte na "+ Přidat screenshot".</div>';
+                return;
+            }
+
+            screenshots.forEach((s, idx) => {
+                const url = typeof s === 'string' ? s : (s.url || '');
+                const alt = typeof s === 'string' ? '' : (s.alt || '');
+                const row = document.createElement('div');
+                row.className = 'screenshot-item-row';
+                row.style.cssText = 'display: flex; gap: 10px; align-items: center; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--admin-border);';
+                row.innerHTML = `
+                    <div style="width: 45px; height: 55px; border-radius: 6px; overflow: hidden; background: #000; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="${url}" style="max-width: 100%; max-height: 100%; object-fit: contain;" onerror="this.style.display='none'">
+                    </div>
+                    <input type="text" class="form-control shot-url" style="flex: 2;" value="${escapeAttr(url)}" placeholder="assets/app-screenshot.png" onchange="markDirty(); updateScreenshotRowPreview(this)">
+                    <input type="text" class="form-control shot-alt" style="flex: 1;" value="${escapeAttr(alt)}" placeholder="Popisek (např. Domů)" onchange="markDirty()">
+                    <button type="button" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; white-space: nowrap;" onclick="triggerRowScreenshotUpload(this)">Nahrát nový</button>
+                    <button type="button" class="btn-danger" style="padding: 6px 10px;" onclick="this.closest('.screenshot-item-row').remove(); markDirty();" title="Smazat">✕</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function addScreenshotRow() {
+            const container = document.getElementById('screenshotsContainerAdmin');
+            if (container.children.length === 1 && !container.children[0].classList.contains('screenshot-item-row')) {
+                container.innerHTML = '';
+            }
+            const row = document.createElement('div');
+            row.className = 'screenshot-item-row';
+            row.style.cssText = 'display: flex; gap: 10px; align-items: center; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--admin-border);';
+            row.innerHTML = `
+                <div style="width: 45px; height: 55px; border-radius: 6px; overflow: hidden; background: #000; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1);">
+                    <img src="" style="max-width: 100%; max-height: 100%; object-fit: contain; display: none;">
+                </div>
+                <input type="text" class="form-control shot-url" style="flex: 2;" value="" placeholder="assets/novy-screenshot.png" onchange="markDirty(); updateScreenshotRowPreview(this)">
+                <input type="text" class="form-control shot-alt" style="flex: 1;" value="" placeholder="Popisek" onchange="markDirty()">
+                <button type="button" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; white-space: nowrap;" onclick="triggerRowScreenshotUpload(this)">Nahrát nový</button>
+                <button type="button" class="btn-danger" style="padding: 6px 10px;" onclick="this.closest('.screenshot-item-row').remove(); markDirty();" title="Smazat">✕</button>
+            `;
+            container.appendChild(row);
+            markDirty();
+        }
+
+        let activeScreenshotRow = null;
+        function triggerRowScreenshotUpload(btn) {
+            activeScreenshotRow = btn.closest('.screenshot-item-row');
+            document.getElementById('rowScreenshotUploadInput').click();
+        }
+
+        async function handleRowScreenshotUpload(event) {
+            const file = event.target.files[0];
+            if (!file || !activeScreenshotRow) return;
+
+            const filename = sanitizeFilename(file.name);
+            const path = `assets/${filename}`;
+            showToast('⏳ Nahrávám screenshot na GitHub...', 'info');
+
+            try {
+                const base64Data = await readFileAsBase64(file);
+                await uploadFileToGitHub(path, base64Data, `Upload screenshotu ${filename}`);
+                activeScreenshotRow.querySelector('.shot-url').value = path;
+                const img = activeScreenshotRow.querySelector('img');
+                if (img) {
+                    img.src = path;
+                    img.style.display = 'block';
+                }
+                markDirty();
+                showToast(`Screenshot "${filename}" nahrán`, 'success');
+            } catch(e) {
+                console.error(e);
+                showToast('Chyba při nahrávání screenshotu', 'error');
+            }
+            event.target.value = '';
+        }
+
+        function updateScreenshotRowPreview(input) {
+            const row = input.closest('.screenshot-item-row');
+            const img = row ? row.querySelector('img') : null;
+            if (img) {
+                img.src = input.value.trim();
+                img.style.display = input.value.trim() ? 'block' : 'none';
+            }
+        }
+
+        function saveAppFromModal() {
+            const id = document.getElementById('appFieldId').value.trim() || 'app-' + Date.now();
+            const title = document.getElementById('appFieldTitle').value.trim();
+            if (!title) {
+                alert('Prosím zadejte název aplikace.');
+                return;
+            }
+
+            const tagline = document.getElementById('appFieldTagline').value.trim();
+            const heroSubtitle = document.getElementById('appFieldHeroSubtitle').value.trim();
+            const medicalNotice = document.getElementById('appFieldMedicalNotice').value.trim();
+            const badge = document.getElementById('appFieldBadge').value.trim() || 'ACTIVE';
+            const accentColor = document.getElementById('appFieldAccentColor').value.trim() || '#FF9A8B';
+            const iconEmoji = document.getElementById('appFieldEmoji').value.trim() || '✨';
+            const appStoreUrl = document.getElementById('appFieldAppStore').value.trim();
+            const image = document.getElementById('appFieldImage').value.trim();
+
+            // Collect features
+            const features = [];
+            const featRows = document.querySelectorAll('#featuresContainer .feature-item-row');
+            featRows.forEach(r => {
+                const icon = r.querySelector('.feat-icon') ? r.querySelector('.feat-icon').value.trim() : '✨';
+                const fTitle = r.querySelector('.feat-title') ? r.querySelector('.feat-title').value.trim() : '';
+                const fDesc = r.querySelector('.feat-desc') ? r.querySelector('.feat-desc').value : '';
+                const fBadge = r.querySelector('.feat-badge') ? r.querySelector('.feat-badge').value.trim() : '';
+                const fStatus = r.querySelector('.feat-status') ? r.querySelector('.feat-status').value : 'included';
+                if (fTitle || fDesc) {
+                    features.push({
+                        icon,
+                        title: fTitle,
+                        description: fDesc,
+                        badge: fBadge,
+                        status: fStatus
+                    });
+                }
+            });
+
+            // Collect screenshots
+            const screenshots = [];
+            const shotRows = document.querySelectorAll('#screenshotsContainerAdmin .screenshot-item-row');
+            shotRows.forEach(r => {
+                const url = r.querySelector('.shot-url') ? r.querySelector('.shot-url').value.trim() : '';
+                const alt = r.querySelector('.shot-alt') ? r.querySelector('.shot-alt').value.trim() : '';
+                if (url) {
+                    screenshots.push({ url, alt });
+                }
+            });
+
+            // Plus Card
+            const plusTitle = document.getElementById('appFieldPlusTitle').value.trim();
+            const plusText = document.getElementById('appFieldPlusText').value.trim();
+            const plusNote = document.getElementById('appFieldPlusNote').value.trim();
+            const plusCard = (plusTitle || plusText || plusNote) ? {
+                title: plusTitle,
+                text: plusText,
+                note: plusNote
+            } : null;
+
+            // CTA
+            const ctaTitle = document.getElementById('appFieldCtaTitle').value.trim();
+            const ctaText = document.getElementById('appFieldCtaText').value.trim();
+            const cta = (ctaTitle || ctaText) ? {
+                title: ctaTitle,
+                text: ctaText
+            } : null;
+
+            const indexVal = document.getElementById('editAppIndex').value;
+            const newAppObj = {
+                id,
+                title,
+                tagline,
+                heroSubtitle,
+                medicalNotice,
+                badge,
+                badgeColor: accentColor,
+                accentColor,
+                iconEmoji,
+                appStoreUrl,
+                image,
+                detailUrl: `apps/app.html?id=${id}`,
+                features,
+                screenshots
+            };
+            if (plusCard) newAppObj.plusCard = plusCard;
+            if (cta) newAppObj.cta = cta;
+
+            if (indexVal !== '') {
+                // Keep existing custom detailUrl if it was set to custom static html
+                const existing = appData.apps[parseInt(indexVal)];
+                if (existing && existing.detailUrl && !existing.detailUrl.includes('app.html?id=')) {
+                    newAppObj.detailUrl = existing.detailUrl;
+                }
+                appData.apps[parseInt(indexVal)] = newAppObj;
+            } else {
+                appData.apps.push(newAppObj);
+            }
+
+            // Immediately save to local storage for instant browser preview
+            try {
+                localStorage.setItem('gratus_admin_content', JSON.stringify(appData));
+            } catch(e) {}
+
+            closeModal('appModal');
+            markDirty();
+            renderAppsGrid();
+            showToast(`Aplikace "${title}" byla uložena a změny jsou aktivní!`, 'success');
+        }
+
+        // IMAGE UPLOAD HANDLER FOR MODAL
+        async function handleAppImageSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const filename = sanitizeFilename(file.name);
+            const path = `assets/${filename}`;
+
+            showToast('⏳ Nahrávám obrázek na GitHub...', 'info');
+
+            try {
+                const base64Data = await readFileAsBase64(file);
+                await uploadFileToGitHub(path, base64Data, `Upload obrázku ${filename}`);
+                document.getElementById('appFieldImage').value = path;
+                
+                const previewImg = document.getElementById('appImagePreviewImg');
+                const placeholder = document.getElementById('appImagePreviewPlaceholder');
+                previewImg.src = path;
+                previewImg.style.display = 'block';
+                placeholder.style.display = 'none';
+
+                showToast(`✅ Obrázek byl úspěšně nahrán jako ${path}`, 'success');
+                markDirty();
+            } catch (err) {
+                alert(`Chyba při nahrávání obrázku: ${err.message}`);
+                showToast('Chyba při nahrávání', 'error');
+            }
+        }
+
+        // TAB 2: RENDER LEGAL
+        function renderLegalTab() {
+            if (!appData.legal) appData.legal = {};
+            const admin = appData.legal.admin || {};
+
+            document.getElementById('legalAdminName').value = admin.name || '';
+            document.getElementById('legalAdminIco').value = admin.ico || '';
+            document.getElementById('legalAdminAddress').value = admin.address || '';
+            document.getElementById('legalAdminEmail').value = admin.email || '';
+            document.getElementById('legalLastUpdated').value = appData.legal.lastUpdated || '';
+
+            // Render App Privacy Sections
+            const list = document.getElementById('appPrivacyList');
+            list.innerHTML = '';
+            const sections = appData.legal.appPrivacySections || [];
+
+            if (sections.length === 0) {
+                list.innerHTML = '<div style="color: var(--text-secondary); font-size: 13px;">Zatím nejsou vytvořena žádná specifická pravidla pro aplikace.</div>';
+            } else {
+                sections.forEach((sec, idx) => {
+                    const box = document.createElement('div');
+                    box.style.background = 'rgba(255, 255, 255, 0.02)';
+                    box.style.border = `1px solid ${sec.badgeColor || '#10B981'}44`;
+                    box.style.borderRadius = '10px';
+                    box.style.padding = '14px 18px';
+                    box.style.marginBottom = '12px';
+                    box.style.display = 'flex';
+                    box.style.justifyContent = 'space-between';
+                    box.style.alignItems = 'center';
+
+                    box.innerHTML = `
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-weight: 600; font-size: 15px; color: ${sec.badgeColor || '#fff'};">${sec.title}</span>
+                                <span class="card-tag" style="background: ${sec.badgeColor || '#10B981'}; color: #000;">${sec.appName || sec.id}</span>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">
+                                Počet bodů soukromí: <strong>${(sec.points || []).length}</strong>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <button class="btn-secondary" style="font-size: 12px;" onclick="openAppPrivacyModal(${idx})">✏️ Upravit</button>
+                            <button class="btn-danger" style="font-size: 12px;" onclick="deleteAppPrivacy(${idx})">🗑️</button>
+                        </div>
+                    `;
+                    list.appendChild(box);
+                });
+            }
+
+            // Render App Terms & EULA Sections (Apple & Google)
+            const termsList = document.getElementById('appTermsList');
+            if (termsList) {
+                termsList.innerHTML = '';
+                const termsSections = appData.legal.appTermsSections || [];
+
+                if (termsSections.length === 0) {
+                    termsList.innerHTML = '<div style="color: var(--text-secondary); font-size: 13px;">Zatím nejsou vytvořeny žádné specifické EULA podmínky pro aplikace.</div>';
+                } else {
+                    termsSections.forEach((sec, idx) => {
+                        const box = document.createElement('div');
+                        box.style.background = 'rgba(255, 255, 255, 0.02)';
+                        box.style.border = `1px solid ${sec.badgeColor || '#FF9A8B'}44`;
+                        box.style.borderRadius = '12px';
+                        box.style.padding = '16px 20px';
+                        box.style.marginBottom = '14px';
+
+                        const appleCount = (sec.applePoints || []).length;
+                        const googleCount = (sec.googlePoints || []).length;
+
+                        box.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                                        <span style="font-weight: 700; font-size: 16px; color: ${sec.badgeColor || '#FF9A8B'};">${sec.title}</span>
+                                        <span class="card-tag" style="background: ${sec.badgeColor || '#FF9A8B'}; color: #000;">${sec.appName || sec.id}</span>
+                                    </div>
+                                    <div style="display: flex; gap: 14px; font-size: 12px; color: var(--text-secondary); flex-wrap: wrap;">
+                                        <span>🍎 Apple App Store bodů: <strong>${appleCount}</strong></span>
+                                        <span>🤖 Google Play bodů: <strong>${googleCount}</strong></span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 8px;">
+                                    <button class="btn-secondary" style="font-size: 12px;" onclick="openAppTermsModal(${idx})">✏️ Upravit EULA</button>
+                                    <button class="btn-danger" style="font-size: 12px;" onclick="deleteAppTerms(${idx})">🗑️</button>
+                                </div>
+                            </div>
+                        `;
+                        termsList.appendChild(box);
+                    });
+                }
+            }
+
+            // Render General GDPR sections
+            const genContainer = document.getElementById('generalLegalSections');
+            genContainer.innerHTML = '';
+            (appData.legal.generalSections || []).forEach((g, gIdx) => {
+                const item = document.createElement('div');
+                item.style.marginBottom = '16px';
+                item.innerHTML = `
+                    <div style="font-weight: 600; font-size: 14px; margin-bottom: 6px;">${g.title}</div>
+                    <textarea class="form-control" style="min-height: 70px;" onchange="appData.legal.generalSections[${gIdx}].content = this.value; markDirty();">${g.content}</textarea>
+                `;
+                genContainer.appendChild(item);
+            });
+        }
+
+        function openAppTermsModal(index) {
+            document.getElementById('editAppTermsIndex').value = index !== null ? index : '';
+            const select = document.getElementById('termsAppSelect');
+            select.innerHTML = '<option value="">-- Vyberte aplikaci --</option>';
+            appData.apps.forEach(a => {
+                select.innerHTML += `<option value="${a.id}">${a.title}</option>`;
+            });
+
+            if (index !== null) {
+                const sec = (appData.legal.appTermsSections || [])[index];
+                document.getElementById('modalAppTermsHeading').innerText = `Upravit EULA: ${sec.appName || sec.title}`;
+                select.value = sec.id || '';
+                document.getElementById('termsBadgeColor').value = sec.badgeColor || '#FF9A8B';
+                document.getElementById('termsSectionTitle').value = sec.title || '';
+                document.getElementById('termsApplePointsText').value = (sec.applePoints || []).join('\n');
+                document.getElementById('termsGooglePointsText').value = (sec.googlePoints || []).join('\n');
+                document.getElementById('termsGeneralPointsText').value = (sec.generalPoints || []).join('\n');
+            } else {
+                document.getElementById('modalAppTermsHeading').innerText = 'Přidat podmínky předplatného a EULA pro aplikaci';
+                select.value = '';
+                document.getElementById('termsBadgeColor').value = '#FF9A8B';
+                document.getElementById('termsSectionTitle').value = '';
+                document.getElementById('termsApplePointsText').value = '';
+                document.getElementById('termsGooglePointsText').value = '';
+                document.getElementById('termsGeneralPointsText').value = '';
+            }
+
+            openModal('appTermsModal');
+        }
+
+        function saveAppTermsFromModal() {
+            const indexVal = document.getElementById('editAppTermsIndex').value;
+            const appId = document.getElementById('termsAppSelect').value;
+            const app = appData.apps.find(a => a.id === appId);
+            const appName = app ? app.title : appId;
+            const badgeColor = document.getElementById('termsBadgeColor').value.trim() || '#FF9A8B';
+            const title = document.getElementById('termsSectionTitle').value.trim() || `Aplikace ${appName} – Podmínky předplatného a EULA`;
+            
+            const appleRaw = document.getElementById('termsApplePointsText').value.trim();
+            const applePoints = appleRaw ? appleRaw.split('\n').filter(p => p.trim() !== '') : [];
+
+            const googleRaw = document.getElementById('termsGooglePointsText').value.trim();
+            const googlePoints = googleRaw ? googleRaw.split('\n').filter(p => p.trim() !== '') : [];
+
+            const genRaw = document.getElementById('termsGeneralPointsText').value.trim();
+            const generalPoints = genRaw ? genRaw.split('\n').filter(p => p.trim() !== '') : [];
+
+            const newSec = {
+                id: appId,
+                appName: appName,
+                title: title,
+                badgeColor: badgeColor,
+                applePoints: applePoints,
+                googlePoints: googlePoints,
+                generalPoints: generalPoints
+            };
+
+            if (!appData.legal.appTermsSections) {
+                appData.legal.appTermsSections = [];
+            }
+
+            if (indexVal !== '') {
+                appData.legal.appTermsSections[parseInt(indexVal)] = newSec;
+            } else {
+                appData.legal.appTermsSections.push(newSec);
+            }
+
+            closeModal('appTermsModal');
+            markDirty();
+            renderLegalTab();
+            showToast('EULA podmínky pro aplikaci byly uloženy', 'success');
+        }
+
+        function deleteAppTerms(index) {
+            if (confirm('Opravdu chcete smazat tyto EULA podmínky?')) {
+                appData.legal.appTermsSections.splice(index, 1);
+                markDirty();
+                renderLegalTab();
+                showToast('Podmínky byly odstraněny', 'info');
+            }
+        }
+
+        function openAppPrivacyModal(index) {
+            document.getElementById('editAppPrivacyIndex').value = index !== null ? index : '';
+            const select = document.getElementById('privacyAppSelect');
+            select.innerHTML = '<option value="">-- Vyberte aplikaci --</option>';
+            appData.apps.forEach(a => {
+                select.innerHTML += `<option value="${a.id}">${a.title}</option>`;
+            });
+
+            if (index !== null) {
+                const sec = appData.legal.appPrivacySections[index];
+                document.getElementById('modalAppPrivacyHeading').innerText = `Upravit soukromí: ${sec.appName || sec.title}`;
+                select.value = sec.id || '';
+                document.getElementById('privacyBadgeColor').value = sec.badgeColor || '#10B981';
+                document.getElementById('privacySectionTitle').value = sec.title || '';
+                document.getElementById('privacyPointsText').value = (sec.points || []).join('\n');
+            } else {
+                document.getElementById('modalAppPrivacyHeading').innerText = 'Přidat pravidla soukromí pro aplikaci';
+                select.value = '';
+                document.getElementById('privacyBadgeColor').value = '#10B981';
+                document.getElementById('privacySectionTitle').value = '';
+                document.getElementById('privacyPointsText').value = '';
+            }
+
+            openModal('appPrivacyModal');
+        }
+
+        function saveAppPrivacyFromModal() {
+            const indexVal = document.getElementById('editAppPrivacyIndex').value;
+            const appId = document.getElementById('privacyAppSelect').value;
+            const app = appData.apps.find(a => a.id === appId);
+            const appName = app ? app.title : appId;
+            const badgeColor = document.getElementById('privacyBadgeColor').value.trim() || '#10B981';
+            const title = document.getElementById('privacySectionTitle').value.trim() || `Aplikace ${appName} – Ochrana soukromí`;
+            const pointsRaw = document.getElementById('privacyPointsText').value.trim();
+            const points = pointsRaw ? pointsRaw.split('\n').filter(p => p.trim() !== '') : [];
+
+            const newSec = {
+                id: appId,
+                appName: appName,
+                title: title,
+                badgeColor: badgeColor,
+                points: points
+            };
+
+            if (!appData.legal.appPrivacySections) {
+                appData.legal.appPrivacySections = [];
+            }
+
+            if (indexVal !== '') {
+                appData.legal.appPrivacySections[parseInt(indexVal)] = newSec;
+            } else {
+                appData.legal.appPrivacySections.push(newSec);
+            }
+
+            closeModal('appPrivacyModal');
+            markDirty();
+            renderLegalTab();
+            showToast('Pravidla soukromí pro aplikaci byla uložena', 'success');
+        }
+
+        function deleteAppPrivacy(index) {
+            if (confirm('Opravdu chcete smazat tato pravidla soukromí?')) {
+                appData.legal.appPrivacySections.splice(index, 1);
+                markDirty();
+                renderLegalTab();
+            }
+        }
+
+        // TAB 3: MEDIA UPLOAD & GALLERY
+        async function handleDirectImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const progress = document.getElementById('uploadProgress');
+            progress.style.display = 'block';
+
+            try {
+                const filename = sanitizeFilename(file.name);
+                const path = `assets/${filename}`;
+                const base64Data = await readFileAsBase64(file);
+
+                await uploadFileToGitHub(path, base64Data, `Nahrání obrázku ${filename} přes Media`);
+                showToast(`🎉 Obrázek byl nahrán jako ${path}`, 'success');
+                renderMediaGallery();
+            } catch (err) {
+                alert(`Chyba při nahrávání: ${err.message}`);
+                showToast('Chyba při nahrávání', 'error');
+            } finally {
+                progress.style.display = 'none';
+                event.target.value = '';
+            }
+        }
+
+        function renderMediaGallery() {
+            const gallery = document.getElementById('mediaGallery');
+            gallery.innerHTML = '';
+
+            // Gather known images from apps
+            const knownImages = new Set();
+            appData.apps.forEach(a => {
+                if (a.image) knownImages.add(a.image);
+                (a.screenshots || []).forEach(s => knownImages.add(s));
+            });
+
+            // Also standard project images
+            ['assets/app-home-clean.png', 'assets/app-inspiration-clean.png', 'assets/app-journey-clean.png', 'assets/dane-pro-dashboard.png', 'assets/podlahy-holcak-hero.png'].forEach(img => knownImages.add(img));
+
+            knownImages.forEach(imgSrc => {
+                const item = document.createElement('div');
+                item.style.background = '#111';
+                item.style.borderRadius = '10px';
+                item.style.padding = '10px';
+                item.style.border = '1px solid var(--admin-border)';
+                item.style.textAlign = 'center';
+
+                item.innerHTML = `
+                    <div style="height: 100px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 8px;">
+                        <img src="${imgSrc}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-secondary); word-break: break-all; margin-bottom: 6px;">${imgSrc}</div>
+                    <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px; width: 100%; justify-content: center;" onclick="copyToClipboard('${imgSrc}')">Kopírovat cestu</button>
+                `;
+                gallery.appendChild(item);
+            });
+        }
+
+        // GITHUB API HELPER: Upload single file
+        async function uploadFileToGitHub(filePath, base64Content, commitMessage) {
+            // Check if file already exists to get SHA
+            let existingSha = null;
+            try {
+                const checkRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}?ref=${BRANCH}`, {
+                    headers: { 'Authorization': `Bearer ${authToken}` }
+                });
+                if (checkRes.ok) {
+                    const checkData = await checkRes.json();
+                    existingSha = checkData.sha;
+                }
+            } catch (e) {}
+
+            const body = {
+                message: commitMessage,
+                content: base64Content,
+                branch: BRANCH
+            };
+            if (existingSha) body.sha = existingSha;
+
+            const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${authToken}`,
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (!res.ok) {
+                const err = await res.json();
+                throw new Error(err.message || 'Chyba API');
+            }
+            return await res.json();
+        }
+
+        // TAB SWITCHING
+        function switchTab(tabId) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            ['home', 'apps', 'pricing', 'support', 'legal', 'media', 'settings'].forEach(id => {
+                const el = document.getElementById(`tab-${id}`);
+                if (el) el.style.display = 'none';
+            });
+
+            if (window.event && window.event.currentTarget && window.event.currentTarget.classList.contains('admin-tab')) {
+                window.event.currentTarget.classList.add('active');
+            } else {
+                const btn = Array.from(document.querySelectorAll('.admin-tab')).find(b => b.getAttribute('onclick')?.includes(`'${tabId}'`));
+                if (btn) btn.classList.add('active');
+            }
+            const targetEl = document.getElementById(`tab-${tabId}`);
+            if (targetEl) targetEl.style.display = 'block';
+        }
+
+        // MODAL HELPERS
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // DIRTY / CLEAN STATE
+        function markDirty() {
+            isDirty = true;
+            document.getElementById('saveDot').classList.add('dirty');
+            document.getElementById('saveStatusText').innerText = 'Máte neuložené změny';
+        }
+        function markClean() {
+            isDirty = false;
+            document.getElementById('saveDot').classList.remove('dirty');
+            document.getElementById('saveStatusText').innerText = 'Vše uloženo';
+        }
+
+        // TOAST NOTIFICATION
+        function showToast(msg, type = 'info', duration = 3500) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toastMessage');
+            const iconEl = document.getElementById('toastIcon');
+
+            msgEl.innerText = msg;
+            iconEl.innerText = type === 'success' ? '✅' : (type === 'error' ? '❌' : (type === 'warning' ? '⚠️' : 'ℹ️'));
+
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // UTILS
+        function sanitizeFilename(name) {
+            return name.toLowerCase().replace(/[^a-z0-9\.\-_]/g, '-');
+        }
+
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const result = reader.result;
+                    // remove data:...;base64,
+                    const base64 = result.split(',')[1];
+                    resolve(base64);
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(`Zkopírováno: ${text}`, 'success');
+            });
+        }
+
+        function exportDataJson() {
+            syncInputsToData();
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `content_backup_${Date.now()}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        }
+    </script>
+</body>
+</html>

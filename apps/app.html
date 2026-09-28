@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Detail Aplikace | Gratus App</title>
+    <link rel="stylesheet" href="../index.css?v=20260501-1">
+    <style>
+        .feature-hero {
+            background: linear-gradient(180deg, #1c1c1e 0%, #000 100%);
+            padding: 90px 20px 70px;
+            text-align: center;
+            position: relative;
+        }
+        .breadcrumb-nav {
+            margin-bottom: 24px;
+        }
+        .breadcrumb-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+        }
+        .breadcrumb-nav a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-card {
+            background: #1c1c1e;
+            padding: 30px;
+            border-radius: 24px;
+            border: 1px solid #333;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+        .icon-box {
+            font-size: 38px;
+            margin-bottom: 18px;
+        }
+        .showcase-row {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        .showcase-item {
+            text-align: center;
+            max-width: 220px;
+        }
+        .showcase-item img {
+            width: 100%;
+            border-radius: 18px;
+            border: 1px solid #333;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            transition: transform 0.4s ease;
+        }
+        .showcase-item img:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+        .showcase-item p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+        .cta-download {
+            background: #1c1c1e;
+            padding: 80px 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <nav>
+        <div class="nav-content">
+            <div class="logo">
+                <a href="../index.html" style="font-weight: 600; color: white;">Gratus App</a>
+            </div>
+            <div class="nav-links">
+                <a href="../index.html">Domů</a>
+                <a href="../cenik.html">Ceník</a>
+                <a href="../apps.html" class="active">Aplikace</a>
+                <a href="../support.html">Podpora</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- LOADING STATE -->
+    <div id="loadingState" style="text-align: center; padding: 160px 20px;">
+        <div style="font-size: 36px; margin-bottom: 16px;">⏳</div>
+        <p style="color: var(--text-secondary);">Načítám detaily aplikace...</p>
+    </div>
+
+    <!-- ERROR / NOT FOUND STATE -->
+    <div id="errorState" style="display: none; text-align: center; padding: 160px 20px;">
+        <h2 style="font-size: 32px; margin-bottom: 12px;">Aplikace nebyla nalezena</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 30px;">Požadovaná aplikace neexistuje nebo byla přesunuta.</p>
+        <a href="../apps.html" class="btn">← Zpět na seznam aplikací</a>
+    </div>
+
+    <!-- MAIN APP CONTENT (Populated dynamically) -->
+    <main id="appContent" style="display: none;">
+        <header class="feature-hero">
+            <div class="breadcrumb-nav">
+                <a href="../apps.html">
+                    <span>←</span> Všechny aplikace
+                </a>
+            </div>
+
+            <div id="heroBadge" style="display: inline-block; padding: 4px 14px; border-radius: 20px; font-size: 11px; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 20px;">
+                ACTIVE
+            </div>
+
+            <h1 id="heroTitle" style="font-size: 52px; margin-bottom: 18px; letter-spacing: -1.5px;">Název aplikace</h1>
+            
+            <p id="heroTagline" style="color: var(--text-secondary); max-width: 650px; margin: 0 auto 40px auto; font-size: 20px; line-height: 1.6;">
+                Popis aplikace...
+            </p>
+
+            <div id="heroImageContainer" style="display: flex; justify-content: center; margin-top: 30px;">
+                <!-- Dynamický obrázek nebo ikona -->
+            </div>
+        </header>
+
+        <!-- SEKCÍ KLÍČOVÉ FUNKCE -->
+        <section id="featuresSection" style="max-width: 1000px; margin: 0 auto; padding: 80px 20px;">
+            <h2 class="section-title" style="text-align: center;">Klíčové funkce a přednosti</h2>
+            <div class="feature-grid" id="featuresGrid">
+                <!-- Dynamické kartičky funkcí -->
+            </div>
+        </section>
+
+        <!-- SCREENSHOTY GALERIE -->
+        <section id="screenshotsSection" style="background: #0a0a0a; text-align: center; padding: 80px 20px; display: none;">
+            <h2 class="section-title">Ukázky z aplikace</h2>
+            <p style="color: var(--text-secondary); max-width: 600px; margin: -10px auto 40px; font-size: 16px;">
+                Náhledy prostředí v moderním rozhraní
+            </p>
+            <div class="showcase-row" id="screenshotsRow">
+                <!-- Dynamické screenshoty -->
+            </div>
+        </section>
+
+        <!-- CTA SEKCE -->
+        <section class="cta-download">
+            <h2 id="ctaTitle" style="font-size: 36px; margin-bottom: 16px;">Vyzkoušejte aplikaci</h2>
+            <p id="ctaDesc" style="color: var(--text-secondary); max-width: 500px; margin: 0 auto 30px; font-size: 17px;">
+                Moderní nástroj navržený s důrazem na jednoduchost a spolehlivost.
+            </p>
+            <div id="ctaButtonContainer">
+                <!-- Odkaz do App Store nebo Web -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.</p>
+            <div class="footer-links" style="margin-top: 20px;">
+                <a href="../support.html">Kontakt a podpora</a> | 
+                <a href="../legal/terms.html">Obchodní podmínky</a> | 
+                <a href="../legal/privacy.html">Ochrana soukromí (GDPR)</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const appId = urlParams.get('id');
+
+            if (!appId) {
+                showError();
+                return;
+            }
+
+            try {
+                const res = await fetch(`../data/content.json?v=${Date.now()}`);
+                if (!res.ok) throw new Error('Nepodařilo se načíst data');
+                const data = await res.json();
+                
+                const app = (data.apps || []).find(a => a.id === appId);
+                if (!app) {
+                    showError();
+                    return;
+                }
+
+                renderAppDetail(app);
+            } catch (err) {
+                console.error(err);
+                showError();
+            }
+        });
+
+        function showError() {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('errorState').style.display = 'block';
+        }
+
+        function renderAppDetail(app) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('appContent').style.display = 'block';
+
+            // Title & Meta
+            document.title = `${app.title} | Gratus App`;
+            document.getElementById('heroTitle').innerText = app.title;
+            document.getElementById('heroTagline').innerText = app.tagline || '';
+
+            // Badge
+            const badge = document.getElementById('heroBadge');
+            badge.innerText = app.badge || 'ACTIVE';
+            badge.style.background = app.badgeColor || app.accentColor || '#0071e3';
+            badge.style.color = '#fff';
+
+            // Hero image or Emoji
+            const imgBox = document.getElementById('heroImageContainer');
+            if (app.image) {
+                const imgPath = app.image.startsWith('http') || app.image.startsWith('../') ? app.image : `../${app.image}`;
+                imgBox.innerHTML = `
+                    <img src="${imgPath}" alt="${app.title}" style="max-height: 280px; max-width: 90%; border-radius: 20px; box-shadow: 0 25px 60px rgba(0,0,0,0.8); ${app.imageRotate ? `transform: rotate(${app.imageRotate});` : ''}">
+                `;
+            } else {
+                imgBox.innerHTML = `
+                    <div style="font-size: 80px; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));">${app.iconEmoji || '📱'}</div>
+                `;
+            }
+
+            // Features Grid
+            const featGrid = document.getElementById('featuresGrid');
+            featGrid.innerHTML = '';
+            const features = app.features || [];
+
+            if (features.length === 0) {
+                document.getElementById('featuresSection').style.display = 'none';
+            } else {
+                features.forEach(f => {
+                    const card = document.createElement('div');
+                    card.className = 'feature-card';
+                    card.style.borderColor = app.accentColor ? `${app.accentColor}44` : '#333';
+                    card.innerHTML = `
+                        <div class="icon-box">${f.icon || '✨'}</div>
+                        <h3 style="color: ${app.accentColor || '#fff'}; font-size: 20px; margin-bottom: 12px;">${f.title}</h3>
+                        <p style="color: var(--text-secondary); line-height: 1.6;">${f.description}</p>
+                    `;
+                    featGrid.appendChild(card);
+                });
+            }
+
+            // Screenshots Gallery
+            const screenshots = app.screenshots || [];
+            if (screenshots.length > 0) {
+                const sSection = document.getElementById('screenshotsSection');
+                const sRow = document.getElementById('screenshotsRow');
+                sSection.style.display = 'block';
+                sRow.innerHTML = '';
+
+                screenshots.forEach((s, idx) => {
+                    const sPath = s.startsWith('http') || s.startsWith('../') ? s : `../${s}`;
+                    const item = document.createElement('div');
+                    item.className = 'showcase-item';
+                    item.innerHTML = `
+                        <img src="${sPath}" alt="${app.title} screenshot ${idx+1}">
+                        <p>Náhled ${idx+1}</p>
+                    `;
+                    sRow.appendChild(item);
+                });
+            }
+
+            // CTA Button
+            const ctaContainer = document.getElementById('ctaButtonContainer');
+            if (app.appStoreUrl) {
+                ctaContainer.innerHTML = `
+                    <a href="${app.appStoreUrl}" class="btn" style="background: white; color: black; font-weight: 600; padding: 14px 32px; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;" target="_blank" rel="noopener noreferrer">
+                        <span>Stáhnout v App Store</span> ↗
+                    </a>
+                `;
+            } else if (app.webUrl) {
+                ctaContainer.innerHTML = `
+                    <a href="${app.webUrl}" class="btn" style="background: ${app.accentColor || '#0071e3'}; color: white; font-weight: 600; padding: 14px 32px; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;" target="_blank" rel="noopener noreferrer">
+                        <span>Otevřít webové stránky</span> ↗
+                    </a>
+                `;
+            } else {
+                ctaContainer.innerHTML = `
+                    <span style="display: inline-block; background: #000; color: #fff; padding: 14px 28px; border-radius: 14px; font-size: 15px; font-weight: 600; border: 1px solid #333;">
+                        Připravujeme pro vás
+                    </span>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
