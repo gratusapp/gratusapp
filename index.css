@@ -472,8 +472,9 @@ footer {
     font-weight: 600;
 }
 
-/* ===== App Store Badge ===== */
-.app-store-badge {
+/* ===== App Store & Google Play Badges ===== */
+.app-store-badge,
+.google-play-badge {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -487,7 +488,8 @@ footer {
     cursor: pointer;
 }
 
-.app-store-badge:hover {
+.app-store-badge:hover,
+.google-play-badge:hover {
     background: #1a1a1a;
     border-color: #fff;
     transform: scale(1.05);
@@ -501,6 +503,17 @@ footer {
     height: 24px;
     flex-shrink: 0;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 20' fill='%23fff'%3E%3Cpath d='M13.545 10.239c-.022-2.328 1.9-3.449 1.986-3.502-1.08-1.58-2.763-1.796-3.362-1.821-1.43-.145-2.793.843-3.52.843-.726 0-1.847-.821-3.034-.8-1.562.023-3.002.909-3.807 2.307-1.623 2.814-.415 6.98 1.166 9.264.772 1.12 1.694 2.378 2.905 2.333 1.166-.047 1.606-.754 3.015-.754 1.41 0 1.805.754 3.034.731 1.254-.022 2.048-1.142 2.817-2.264.887-1.299 1.253-2.555 1.275-2.621-.028-.013-2.446-.939-2.471-3.726zM11.227 3.28c.643-.779 1.076-1.86.958-2.938-.926.038-2.048.617-2.713 1.394-.596.69-1.118 1.793-.978 2.85 1.033.08 2.088-.524 2.733-1.306z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.asb-play {
+    display: block;
+    width: 20px;
+    height: 22px;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 29 32'%3E%3Cpath d='M13.54 15.28.12 29.34a3.66 3.66 0 0 0 5.33 2.16l15.1-8.6Z' fill='%23ea4335'/%3E%3Cpath d='m27.11 12.89-6.53-3.74-7.35 6.45 7.38 7.28 6.48-3.7a3.54 3.54 0 0 0 1.5-4.79 3.62 3.62 0 0 0-1.5-1.5z' fill='%23fbbc04'/%3E%3Cpath d='M.12 2.66a3.57 3.57 0 0 0-.12.92v24.84a3.57 3.57 0 0 0 .12.92L14 15.64Z' fill='%234285f4'/%3E%3Cpath d='m13.64 16 6.94-6.85L5.5.51A3.73 3.73 0 0 0 3.63 0 3.64 3.64 0 0 0 .12 2.65Z' fill='%2334a853'/%3E%3C/svg%3E");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -526,7 +539,8 @@ footer {
 }
 
 /* Large badge – CTA section */
-.app-store-badge--lg {
+.app-store-badge--lg,
+.google-play-badge--lg {
     padding: 10px 22px 10px 16px;
     border-radius: 12px;
 }
@@ -536,16 +550,24 @@ footer {
     height: 31px;
 }
 
-.app-store-badge--lg .asb-subtitle {
+.google-play-badge--lg .asb-play {
+    width: 25px;
+    height: 28px;
+}
+
+.app-store-badge--lg .asb-subtitle,
+.google-play-badge--lg .asb-subtitle {
     font-size: 11px;
 }
 
-.app-store-badge--lg .asb-title {
+.app-store-badge--lg .asb-title,
+.google-play-badge--lg .asb-title {
     font-size: 22px;
 }
 
 /* Small badge – footer */
-.app-store-badge--sm {
+.app-store-badge--sm,
+.google-play-badge--sm {
     padding: 6px 12px 6px 10px;
     border-radius: 8px;
 }
@@ -555,16 +577,24 @@ footer {
     height: 19px;
 }
 
-.app-store-badge--sm .asb-subtitle {
+.google-play-badge--sm .asb-play {
+    width: 16px;
+    height: 18px;
+}
+
+.app-store-badge--sm .asb-subtitle,
+.google-play-badge--sm .asb-subtitle {
     font-size: 8px;
 }
 
-.app-store-badge--sm .asb-title {
+.app-store-badge--sm .asb-title,
+.google-play-badge--sm .asb-title {
     font-size: 14px;
 }
 
-/* Nav App Store button */
-.nav-app-store {
+/* Nav App Store & Google Play buttons */
+.nav-app-store,
+.nav-google-play {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -576,14 +606,16 @@ footer {
     font-weight: 600;
     letter-spacing: 0.02em;
     transition: all 0.3s ease;
-    margin-left: 12px;
+    margin-left: 8px;
     opacity: 1 !important;
     white-space: nowrap;
 }
 
-.nav-app-store:hover {
+.nav-app-store:hover,
+.nav-google-play:hover {
     background: #e0e0e0;
     opacity: 1 !important;
+    transform: scale(1.04);
 }
 
 .nav-app-store::before {
@@ -596,8 +628,24 @@ footer {
     background-repeat: no-repeat;
 }
 
+.nav-google-play::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 13px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 29 32'%3E%3Cpath d='M13.54 15.28.12 29.34a3.66 3.66 0 0 0 5.33 2.16l15.1-8.6Z' fill='%23ea4335'/%3E%3Cpath d='m27.11 12.89-6.53-3.74-7.35 6.45 7.38 7.28 6.48-3.7a3.54 3.54 0 0 0 1.5-4.79 3.62 3.62 0 0 0-1.5-1.5z' fill='%23fbbc04'/%3E%3Cpath d='M.12 2.66a3.57 3.57 0 0 0-.12.92v24.84a3.57 3.57 0 0 0 .12.92L14 15.64Z' fill='%234285f4'/%3E%3Cpath d='m13.64 16 6.94-6.85L5.5.51A3.73 3.73 0 0 0 3.63 0 3.64 3.64 0 0 0 .12 2.65Z' fill='%2334a853'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 /* Hero badge placement */
-.hero-badge {
+.hero-badge,
+.hero-badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -644,18 +692,36 @@ footer {
     position: relative;
 }
 
-.cta-download .app-store-badge {
+.cta-download .app-store-badge,
+.cta-download .google-play-badge {
     position: relative;
 }
 
+.cta-badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: relative;
+    z-index: 2;
+}
+
 /* Footer badge */
-.footer-badge {
+.footer-badge,
+.footer-badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 20px;
 }
 
 /* Responsive – badges */
 @media (max-width: 768px) {
-    .nav-app-store {
+    .nav-app-store,
+    .nav-google-play {
         margin-left: 0;
     }
 
@@ -677,7 +743,8 @@ footer {
         font-size: 24px;
     }
 
-    .app-store-badge--lg {
+    .app-store-badge--lg,
+    .google-play-badge--lg {
         padding: 8px 16px 8px 12px;
     }
 
@@ -686,7 +753,13 @@ footer {
         height: 26px;
     }
 
-    .app-store-badge--lg .asb-title {
+    .google-play-badge--lg .asb-play {
+        width: 21px;
+        height: 23px;
+    }
+
+    .app-store-badge--lg .asb-title,
+    .google-play-badge--lg .asb-title {
         font-size: 19px;
     }
 }

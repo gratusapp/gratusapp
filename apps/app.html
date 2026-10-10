@@ -286,12 +286,31 @@
 
             // CTA Button
             const ctaContainer = document.getElementById('ctaButtonContainer');
-            if (app.appStoreUrl) {
-                ctaContainer.innerHTML = `
-                    <a href="${app.appStoreUrl}" class="btn" style="background: white; color: black; font-weight: 600; padding: 14px 32px; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;" target="_blank" rel="noopener noreferrer">
-                        <span>Stáhnout v App Store</span> ↗
-                    </a>
-                `;
+            if (app.appStoreUrl || app.googlePlayUrl) {
+                let buttons = '';
+                if (app.appStoreUrl) {
+                    buttons += `
+                        <a href="${app.appStoreUrl}" class="app-store-badge app-store-badge--lg" target="_blank" rel="noopener noreferrer">
+                            <span class="asb-apple"></span>
+                            <span class="asb-text">
+                                <span class="asb-subtitle">Download on the</span>
+                                <span class="asb-title">App Store</span>
+                            </span>
+                        </a>
+                    `;
+                }
+                if (app.googlePlayUrl) {
+                    buttons += `
+                        <a href="${app.googlePlayUrl}" class="google-play-badge google-play-badge--lg" target="_blank" rel="noopener noreferrer">
+                            <span class="asb-play"></span>
+                            <span class="asb-text">
+                                <span class="asb-subtitle">GET IT ON</span>
+                                <span class="asb-title">Google Play</span>
+                            </span>
+                        </a>
+                    `;
+                }
+                ctaContainer.innerHTML = `<div class="cta-badges">${buttons}</div>`;
             } else if (app.webUrl) {
                 ctaContainer.innerHTML = `
                     <a href="${app.webUrl}" class="btn" style="background: ${app.accentColor || '#0071e3'}; color: white; font-weight: 600; padding: 14px 32px; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;" target="_blank" rel="noopener noreferrer">

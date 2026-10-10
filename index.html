@@ -24,6 +24,7 @@
                     <a href="de/index.html">DE</a>
                 </div>
                 <a href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="nav-app-store" target="_blank" rel="noopener noreferrer">App Store</a>
+                <a id="navHeroGooglePlay" href="https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share" class="nav-google-play" target="_blank" rel="noopener noreferrer">Google Play</a>
             </div>
         </div>
     </nav>
@@ -54,12 +55,19 @@
             <a id="homeHeroBtn1" href="#vision" class="btn" style="background: white; color: black;">Moje vize</a>
             <a id="homeHeroBtn2" href="apps.html" class="btn">Prohlédnout projekty</a>
         </div>
-        <div class="hero-badge">
+        <div class="hero-badge hero-badges">
             <a id="homeHeroAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge" target="_blank" rel="noopener noreferrer">
                 <span class="asb-apple"></span>
                 <span class="asb-text">
                     <span class="asb-subtitle">Download on the</span>
                     <span class="asb-title">App Store</span>
+                </span>
+            </a>
+            <a id="homeHeroGooglePlay" href="https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share" class="google-play-badge" target="_blank" rel="noopener noreferrer">
+                <span class="asb-play"></span>
+                <span class="asb-text">
+                    <span class="asb-subtitle">GET IT ON</span>
+                    <span class="asb-title">Google Play</span>
                 </span>
             </a>
         </div>
@@ -253,13 +261,22 @@
     <section class="cta-download">
         <h2 id="homeCtaTitle">Začněte svou cestu k vděčnosti ještě dnes</h2>
         <p id="homeCtaDesc">Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.</p>
-        <a id="homeCtaAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge app-store-badge--lg" target="_blank" rel="noopener noreferrer">
-            <span class="asb-apple"></span>
-            <span class="asb-text">
-                <span class="asb-subtitle">Download on the</span>
-                <span class="asb-title">App Store</span>
-            </span>
-        </a>
+        <div class="cta-badges">
+            <a id="homeCtaAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge app-store-badge--lg" target="_blank" rel="noopener noreferrer">
+                <span class="asb-apple"></span>
+                <span class="asb-text">
+                    <span class="asb-subtitle">Download on the</span>
+                    <span class="asb-title">App Store</span>
+                </span>
+            </a>
+            <a id="homeCtaGooglePlay" href="https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share" class="google-play-badge google-play-badge--lg" target="_blank" rel="noopener noreferrer">
+                <span class="asb-play"></span>
+                <span class="asb-text">
+                    <span class="asb-subtitle">GET IT ON</span>
+                    <span class="asb-title">Google Play</span>
+                </span>
+            </a>
+        </div>
     </section>
 
     <footer>
@@ -272,12 +289,19 @@
                 <a id="homeFooterLinkedin" href="https://www.linkedin.com/in/veronika-m-52420322b" target="_blank">LinkedIn</a> | 
                 <a href="admin.html" style="opacity: 0.4;">Admin</a>
             </div>
-            <div class="footer-badge">
+            <div class="footer-badge footer-badges">
                 <a id="homeFooterAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge app-store-badge--sm" target="_blank" rel="noopener noreferrer">
                     <span class="asb-apple"></span>
                     <span class="asb-text">
                         <span class="asb-subtitle">Download on the</span>
                         <span class="asb-title">App Store</span>
+                    </span>
+                </a>
+                <a id="homeFooterGooglePlay" href="https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share" class="google-play-badge google-play-badge--sm" target="_blank" rel="noopener noreferrer">
+                    <span class="asb-play"></span>
+                    <span class="asb-text">
+                        <span class="asb-subtitle">GET IT ON</span>
+                        <span class="asb-title">Google Play</span>
                     </span>
                 </a>
             </div>
@@ -357,6 +381,10 @@
                     }
                     const asb = document.getElementById('homeHeroAppStore');
                     if (asb && h.hero.appStoreUrl) asb.href = h.hero.appStoreUrl;
+                    const gpb = document.getElementById('homeHeroGooglePlay');
+                    if (gpb && h.hero.googlePlayUrl) gpb.href = h.hero.googlePlayUrl;
+                    const ngp = document.getElementById('navHeroGooglePlay');
+                    if (ngp && h.hero.googlePlayUrl) ngp.href = h.hero.googlePlayUrl;
                     const sl = document.getElementById('homeShowcaseLeft');
                     if (sl && h.hero.showcaseLeft) sl.src = h.hero.showcaseLeft;
                     const sc = document.getElementById('homeShowcaseCenter');
@@ -449,6 +477,12 @@
                     if (cd && h.cta.desc) cd.textContent = h.cta.desc;
                     const cas = document.getElementById('homeCtaAppStore');
                     if (cas && h.cta.appStoreUrl) cas.href = h.cta.appStoreUrl;
+                    const cgp = document.getElementById('homeCtaGooglePlay');
+                    if (cgp && h.cta.googlePlayUrl) cgp.href = h.cta.googlePlayUrl;
+                    const fgp = document.getElementById('homeFooterGooglePlay');
+                    if (fgp && (h.cta.googlePlayUrl || (h.hero && h.hero.googlePlayUrl))) {
+                        fgp.href = h.cta.googlePlayUrl || h.hero.googlePlayUrl;
+                    }
                 }
             }
 

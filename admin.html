@@ -643,6 +643,10 @@
                     <label>Odkaz na App Store (tlačítko "Download on the App Store"):</label>
                     <input type="text" id="homeHeroAppStoreInput" class="form-control" onchange="autoSaveField('home.hero.appStoreUrl', this.value)">
                 </div>
+                <div class="form-group">
+                    <label>Odkaz na Google Play (tlačítko "GET IT ON Google Play"):</label>
+                    <input type="text" id="homeHeroGooglePlayInput" class="form-control" onchange="autoSaveField('home.hero.googlePlayUrl', this.value)">
+                </div>
                 <div class="form-group" style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 8px; border: 1px solid var(--admin-border);">
                     <label style="margin-bottom: 8px;">3 prezentační telefony v záhlaví (cesty k obrázkům v <code>assets/</code>):</label>
                     <div class="form-row">
@@ -743,6 +747,10 @@
                 <div class="form-group">
                     <label>Odkaz na App Store:</label>
                     <input type="text" id="homeCtaAppStoreInput" class="form-control" onchange="autoSaveField('home.cta.appStoreUrl', this.value)">
+                </div>
+                <div class="form-group">
+                    <label>Odkaz na Google Play:</label>
+                    <input type="text" id="homeCtaGooglePlayInput" class="form-control" onchange="autoSaveField('home.cta.googlePlayUrl', this.value)">
                 </div>
             </div>
         </section>
@@ -1136,8 +1144,12 @@
                             <input type="text" id="appFieldEmoji" class="form-control" placeholder="✨">
                         </div>
                         <div class="form-group">
-                            <label>Odkaz do App Store / na web:</label>
+                            <label>Odkaz do App Store:</label>
                             <input type="url" id="appFieldAppStore" class="form-control" placeholder="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs">
+                        </div>
+                        <div class="form-group">
+                            <label>Odkaz do Google Play:</label>
+                            <input type="url" id="appFieldGooglePlay" class="form-control" placeholder="https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share">
                         </div>
                     </div>
 
@@ -1365,6 +1377,7 @@
               "btn2Text": "Prohlédnout projekty",
               "btn2Link": "apps.html",
               "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+              "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
               "showcaseLeft": "assets/app-inspiration-clean.png",
               "showcaseCenter": "assets/app-home-clean.png",
               "showcaseRight": "assets/app-journey-clean.png"
@@ -1409,7 +1422,8 @@
             "cta": {
               "title": "Začněte svou cestu k vděčnosti ještě dnes",
               "desc": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.",
-              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs"
+              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+              "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share"
             }
           },
           "pricing": {
@@ -1567,6 +1581,7 @@
               "imageRotate": "5deg",
               "iconEmoji": "✨",
               "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+              "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
               "detailUrl": "apps/denik-vdecnosti.html",
               "features": [
                 {
@@ -2089,6 +2104,9 @@
                 appData.home.hero.btn2Text = document.getElementById('homeHeroBtn2TextInput').value;
                 appData.home.hero.btn2Link = document.getElementById('homeHeroBtn2LinkInput').value;
                 appData.home.hero.appStoreUrl = document.getElementById('homeHeroAppStoreInput').value;
+                if (document.getElementById('homeHeroGooglePlayInput')) {
+                    appData.home.hero.googlePlayUrl = document.getElementById('homeHeroGooglePlayInput').value;
+                }
                 appData.home.hero.showcaseLeft = document.getElementById('homeShowcaseLeftInput').value;
                 appData.home.hero.showcaseCenter = document.getElementById('homeShowcaseCenterInput').value;
                 appData.home.hero.showcaseRight = document.getElementById('homeShowcaseRightInput').value;
@@ -2106,6 +2124,9 @@
                 appData.home.cta.title = document.getElementById('homeCtaTitleInput').value;
                 appData.home.cta.desc = document.getElementById('homeCtaDescInput').value;
                 appData.home.cta.appStoreUrl = document.getElementById('homeCtaAppStoreInput').value;
+                if (document.getElementById('homeCtaGooglePlayInput')) {
+                    appData.home.cta.googlePlayUrl = document.getElementById('homeCtaGooglePlayInput').value;
+                }
             }
 
             // Pricing
@@ -2192,6 +2213,8 @@
                 if (b2l) b2l.value = h.hero.btn2Link || '';
                 const asb = document.getElementById('homeHeroAppStoreInput');
                 if (asb) asb.value = h.hero.appStoreUrl || '';
+                const gpb = document.getElementById('homeHeroGooglePlayInput');
+                if (gpb) gpb.value = h.hero.googlePlayUrl || '';
                 const sl = document.getElementById('homeShowcaseLeftInput');
                 if (sl) sl.value = h.hero.showcaseLeft || '';
                 const sc = document.getElementById('homeShowcaseCenterInput');
@@ -2302,6 +2325,8 @@
                 if (cd) cd.value = h.cta.desc || '';
                 const ca = document.getElementById('homeCtaAppStoreInput');
                 if (ca) ca.value = h.cta.appStoreUrl || '';
+                const cgpb = document.getElementById('homeCtaGooglePlayInput');
+                if (cgpb) cgpb.value = h.cta.googlePlayUrl || '';
             }
         }
 
@@ -2677,6 +2702,8 @@
                 document.getElementById('appFieldColorPicker').value = app.accentColor || '#FF9A8B';
                 document.getElementById('appFieldEmoji').value = app.iconEmoji || '✨';
                 document.getElementById('appFieldAppStore').value = app.appStoreUrl || '';
+                const appGp = document.getElementById('appFieldGooglePlay');
+                if (appGp) appGp.value = app.googlePlayUrl || '';
                 document.getElementById('appFieldImage').value = app.image || '';
 
                 if (app.image) {
@@ -2711,6 +2738,8 @@
                 document.getElementById('appFieldColorPicker').value = '#0071e3';
                 document.getElementById('appFieldEmoji').value = '📱';
                 document.getElementById('appFieldAppStore').value = '';
+                const appGpClear = document.getElementById('appFieldGooglePlay');
+                if (appGpClear) appGpClear.value = '';
                 document.getElementById('appFieldImage').value = '';
                 previewImg.style.display = 'none';
                 placeholder.style.display = 'block';
@@ -2953,6 +2982,8 @@
             const accentColor = document.getElementById('appFieldAccentColor').value.trim() || '#FF9A8B';
             const iconEmoji = document.getElementById('appFieldEmoji').value.trim() || '✨';
             const appStoreUrl = document.getElementById('appFieldAppStore').value.trim();
+            const googlePlayEl = document.getElementById('appFieldGooglePlay');
+            const googlePlayUrl = googlePlayEl ? googlePlayEl.value.trim() : '';
             const image = document.getElementById('appFieldImage').value.trim();
 
             // Collect features
@@ -3016,6 +3047,7 @@
                 accentColor,
                 iconEmoji,
                 appStoreUrl,
+                googlePlayUrl,
                 image,
                 detailUrl: `apps/app.html?id=${id}`,
                 features,

@@ -16,6 +16,7 @@
       "btn2Text": "Prohlédnout projekty",
       "btn2Link": "apps.html",
       "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
       "showcaseLeft": "assets/app-inspiration-clean.png",
       "showcaseCenter": "assets/app-home-clean.png",
       "showcaseRight": "assets/app-journey-clean.png"
@@ -60,7 +61,8 @@
     "cta": {
       "title": "Začněte svou cestu k vděčnosti ještě dnes",
       "desc": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.",
-      "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs"
+      "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share"
     }
   },
   "pricing": {
@@ -218,6 +220,7 @@
       "imageRotate": "5deg",
       "iconEmoji": "✨",
       "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
       "detailUrl": "apps/denik-vdecnosti.html",
       "features": [
         {
