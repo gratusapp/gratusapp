@@ -413,15 +413,16 @@
     },
     {
       "id": "dane-pro",
-      "title": "DaněPro",
+      "title": "Kapesní účetní",
       "tagline": "Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí na iCloudu.",
       "heroSubtitle": "",
       "medicalNotice": "",
-      "badge": "Připravujeme",
+      "badge": "Finální testování",
       "badgeColor": "#10B981",
       "accentColor": "#10B981",
       "iconEmoji": "📊",
       "appStoreUrl": "",
+      "googlePlayUrl": "",
       "image": "assets/dane-pro-dashboard.png",
       "detailUrl": "apps/dane-pro.html",
       "features": [
@@ -429,21 +430,21 @@
           "icon": "⚖️",
           "title": "Live Daňový Souboj",
           "description": "Real-time porovnání reálných výdajů proti výdajovému paušálu (60 % / 40 % / 80 %).",
-          "badge": "",
+          "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         },
         {
           "icon": "💳",
           "title": "Revolut Pro & Multi-Currency",
           "description": "Bleskový import CSV výpisů a automatické přepočty měn dle oficiálních kurzů ČNB.",
-          "badge": "",
+          "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         },
         {
           "icon": "🧾",
           "title": "Faktury & ARES Registr",
           "description": "Vystavení PDF faktury s QR platbou a načítání firemních údajů z registru ARES.",
-          "badge": "",
+          "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         },
         {
@@ -487,7 +488,7 @@
       {
         "id": "dane-pro",
         "appName": "DaněPro",
-        "title": "Aplikace DaněPro – 100% Soukromí a Finanční Data",
+        "title": "Aplikace Kapesní účetní – 100% Soukromí a Finanční Data",
         "badgeColor": "#10B981",
         "points": [
           "Lokální uložení a Apple iCloud: Veškeré vámi zadané finanční doklady, faktury, výdaje, bankovní účty (Revolut Pro), IČO/DIČ a fotografie účtenek jsou ukládány výhradně na vašem zařízení a synchronizovány v rámci vašeho osobního soukromého iCloudu (Apple CloudKit).",
