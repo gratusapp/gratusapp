@@ -83,6 +83,12 @@
                 </span>
             </a>
         </div>
+
+        <!-- HERO SHOWCASE IMAGE (ZÁHLAVÍ DETAILU) -->
+        <div id="heroImageWrapper" style="display: none; margin-top: 45px; max-width: 980px; margin-left: auto; margin-right: auto; padding: 0 16px; position: relative;">
+            <div style="position: absolute; top: 15%; left: 10%; width: 80%; height: 70%; background: radial-gradient(circle, rgba(255, 154, 139, 0.22) 0%, transparent 70%); filter: blur(40px); pointer-events: none; z-index: 0;"></div>
+            <img id="heroShowcaseImg" src="" alt="Ukázka Deník vděčnosti" style="width: 100%; max-width: 960px; border-radius: 20px; box-shadow: 0 25px 70px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.12); position: relative; z-index: 1; display: block; margin: 0 auto;" onerror="this.parentElement.style.display='none'">
+        </div>
     </header>
 
     <section>
@@ -275,6 +281,19 @@
             if (med) {
                 const accent = app.accentColor || 'var(--accent-color)';
                 med.innerHTML = `<strong style="color: var(--text-color);">Důležité:</strong> ${escapeHtml(app.medicalNotice)} <a href="../legal/terms.html" style="color: ${accent};">Obchodní podmínky</a>`;
+            }
+        }
+
+        // Velký Hero obrázek v záhlaví
+        const heroWrap = document.getElementById('heroImageWrapper');
+        const heroImg = document.getElementById('heroShowcaseImg');
+        if (heroWrap && heroImg) {
+            if (app.heroImage) {
+                const src = app.heroImage.startsWith('../') ? app.heroImage : `../${app.heroImage}`;
+                heroImg.src = src;
+                heroWrap.style.display = 'block';
+            } else if (app.heroImage === '') {
+                heroWrap.style.display = 'none';
             }
         }
 

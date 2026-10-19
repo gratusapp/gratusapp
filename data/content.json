@@ -423,7 +423,8 @@
       "iconEmoji": "📊",
       "appStoreUrl": "",
       "googlePlayUrl": "",
-      "image": "assets/appstore_universal_asset_5244x2950.png",
+      "image": "assets/dane-pro-dashboard.png",
+      "heroImage": "assets/appstore_universal_asset_5244x2950.png",
       "detailUrl": "apps/dane-pro.html",
       "features": [
         {

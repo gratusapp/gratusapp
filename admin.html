@@ -1165,6 +1165,22 @@
                             <span id="appImagePreviewPlaceholder" style="color: var(--text-secondary); font-size: 13px;">Náhled obrázku</span>
                         </div>
                     </div>
+
+                    <div class="form-group" style="margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--admin-border);">
+                        <label>🖼️ Velký úvodní obrázek v záhlaví detailu (Hero banner / mockup):</label>
+                        <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">
+                            Zobrazí se v plné šířce přímo v záhlaví detailu aplikace pod štítkem „Připraveno pro App Store“ a nad sekcí „Co všechno aplikace umí?“.
+                        </div>
+                        <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                            <input type="text" id="appFieldHeroImage" class="form-control" placeholder="assets/appstore_universal_asset_5244x2950.png" oninput="updateAppHeroImagePreview(this.value)">
+                            <button type="button" class="btn-secondary" onclick="document.getElementById('appHeroImageUploadInput').click()">Nahrát nový</button>
+                            <input type="file" id="appHeroImageUploadInput" accept="image/png, image/jpeg, image/webp, image/svg+xml, image/*" style="display: none;" onchange="handleAppHeroImageSelect(event)">
+                        </div>
+                        <div id="appHeroImagePreviewBox" style="height: 120px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--admin-border); position: relative;">
+                            <img id="appHeroImagePreviewImg" src="" style="max-height: 110px; max-width: 95%; object-fit: contain; display: none;" onerror="this.style.display='none'; const ph = document.getElementById('appHeroImagePreviewPlaceholder'); if (ph) ph.style.display='block';">
+                            <span id="appHeroImagePreviewPlaceholder" style="color: var(--text-secondary); font-size: 13px;">Náhled velkého úvodního obrázku (Hero banner)</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- SEKCE 2: FUNKCE APLIKACE (FEATURES) -->
@@ -1785,6 +1801,7 @@
                         "appStoreUrl": "",
                         "googlePlayUrl": "",
                         "image": "assets/dane-pro-dashboard.png",
+                        "heroImage": "assets/appstore_universal_asset_5244x2950.png",
                         "detailUrl": "apps/dane-pro.html",
                         "features": [
                                 {
@@ -2162,6 +2179,7 @@
                 if (!denik.screenshots || denik.screenshots.length === 0) denik.screenshots = defDenik.screenshots;
                 if (!denik.plusCard) denik.plusCard = defDenik.plusCard;
                 if (!denik.cta) denik.cta = defDenik.cta;
+                if (!denik.heroImage && defDenik.heroImage) denik.heroImage = defDenik.heroImage;
             }
             const dane = appData.apps.find(a => a.id === 'dane-pro');
             const defDane = DEFAULT_CONTENT.apps.find(a => a.id === 'dane-pro');
@@ -2172,6 +2190,7 @@
                 if (!dane.screenshots || dane.screenshots.length === 0) dane.screenshots = defDane.screenshots;
                 if (!dane.plusCard) dane.plusCard = defDane.plusCard;
                 if (!dane.cta) dane.cta = defDane.cta;
+                if (!dane.heroImage && defDane.heroImage) dane.heroImage = defDane.heroImage;
             }
         }
 
@@ -2884,6 +2903,19 @@
                     placeholder.style.display = 'block';
                 }
 
+                // Hero Image (Úvodní velký obrázek v detailu)
+                document.getElementById('appFieldHeroImage').value = app.heroImage || '';
+                const heroPreviewImg = document.getElementById('appHeroImagePreviewImg');
+                const heroPlaceholder = document.getElementById('appHeroImagePreviewPlaceholder');
+                if (app.heroImage) {
+                    heroPreviewImg.src = app.heroImage;
+                    heroPreviewImg.style.display = 'block';
+                    heroPlaceholder.style.display = 'none';
+                } else {
+                    heroPreviewImg.style.display = 'none';
+                    heroPlaceholder.style.display = 'block';
+                }
+
                 renderFeaturesRows(app.features || []);
                 renderScreenshotsRowsAdmin(app.screenshots || []);
 
@@ -2912,6 +2944,12 @@
                 document.getElementById('appFieldImage').value = '';
                 previewImg.style.display = 'none';
                 placeholder.style.display = 'block';
+
+                document.getElementById('appFieldHeroImage').value = '';
+                const heroPreviewClear = document.getElementById('appHeroImagePreviewImg');
+                const heroPlaceholderClear = document.getElementById('appHeroImagePreviewPlaceholder');
+                if (heroPreviewClear) heroPreviewClear.style.display = 'none';
+                if (heroPlaceholderClear) heroPlaceholderClear.style.display = 'block';
 
                 renderFeaturesRows([]);
                 renderScreenshotsRowsAdmin([]);
@@ -3179,6 +3217,7 @@
             const googlePlayEl = document.getElementById('appFieldGooglePlay');
             const googlePlayUrl = googlePlayEl ? googlePlayEl.value.trim() : '';
             const image = document.getElementById('appFieldImage').value.trim();
+            const heroImage = document.getElementById('appFieldHeroImage').value.trim();
 
             // Collect features
             const features = [];
@@ -3243,6 +3282,7 @@
                 appStoreUrl,
                 googlePlayUrl,
                 image,
+                heroImage,
                 detailUrl: `apps/app.html?id=${id}`,
                 features,
                 screenshots
@@ -3315,6 +3355,66 @@
                 showToast(`❌ ${err.message}`, 'error', 6000);
             } finally {
                 event.target.value = '';
+            }
+        }
+
+        // HERO IMAGE UPLOAD HANDLER FOR MODAL
+        async function handleAppHeroImageSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!authToken) {
+                openTokenModal();
+                alert('Pro nahrávání obrázků na GitHub je nejprve potřeba zadat GitHub Token.');
+                event.target.value = '';
+                return;
+            }
+
+            const previewImg = document.getElementById('appHeroImagePreviewImg');
+            const placeholder = document.getElementById('appHeroImagePreviewPlaceholder');
+
+            showToast('⏳ Zpracovávám a optimalizuji Hero obrázek...', 'info');
+
+            try {
+                // Allow up to 2400px so the hero banner stays razor-sharp
+                const prepared = await compressAndPrepareImage(file, 2400, 0.88);
+
+                // Okamžitý lokální náhled pro uživatele
+                previewImg.src = prepared.blobUrl;
+                previewImg.style.display = 'block';
+                placeholder.style.display = 'none';
+
+                let baseName = sanitizeFilename(file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
+                if (!baseName) baseName = 'hero-banner';
+                const filename = `${baseName}.${prepared.extension}`;
+                const path = `assets/${filename}`;
+
+                showToast(`⏳ Nahrávám "${filename}" na GitHub...`, 'info', 10000);
+                await uploadFileToGitHub(path, prepared.base64, `Upload Hero obrázku ${filename}`);
+
+                document.getElementById('appFieldHeroImage').value = path;
+                showToast(`✅ Hero obrázek "${filename}" byl úspěšně nahrán na GitHub!`, 'success', 5000);
+                markDirty();
+            } catch (err) {
+                console.error(err);
+                alert(`Chyba při nahrávání Hero obrázku: ${err.message}`);
+                showToast(`❌ ${err.message}`, 'error', 6000);
+            } finally {
+                event.target.value = '';
+            }
+        }
+
+        function updateAppHeroImagePreview(val) {
+            const previewImg = document.getElementById('appHeroImagePreviewImg');
+            const placeholder = document.getElementById('appHeroImagePreviewPlaceholder');
+            if (!previewImg || !placeholder) return;
+            if (val && val.trim()) {
+                previewImg.src = val.trim();
+                previewImg.style.display = 'block';
+                placeholder.style.display = 'none';
+            } else {
+                previewImg.style.display = 'none';
+                placeholder.style.display = 'block';
             }
         }
 
