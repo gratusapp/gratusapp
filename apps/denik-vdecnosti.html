@@ -87,7 +87,7 @@
         <!-- HERO SHOWCASE IMAGE (ZÁHLAVÍ DETAILU) -->
         <div id="heroImageWrapper" style="display: none; margin-top: 45px; max-width: 980px; margin-left: auto; margin-right: auto; padding: 0 16px; position: relative;">
             <div style="position: absolute; top: 15%; left: 10%; width: 80%; height: 70%; background: radial-gradient(circle, rgba(255, 154, 139, 0.22) 0%, transparent 70%); filter: blur(40px); pointer-events: none; z-index: 0;"></div>
-            <img id="heroShowcaseImg" src="" alt="Ukázka Deník vděčnosti" style="width: 100%; max-width: 960px; border-radius: 20px; box-shadow: 0 25px 70px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.12); position: relative; z-index: 1; display: block; margin: 0 auto;" onerror="this.parentElement.style.display='none'">
+            <img id="heroShowcaseImg" src="" alt="Ukázka Deník vděčnosti" style="width: 100%; max-width: 960px; border-radius: 20px; box-shadow: 0 25px 70px rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.12); position: relative; z-index: 1; display: block; margin: 0 auto;" onerror="handleHeroImgError(this)">
         </div>
     </header>
 
@@ -240,6 +240,34 @@
 
     <!-- DYNAMICKÝ NAČÍTAČ Z ADMINISTRACE (content.json & localStorage) -->
     <script>
+    // Inteligentní ošetření chybného načtení (fallback na raw.githubusercontent.com)
+    function handleHeroImgError(img) {
+        if (!img) return;
+        const currentSrc = img.src || '';
+        if (!img.dataset.triedGitHubRaw) {
+            img.dataset.triedGitHubRaw = 'true';
+            const clean = img.dataset.assetPath || (currentSrc.match(/assets\/[^?#]+/) || [])[0];
+            if (clean) {
+                console.log('Hero obrázek načítám záložně z GitHub CDN:', clean);
+                img.src = `https://raw.githubusercontent.com/gratusapp/gratusapp/main/${clean}`;
+                return;
+            }
+        }
+        if (img.parentElement) {
+            img.parentElement.style.display = 'none';
+        }
+    }
+
+    // Helper pro korektní URL obrázků
+    function resolveAssetUrl(path) {
+        if (!path) return '';
+        if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:') || path.startsWith('blob:')) {
+            return path;
+        }
+        const cleanPath = path.replace(/^\.?\.\//, '').replace(/^\//, '');
+        return `../${cleanPath}`;
+    }
+
     async function loadDynamicDenikContent() {
         let data = null;
 
@@ -289,8 +317,21 @@
         const heroImg = document.getElementById('heroShowcaseImg');
         if (heroWrap && heroImg) {
             if (app.heroImage) {
-                const src = app.heroImage.startsWith('../') ? app.heroImage : `../${app.heroImage}`;
-                heroImg.src = src;
+                const clean = app.heroImage.replace(/^\.?\.\//, '').replace(/^\//, '');
+                heroImg.dataset.assetPath = clean;
+                delete heroImg.dataset.triedGitHubRaw;
+
+                // 1. Zkusit okamžitou lokální mezipaměť (pokud byl obrázek právě nahrán v adminu)
+                let localCached = null;
+                try {
+                    localCached = localStorage.getItem('gratus_preview_' + clean) || localStorage.getItem('gratus_preview_' + app.heroImage);
+                } catch(e) {}
+
+                if (localCached) {
+                    heroImg.src = localCached;
+                } else {
+                    heroImg.src = resolveAssetUrl(app.heroImage);
+                }
                 heroWrap.style.display = 'block';
             } else if (app.heroImage === '') {
                 heroWrap.style.display = 'none';
