@@ -415,8 +415,8 @@
       "id": "dane-pro",
       "title": "Kapesní účetní",
       "tagline": "Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí na iCloudu.",
-      "heroSubtitle": "",
-      "medicalNotice": "",
+      "heroSubtitle": "Chytrá daňová evidence a fakturace pro české freelancery. Live srovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí bez externích serverů.",
+      "medicalNotice": "Aplikace je nezávislý softwarový nástroj pro evidenci a modelové srovnání daňových režimů OSVČ (zákon č. 586/1992 Sb.). Nenahrazuje individuální poradenství certifikovaného daňového poradce.",
       "badge": "Finální testování",
       "badgeColor": "#10B981",
       "accentColor": "#10B981",
@@ -428,36 +428,64 @@
       "features": [
         {
           "icon": "⚖️",
-          "title": "Live Daňový Souboj",
-          "description": "Real-time porovnání reálných výdajů proti výdajovému paušálu (60 % / 40 % / 80 %).",
+          "title": "Sloupec A vs. Sloupec B (Live srovnání)",
+          "description": "Okamžitý přehled v reálném čase. Porovnává daňovou evidenci (reálné výdaje) s výdajovým paušálem (60 % / 80 %). Zelený štítek vám ihned spočítá, která metoda vám ušetří více peněz.",
+          "badge": "SOUČÁST VERZE 1.0",
+          "status": "included"
+        },
+        {
+          "icon": "🛡️",
+          "title": "Vedlejší činnost & Sociální pojištění",
+          "description": "Hlídá zákonnou rozhodnou částku 117 521 Kč zisku pro rok 2026. Při zisku do tohoto limitu je sociální pojištění 0 Kč (osvobozeno od plateb záloh). Včas vás upozorní při přiblížení k limitu.",
           "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         },
         {
           "icon": "💳",
-          "title": "Revolut Pro & Multi-Currency",
-          "description": "Bleskový import CSV výpisů a automatické přepočty měn dle oficiálních kurzů ČNB.",
+          "title": "Fakturace v CZK & EUR (Revolut Pro)",
+          "description": "Vystavujte faktury tuzemským i zahraničním klientům. Automaticky stahuje oficiální denní kurzy ČNB, doplňuje QR platbu pro české banky a generuje čisté A4 PDF faktury.",
           "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         },
         {
-          "icon": "🧾",
-          "title": "Faktury & ARES Registr",
-          "description": "Vystavení PDF faktury s QR platbou a načítání firemních údajů z registru ARES.",
+          "icon": "🇪🇺",
+          "title": "EU Reverse Charge doložka",
+          "description": "Při fakturaci klientům v EU (Apple, Google atd.) automaticky vkládá povinnou doložku dle čl. 196 Směrnice 2006/112/ES a hlídá povinnosti Identifikované osoby k DPH.",
+          "badge": "SOUČÁST VERZE 1.0",
+          "status": "included"
+        },
+        {
+          "icon": "🔍",
+          "title": "1-Klikové ověření v registru ARES",
+          "description": "Zadejte IČO a jedním klepnutím načtěte oficiální název, sídlo a DIČ z registru MFČR. Automaticky rozpozná CZ-NACE obor podnikání a odpovídající paušál (60% volná vs. 80% řemeslná).",
+          "badge": "SOUČÁST VERZE 1.0",
+          "status": "included"
+        },
+        {
+          "icon": "📥",
+          "title": "Migrace faktur (ISDOC & CSV)",
+          "description": "Přecházíte z jiného systému? Snadný import faktur ze standardu ISDOC (Fakturoid, iDoklad, Pohoda, Money S3) i CSV souborů s automatickou kontrolou duplicit.",
+          "badge": "SOUČÁST VERZE 1.0",
+          "status": "included"
+        },
+        {
+          "icon": "📷",
+          "title": "OCR Triage & Daňový asistent",
+          "description": "Vyfoťte doklad fotoaparátem. Systém Vision OCR doklad vytěží a podle vašeho IČO rozpozná, zda jde o příjem nebo výdaj. Hlídá také hranici odpisů majetku nad 100 000 Kč.",
           "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         },
         {
           "icon": "🔒",
-          "title": "100% Soukromí na iCloudu",
-          "description": "Žádné externí servery, žádné sledování. Vaše účetní data jsou pouze vaše.",
-          "badge": "",
+          "title": "100% Soukromí & Apple iCloud Sync",
+          "description": "Vaše finanční data nikam neposíláme. Aplikace nemá žádný externí server ani reklamní trackery. Veškeré záznamy jsou bezpečně uloženy v zařízení a synchronizovány v soukromém iCloudu.",
+          "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         },
         {
           "icon": "🪄",
           "title": "Propojení mezi zařízeními",
-          "description": "Žadáš fakturu v telefonu a večer si zapneš tablet, nebo notebook a vše vidíš i na těchto zařízení v reálném stavu jako je v telefonu. ",
+          "description": "Zadáš fakturu v telefonu a večer si zapneš tablet, nebo notebook a vše vidíš i na těchto zařízení v reálném stavu jako je v telefonu.",
           "badge": "SOUČÁST VERZE 1.0",
           "status": "included"
         }
@@ -479,7 +507,16 @@
           "url": "assets/dane-pro-paywall.png",
           "alt": ""
         }
-      ]
+      ],
+      "plusCard": {
+        "title": "Tarify & Předplatné (14 dní zdarma)",
+        "text": "Základní verze umožňuje zdarma vystavit až 5 faktur ročně pro vyzkoušení kalkulátoru. Pro neomezenou evidenci, importy a OCR vytěžování je k dispozici roční předplatné se 14denní zkušební dobou zdarma (1 490 Kč / rok, odpovídá ~124 Kč/měsíc), flexibilní měsíční předplatné (199 Kč / měsíc) nebo jednorázová doživotní licence (2 990 Kč).",
+        "note": "Předplatné lze kdykoliv spravovat nebo zrušit v nastavení vašeho Apple ID."
+      },
+      "cta": {
+        "title": "Mějte své daně a faktury vyřešené za pár minut",
+        "text": "Aplikace vám ušetří hodiny počítání i peníze na daních a odvodech."
+      }
     }
   ],
   "legal": {
