@@ -994,7 +994,7 @@
                     <div style="font-size: 44px; margin-bottom: 12px;">📤</div>
                     <p style="font-weight: 600; font-size: 16px; margin-bottom: 6px;">Klikněte pro výběr obrázku nebo ho přetáhněte sem</p>
                     <p style="color: var(--text-secondary); font-size: 13px;">Podporovány formáty PNG, JPG, WEBP, SVG</p>
-                    <input type="file" id="mediaFileInput" accept="image/*" style="display: none;" onchange="handleDirectImageUpload(event)">
+                    <input type="file" id="mediaFileInput" accept="image/png, image/jpeg, image/webp, image/svg+xml, image/*" style="display: none;" onchange="handleDirectImageUpload(event)">
                 </div>
                 <div id="uploadProgress" style="display: none; margin-top: 15px; text-align: center; color: var(--accent-color);">
                     ⏳ Nahrávám obrázek na GitHub...
@@ -1156,12 +1156,12 @@
                     <div class="form-group">
                         <label>Hlavní ikona / Náhledový obrázek (assets/...):</label>
                         <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                            <input type="text" id="appFieldImage" class="form-control" placeholder="assets/app-home-clean.png">
+                            <input type="text" id="appFieldImage" class="form-control" placeholder="assets/app-home-clean.png" oninput="updateAppImagePreview(this.value)">
                             <button type="button" class="btn-secondary" onclick="document.getElementById('appImageUploadInput').click()">Nahrát nový</button>
-                            <input type="file" id="appImageUploadInput" accept="image/*" style="display: none;" onchange="handleAppImageSelect(event)">
+                            <input type="file" id="appImageUploadInput" accept="image/png, image/jpeg, image/webp, image/svg+xml, image/*" style="display: none;" onchange="handleAppImageSelect(event)">
                         </div>
                         <div id="appImagePreviewBox" style="height: 90px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--admin-border);">
-                            <img id="appImagePreviewImg" src="" style="max-height: 80px; max-width: 90%; display: none;">
+                            <img id="appImagePreviewImg" src="" style="max-height: 80px; max-width: 90%; display: none;" onerror="this.style.display='none'; const ph = document.getElementById('appImagePreviewPlaceholder'); if (ph) ph.style.display='block';">
                             <span id="appImagePreviewPlaceholder" style="color: var(--text-secondary); font-size: 13px;">Náhled obrázku</span>
                         </div>
                     </div>
@@ -1194,7 +1194,7 @@
                         </div>
                         <button type="button" class="btn-secondary" style="font-size: 12px; padding: 6px 12px;" onclick="addScreenshotRow()">+ Přidat screenshot</button>
                     </div>
-                    <input type="file" id="rowScreenshotUploadInput" accept="image/*" style="display: none;" onchange="handleRowScreenshotUpload(event)">
+                    <input type="file" id="rowScreenshotUploadInput" accept="image/png, image/jpeg, image/webp, image/svg+xml, image/*" style="display: none;" onchange="handleRowScreenshotUpload(event)">
                     <div id="screenshotsContainerAdmin">
                         <!-- Dynamicky generováno -->
                     </div>
@@ -3105,34 +3105,59 @@
             const file = event.target.files[0];
             if (!file || !activeScreenshotRow) return;
 
-            const filename = sanitizeFilename(file.name);
-            const path = `assets/${filename}`;
-            showToast('⏳ Nahrávám screenshot na GitHub...', 'info');
+            if (!authToken) {
+                openTokenModal();
+                alert('Pro nahrávání screenshotů na GitHub je nejprve potřeba zadat GitHub Token.');
+                event.target.value = '';
+                return;
+            }
+
+            const row = activeScreenshotRow;
+            const img = row.querySelector('img');
+            const shotUrlInput = row.querySelector('.shot-url');
+
+            showToast('⏳ Zpracovávám screenshot...', 'info');
 
             try {
-                const base64Data = await readFileAsBase64(file);
-                await uploadFileToGitHub(path, base64Data, `Upload screenshotu ${filename}`);
-                activeScreenshotRow.querySelector('.shot-url').value = path;
-                const img = activeScreenshotRow.querySelector('img');
+                const prepared = await compressAndPrepareImage(file);
+
+                // 1. Okamžitý lokální náhled pro uživatele (nikdy nezmizí!)
                 if (img) {
-                    img.src = path;
+                    img.src = prepared.blobUrl;
                     img.style.display = 'block';
                 }
+
+                let baseName = sanitizeFilename(file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
+                if (!baseName) baseName = 'screenshot';
+                const filename = `${baseName}.${prepared.extension}`;
+                const path = `assets/${filename}`;
+
+                showToast(`⏳ Nahrávám "${filename}" na GitHub...`, 'info', 10000);
+                await uploadFileToGitHub(path, prepared.base64, `Upload screenshotu ${filename}`);
+
+                if (shotUrlInput) shotUrlInput.value = path;
+                showToast(`✅ Screenshot "${filename}" byl úspěšně nahrán na GitHub!`, 'success', 5000);
                 markDirty();
-                showToast(`Screenshot "${filename}" nahrán`, 'success');
             } catch(e) {
                 console.error(e);
-                showToast('Chyba při nahrávání screenshotu', 'error');
+                alert(`Chyba při nahrávání screenshotu: ${e.message}`);
+                showToast(`❌ ${e.message}`, 'error', 6000);
+            } finally {
+                event.target.value = '';
             }
-            event.target.value = '';
         }
 
         function updateScreenshotRowPreview(input) {
             const row = input.closest('.screenshot-item-row');
             const img = row ? row.querySelector('img') : null;
             if (img) {
-                img.src = input.value.trim();
-                img.style.display = input.value.trim() ? 'block' : 'none';
+                const val = input.value.trim();
+                if (val) {
+                    img.src = val;
+                    img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
+                }
             }
         }
 
@@ -3252,27 +3277,44 @@
             const file = event.target.files[0];
             if (!file) return;
 
-            const filename = sanitizeFilename(file.name);
-            const path = `assets/${filename}`;
+            if (!authToken) {
+                openTokenModal();
+                alert('Pro nahrávání obrázků na GitHub je nejprve potřeba zadat GitHub Token.');
+                event.target.value = '';
+                return;
+            }
 
-            showToast('⏳ Nahrávám obrázek na GitHub...', 'info');
+            const previewImg = document.getElementById('appImagePreviewImg');
+            const placeholder = document.getElementById('appImagePreviewPlaceholder');
+
+            showToast('⏳ Zpracovávám a optimalizuji obrázek...', 'info');
 
             try {
-                const base64Data = await readFileAsBase64(file);
-                await uploadFileToGitHub(path, base64Data, `Upload obrázku ${filename}`);
-                document.getElementById('appFieldImage').value = path;
-                
-                const previewImg = document.getElementById('appImagePreviewImg');
-                const placeholder = document.getElementById('appImagePreviewPlaceholder');
-                previewImg.src = path;
+                const prepared = await compressAndPrepareImage(file);
+
+                // 1. Okamžitý lokální náhled pro uživatele (uživatel ho HNED vidí)
+                previewImg.src = prepared.blobUrl;
                 previewImg.style.display = 'block';
                 placeholder.style.display = 'none';
 
-                showToast(`✅ Obrázek byl úspěšně nahrán jako ${path}`, 'success');
+                // 2. Název souboru
+                let baseName = sanitizeFilename(file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
+                if (!baseName) baseName = 'app-image';
+                const filename = `${baseName}.${prepared.extension}`;
+                const path = `assets/${filename}`;
+
+                showToast(`⏳ Nahrávám "${filename}" na GitHub...`, 'info', 10000);
+                await uploadFileToGitHub(path, prepared.base64, `Upload obrázku ${filename}`);
+
+                document.getElementById('appFieldImage').value = path;
+                showToast(`✅ Obrázek "${filename}" byl úspěšně nahrán na GitHub!`, 'success', 5000);
                 markDirty();
             } catch (err) {
+                console.error(err);
                 alert(`Chyba při nahrávání obrázku: ${err.message}`);
-                showToast('Chyba při nahrávání', 'error');
+                showToast(`❌ ${err.message}`, 'error', 6000);
+            } finally {
+                event.target.value = '';
             }
         }
 
@@ -3537,39 +3579,59 @@
             const file = event.target.files[0];
             if (!file) return;
 
+            if (!authToken) {
+                openTokenModal();
+                alert('Pro nahrávání médií na GitHub je nejprve potřeba zadat GitHub Token.');
+                event.target.value = '';
+                return;
+            }
+
             const progress = document.getElementById('uploadProgress');
-            progress.style.display = 'block';
+            if (progress) progress.style.display = 'block';
+
+            showToast('⏳ Optimalizuji obrázek...', 'info');
 
             try {
-                const filename = sanitizeFilename(file.name);
+                const prepared = await compressAndPrepareImage(file);
+                let baseName = sanitizeFilename(file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
+                if (!baseName) baseName = 'media';
+                const filename = `${baseName}.${prepared.extension}`;
                 const path = `assets/${filename}`;
-                const base64Data = await readFileAsBase64(file);
 
-                await uploadFileToGitHub(path, base64Data, `Nahrání obrázku ${filename} přes Media`);
-                showToast(`🎉 Obrázek byl nahrán jako ${path}`, 'success');
+                showToast(`⏳ Nahrávám "${filename}" na GitHub...`, 'info', 10000);
+                await uploadFileToGitHub(path, prepared.base64, `Nahrání obrázku ${filename} přes Media`);
+                showToast(`🎉 Obrázek byl úspěšně nahrán jako ${path}`, 'success', 5000);
+
                 renderMediaGallery();
             } catch (err) {
+                console.error(err);
                 alert(`Chyba při nahrávání: ${err.message}`);
-                showToast('Chyba při nahrávání', 'error');
+                showToast(`❌ ${err.message}`, 'error', 6000);
             } finally {
-                progress.style.display = 'none';
+                if (progress) progress.style.display = 'none';
                 event.target.value = '';
             }
         }
 
         function renderMediaGallery() {
             const gallery = document.getElementById('mediaGallery');
+            if (!gallery) return;
             gallery.innerHTML = '';
 
             // Gather known images from apps
             const knownImages = new Set();
-            appData.apps.forEach(a => {
-                if (a.image) knownImages.add(a.image);
-                (a.screenshots || []).forEach(s => knownImages.add(s));
-            });
+            if (appData && appData.apps) {
+                appData.apps.forEach(a => {
+                    if (a.image) knownImages.add(a.image);
+                    (a.screenshots || []).forEach(s => {
+                        const url = typeof s === 'string' ? s : (s.url || '');
+                        if (url) knownImages.add(url);
+                    });
+                });
+            }
 
             // Also standard project images
-            ['assets/app-home-clean.png', 'assets/app-inspiration-clean.png', 'assets/app-journey-clean.png', 'assets/dane-pro-dashboard.png', 'assets/podlahy-holcak-hero.png'].forEach(img => knownImages.add(img));
+            ['assets/app-home-clean.png', 'assets/app-inspiration-clean.png', 'assets/app-journey-clean.png', 'assets/dane-pro-dashboard.png', 'assets/dane-pro-invoices.png', 'assets/dane-pro-import.png', 'assets/dane-pro-paywall.png', 'assets/podlahy-holcak-hero.png'].forEach(img => knownImages.add(img));
 
             knownImages.forEach(imgSrc => {
                 const item = document.createElement('div');
@@ -3581,7 +3643,7 @@
 
                 item.innerHTML = `
                     <div style="height: 100px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 8px;">
-                        <img src="${imgSrc}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                        <img src="${imgSrc}" style="max-height: 100%; max-width: 100%; object-fit: contain;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>'">
                     </div>
                     <div style="font-size: 11px; color: var(--text-secondary); word-break: break-all; margin-bottom: 6px;">${imgSrc}</div>
                     <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px; width: 100%; justify-content: center;" onclick="copyToClipboard('${imgSrc}')">Kopírovat cestu</button>
@@ -3592,11 +3654,20 @@
 
         // GITHUB API HELPER: Upload single file
         async function uploadFileToGitHub(filePath, base64Content, commitMessage) {
+            if (!authToken) {
+                openTokenModal();
+                throw new Error('Chybí GitHub Token. Zadejte prosím přístupový token.');
+            }
+
             // Check if file already exists to get SHA
             let existingSha = null;
             try {
-                const checkRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}?ref=${BRANCH}`, {
-                    headers: { 'Authorization': `Bearer ${authToken}` }
+                const encodedPath = filePath.split('/').map(encodeURIComponent).join('/');
+                const checkRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodedPath}?ref=${BRANCH}&v=${Date.now()}`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
                 });
                 if (checkRes.ok) {
                     const checkData = await checkRes.json();
@@ -3611,7 +3682,8 @@
             };
             if (existingSha) body.sha = existingSha;
 
-            const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${filePath}`, {
+            const encodedPath = filePath.split('/').map(encodeURIComponent).join('/');
+            const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodedPath}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${authToken}`,
@@ -3622,8 +3694,12 @@
             });
 
             if (!res.ok) {
-                const err = await res.json();
-                throw new Error(err.message || 'Chyba API');
+                const err = await res.json().catch(() => ({}));
+                if (res.status === 401 || res.status === 403) {
+                    openTokenModal();
+                    throw new Error('Neplatný nebo expirovaný GitHub Token (chyba ' + res.status + '). Zkontrolujte token s oprávněním repo.');
+                }
+                throw new Error(err.message || `Chyba GitHub API (${res.status})`);
             }
             return await res.json();
         }
@@ -3684,6 +3760,88 @@
         // UTILS
         function sanitizeFilename(name) {
             return name.toLowerCase().replace(/[^a-z0-9\.\-_]/g, '-');
+        }
+
+        function compressAndPrepareImage(file, maxDimension = 1600, quality = 0.85) {
+            return new Promise((resolve, reject) => {
+                if (file.type === 'image/svg+xml') {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        const base64 = reader.result.split(',')[1];
+                        resolve({
+                            base64: base64,
+                            blobUrl: URL.createObjectURL(file),
+                            extension: 'svg'
+                        });
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > maxDimension || height > maxDimension) {
+                            if (width > height) {
+                                height = Math.round((height * maxDimension) / width);
+                                width = maxDimension;
+                            } else {
+                                width = Math.round((width * maxDimension) / height);
+                                height = maxDimension;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        const isPng = file.type === 'image/png';
+                        const outputType = isPng ? 'image/png' : 'image/jpeg';
+                        const dataUrl = canvas.toDataURL(outputType, quality);
+                        const base64 = dataUrl.split(',')[1];
+
+                        resolve({
+                            base64: base64,
+                            blobUrl: dataUrl,
+                            extension: isPng ? 'png' : 'jpg'
+                        });
+                    };
+                    img.onerror = () => {
+                        // Fallback to raw base64 if canvas decode fails
+                        readFileAsBase64(file).then(rawB64 => {
+                            resolve({
+                                base64: rawB64,
+                                blobUrl: URL.createObjectURL(file),
+                                extension: (file.name.split('.').pop() || 'png').toLowerCase()
+                            });
+                        }).catch(reject);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateAppImagePreview(val) {
+            const previewImg = document.getElementById('appImagePreviewImg');
+            const placeholder = document.getElementById('appImagePreviewPlaceholder');
+            if (!previewImg || !placeholder) return;
+            if (val && val.trim()) {
+                previewImg.src = val.trim();
+                previewImg.style.display = 'block';
+                placeholder.style.display = 'none';
+            } else {
+                previewImg.style.display = 'none';
+                placeholder.style.display = 'block';
+            }
         }
 
         function readFileAsBase64(file) {
