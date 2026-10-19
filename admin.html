@@ -1360,473 +1360,576 @@
 
         // DEFAULT CONTENT EMBEDDED (Safe fallback for file:// and offline)
         const DEFAULT_CONTENT = {
-          "settings": {
-            "siteTitle": "Gratus App",
-            "developerName": "Veronika Mikovcová",
-            "contactEmail": "gratusapp@icloud.com",
-            "ico": "29851106",
-            "location": "Praha, Česká republika",
-            "footerCopyright": "© 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.",
-            "linkedinUrl": "https://www.linkedin.com/in/veronika-m-52420322b"
-          },
-          "home": {
-            "hero": {
-              "title": "Digitální řešení na míru",
-              "btn1Text": "Moje vize",
-              "btn1Link": "#vision",
-              "btn2Text": "Prohlédnout projekty",
-              "btn2Link": "apps.html",
-              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
-              "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
-              "showcaseLeft": "assets/app-inspiration-clean.png",
-              "showcaseCenter": "assets/app-home-clean.png",
-              "showcaseRight": "assets/app-journey-clean.png"
-            },
-            "approach": {
-              "title": "Kreativita poháněná technologií",
-              "p1": "Věřím, že digitální produkt by měl být víc než jen kód. Měl by vyprávět příběh a vzbuzovat emoce. Má cesta začala vášní pro design a postupně se prolnula s precizností softwarového testování a efektivitou programování s AI.",
-              "p2": "Dnes pomáhám podnikatelům růst tím, že z jejich vizí dělám hmatatelnou realitu. Můj přístup je postaven na detailech, které dělají rozdíl.",
-              "pillars": [
-                { "title": "Preciznost", "color": "#FF9A8B", "desc": "Odzkoušené a spolehlivé projekty bez chyb." },
-                { "title": "AI Efektivita", "color": "#0071e3", "desc": "Rychlejší doručení bez ztráty kvality." },
-                { "title": "UI Design", "color": "#ffffff", "desc": "Minimalismus inspirovaný Apple estetikou." },
-                { "title": "Marketing", "color": "#ffffff", "desc": "Obsah, který lidi baví a prodává." }
-              ]
-            },
-            "vision": {
-              "title": "Moje vize",
-              "mainQuote": "Budoucnost leží v symbióze lidského nápadu a AI. Jako nezávislý vývojář doručuji výsledky, na které by agentura potřebovala celý tým.",
-              "points": [
-                "Rychlost: AI nám dává křídla v základech.",
-                "Flexibilita: Komunikujete přímo se mnou.",
-                "Kvalita: Agenturní standard za férovou cenu."
-              ],
-              "sideBoxEmoji": "💡",
-              "sideBoxTitle": "Innovation starts here.",
-              "sideBoxDesc": "Každý projekt je pro mě příležitostí ukázat, že i malý tým dokáže překonat velké agentury."
-            },
-            "expertise": [
-              { "icon": "🎓", "title": "Google AI Essentials", "desc": "Ovládám techniky Prompt Engineeringu a vím, jak pomocí AI doručovat výsledky v rekordním čase." },
-              { "icon": "🎨", "title": "Creative UX/UI", "desc": "Design v Canvě a Figma, který lidi baví. Čistota, minimalismus a důraz na uživatelský prožitek." },
-              { "icon": "🧪", "title": "Software Testing", "desc": "Zkušenosti z QA zaručují, že vaše řešení bude stabilní, bezpečné a připravené na reálný nápor uživatelů." },
-              { "icon": "🔍", "title": "SEO & Analytika", "desc": "Váš web nezapadne. Nastavím technické SEO a analytiku tak, abyste byli vidět tam, kde vás lidé hledají." },
-              { "icon": "📍", "title": "Google & Domény", "desc": "Nabízím propojení vaší firmy s Google Maps, firemním profilem na Googlu a kompletní nastavení domén pro vaše weby." },
-              { "icon": "🤝", "title": "Spolupráce", "desc": "Hledáte parťáka pro projekt? Pojďme se propojit na LinkedInu a probrat vaše nápady." }
-            ],
-            "technologies": [
-              { "icon": "🍎", "title": "iOS & Swift", "desc": "Vývoj nativních aplikací pro ekosystém Apple s důrazem na plynulost, bezpečnost a čistý Swift kód." },
-              { "icon": "🤖", "title": "AI Integration", "desc": "Implementace GPT modelů a pokročilého Prompt Engineeringu pro chytřejší a efektivnější funkce." },
-              { "icon": "🌐", "title": "Modern Web", "desc": "Stavba rychlých a responzivních webů využívajících HTML5, CSS3 a moderní JavaScriptové frameworky." },
-              { "icon": "☁️", "title": "iCloud & Cloud", "desc": "Lokální úložiště v zařízení, volitelné zálohy přes Apple podle nastavení uživatele — bez vlastního „datového cloudu“ vývojáře u obsahu aplikace." }
-            ],
-            "cta": {
-              "title": "Začněte svou cestu k vděčnosti ještě dnes",
-              "desc": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.",
-              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
-              "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share"
-            }
-          },
-          "pricing": {
-            "title": "Možnosti spolupráce",
-            "subtitle": "Férové ceny a individuální přístup pro každý projekt. Vyberte si úroveň měsíční péče nebo jednorázové řešení.",
-            "monthlyTitle": "Měsíční správa a podpora",
-            "monthlyPackages": [
-              {
-                "id": "basic",
-                "title": "BASIC Podpora",
-                "price": "1 000 Kč",
-                "period": "/ měsíc",
-                "badge": "",
-                "badgeColor": "",
-                "borderColor": "",
-                "tagline": "Změny 1x měsíčně",
-                "features": [
-                  "Kontrola funkčnosti webu",
-                  "Vložení dodaných textů a fotek",
-                  "Základní technický dohled"
+        "settings": {
+                "siteTitle": "Gratus App",
+                "developerName": "Veronika Mikovcová",
+                "contactEmail": "gratusapp@icloud.com",
+                "ico": "29851106",
+                "location": "Praha, Česká republika",
+                "footerCopyright": "© 2026 Veronika Mikovcová. Vytvořeno s citem pro detail.",
+                "linkedinUrl": "https://www.linkedin.com/in/veronika-m-52420322b"
+        },
+        "home": {
+                "hero": {
+                        "title": "Digitální řešení na míru",
+                        "btn1Text": "Moje vize",
+                        "btn1Link": "#vision",
+                        "btn2Text": "Prohlédnout projekty",
+                        "btn2Link": "apps.html",
+                        "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+                        "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
+                        "showcaseLeft": "assets/app-inspiration-clean.png",
+                        "showcaseCenter": "assets/app-home-clean.png",
+                        "showcaseRight": "assets/app-journey-clean.png"
+                },
+                "approach": {
+                        "title": "Kreativita poháněná technologií",
+                        "p1": "Věřím, že digitální produkt by měl být víc než jen kód. Měl by vyprávět příběh a vzbuzovat emoce. Má cesta začala vášní pro design a postupně se prolnula s precizností softwarového testování a efektivitou programování s AI.",
+                        "p2": "Dnes pomáhám podnikatelům růst tím, že z jejich vizí dělám hmatatelnou realitu. Můj přístup je postaven na detailech, které dělají rozdíl.",
+                        "pillars": [
+                                {
+                                        "title": "Preciznost",
+                                        "color": "#FF9A8B",
+                                        "desc": "Odzkoušené a spolehlivé projekty bez chyb."
+                                },
+                                {
+                                        "title": "AI Efektivita",
+                                        "color": "#0071e3",
+                                        "desc": "Rychlejší doručení bez ztráty kvality."
+                                },
+                                {
+                                        "title": "UI Design",
+                                        "color": "#ffffff",
+                                        "desc": "Minimalismus inspirovaný Apple estetikou."
+                                },
+                                {
+                                        "title": "Marketing",
+                                        "color": "#ffffff",
+                                        "desc": "Obsah, který lidi baví a prodává."
+                                }
+                        ]
+                },
+                "vision": {
+                        "title": "Moje vize",
+                        "mainQuote": "Budoucnost leží v symbióze lidského nápadu a AI. Jako nezávislý vývojář doručuji výsledky, na které by agentura potřebovala celý tým.",
+                        "points": [
+                                "Rychlost: AI nám dává křídla v základech.",
+                                "Flexibilita: Komunikujete přímo se mnou.",
+                                "Kvalita: Agenturní standard za férovou cenu."
+                        ],
+                        "sideBoxEmoji": "💡",
+                        "sideBoxTitle": "Innovation starts here.",
+                        "sideBoxDesc": "Každý projekt je pro mě příležitostí ukázat, že i malý tým dokáže překonat velké agentury."
+                },
+                "expertise": [
+                        {
+                                "icon": "🎓",
+                                "title": "Google AI Essentials",
+                                "desc": "Ovládám techniky Prompt Engineeringu a vím, jak pomocí AI doručovat výsledky v rekordním čase."
+                        },
+                        {
+                                "icon": "🎨",
+                                "title": "Creative UX/UI",
+                                "desc": "Design v Canvě a Figma, který lidi baví. Čistota, minimalismus a důraz na uživatelský prožitek."
+                        },
+                        {
+                                "icon": "🧪",
+                                "title": "Software Testing",
+                                "desc": "Zkušenosti z QA zaručují, že vaše řešení bude stabilní, bezpečné a připravené na reálný nápor uživatelů."
+                        },
+                        {
+                                "icon": "🔍",
+                                "title": "SEO & Analytika",
+                                "desc": "Váš web nezapadne. Nastavím technické SEO a analytiku tak, abyste byli vidět tam, kde vás lidé hledají."
+                        },
+                        {
+                                "icon": "📍",
+                                "title": "Google & Domény",
+                                "desc": "Nabízím propojení vaší firmy s Google Maps, firemním profilem na Googlu a kompletní nastavení domén pro vaše weby."
+                        },
+                        {
+                                "icon": "🤝",
+                                "title": "Spolupráce",
+                                "desc": "Hledáte parťáka pro projekt? Pojďme se propojit na LinkedInu a probrat vaše nápady."
+                        }
                 ],
-                "buttonText": "Zvolit balíček"
-              },
-              {
-                "id": "weekly",
-                "title": "WEEKLY Péče",
-                "price": "3 500 Kč",
-                "period": "/ měsíc",
-                "badge": "OBLÍBENÉ",
-                "badgeColor": "#0071e3",
-                "borderColor": "#0071e3",
-                "tagline": "Úpravy každý týden",
-                "features": [
-                  "Týdenní aktualizace obsahu",
-                  "Design 1x newsletteru měsíčně",
-                  "2x grafika pro sítě (Canva)",
-                  "Přednostní podpora"
+                "technologies": [
+                        {
+                                "icon": "🍎",
+                                "title": "iOS & Swift",
+                                "desc": "Vývoj nativních aplikací pro ekosystém Apple s důrazem na plynulost, bezpečnost a čistý Swift kód."
+                        },
+                        {
+                                "icon": "🤖",
+                                "title": "AI Integration",
+                                "desc": "Implementace GPT modelů a pokročilého Prompt Engineeringu pro chytřejší a efektivnější funkce."
+                        },
+                        {
+                                "icon": "🌐",
+                                "title": "Modern Web",
+                                "desc": "Stavba rychlých a responzivních webů využívajících HTML5, CSS3 a moderní JavaScriptové frameworky."
+                        },
+                        {
+                                "icon": "☁️",
+                                "title": "iCloud & Cloud",
+                                "desc": "Lokální úložiště v zařízení, volitelné zálohy přes Apple podle nastavení uživatele — bez vlastního „datového cloudu“ vývojáře u obsahu aplikace."
+                        }
                 ],
-                "buttonText": "Zvolit balíček"
-              },
-              {
-                "id": "premium",
-                "title": "PREMIUM Podpora",
-                "price": "7 000 Kč",
-                "period": "/ měsíc",
-                "badge": "",
-                "badgeColor": "",
-                "borderColor": "#FF9A8B",
-                "tagline": "Pro aktivní projekty",
-                "features": [
-                  "Pravidelné vkládání obsahu",
-                  "Rychlá pomoc na telefonu",
-                  "Tvorba 2x newsletteru měsíčně",
-                  "Slevy na nové featury"
-                ],
-                "buttonText": "Zvolit balíček"
-              },
-              {
-                "id": "ultimate",
-                "title": "ULTIMATE Správa",
-                "price": "10 000 Kč",
-                "period": "/ měsíc",
-                "badge": "",
-                "badgeColor": "",
-                "borderColor": "#ffffff",
-                "tagline": "Full-service bez starostí",
-                "features": [
-                  "Vymýšlení a tvorba obsahu",
-                  "Měsíční strategická konzultace",
-                  "Kompletní péče o digitální tvář",
-                  "Neomezené technické úpravy"
-                ],
-                "buttonText": "Zvolit balíček"
-              }
-            ],
-            "monthlyNote": "* U balíčků správy se předpokládá dodání podkladů (texty, fotky) od klienta, pokud není sjednána i tvorba obsahu (např. v balíčku ULTIMATE).\n** Ceny nezahrnují náklady na webhosting, doménu nebo licence za software třetích stran.",
-            "oneTimeTitle": "Jednorázové projekty",
-            "oneTimePackages": [
-              {
-                "id": "landing",
-                "title": "Landing Page",
-                "price": "Již od 5 000 Kč",
-                "borderColor": "",
-                "features": [
-                  "Moderní jednostránkový web",
-                  "Plně responzivní design",
-                  "Základní SEO optimalizace"
-                ],
-                "buttonText": "Mám zájem"
-              },
-              {
-                "id": "app",
-                "title": "Mobilní & Web aplikace",
-                "price": "Již od 25 000 Kč",
-                "borderColor": "#0071e3",
-                "features": [
-                  "Nativní iOS aplikace na míru",
-                  "Komplexní webové systémy",
-                  "Publikace v App Store"
-                ],
-                "buttonText": "Mám zájem"
-              },
-              {
-                "id": "seo",
-                "title": "Obsah & SEO",
-                "price": "Již od 3 000 Kč",
-                "borderColor": "#FF9A8B",
-                "features": [
-                  "Technické SEO webu",
-                  "Tvorba moderních newsletterů",
-                  "Obsahová strategie a textace"
-                ],
-                "buttonText": "Mám zájem"
-              }
-            ],
-            "customOffer": {
-              "title": "Nenašli jste, co jste hledali?",
-              "text": "Každá spolupráce je unikátní. Napište mi své představy a já vám připravím nabídku na míru vašim potřebám.",
-              "buttonText": "Nezávazně poptat"
-            }
-          },
-          "support": {
-            "title": "Podpora a Kontakt",
-            "subtitle": "Máte dotaz k aplikaci nebo potřebujete pomoci s technickým problémem? Jsme tu pro vás.",
-            "faq": [
-              {
-                "question": "Jak obnovím své předplatné?",
-                "answer": "Stačí v aplikaci kliknout na 'Obnovit nákupy' v sekci nastavení."
-              },
-              {
-                "question": "Kam se ukládají moje data?",
-                "answer": "Záznamy z aplikace jsou v telefonu (lokálně). Vývojář k nim nemá přístup. Do iCloudu se dostanou jen tehdy, pokud máte zapnutou zálohu iPhonu do iCloudu — podle nastavení u Apple."
-              }
-            ],
-            "contact": {
-              "name": "Veronika Mikovcová",
-              "ico": "29851106",
-              "location": "Praha, Česká republika",
-              "email": "gratusapp@icloud.com",
-              "responseTime": "Zpravidla odpovídáme do 24 hodin.",
-              "note": "Dotazy, technická podpora a konzultace:"
-            }
-          },
-          "apps": [
-            {
-              "id": "denik-vdecnosti",
-              "title": "Deník vděčnosti",
-              "tagline": "Vaše každodenní dávka pozitivity. Moderní iOS aplikace inspirovaná klidem a minimalismem. Sledujte svůj pokrok a budujte nové návyky.",
-              "heroSubtitle": "Osobní deník a nástroje pro každodenní záznamy a reflexi — inspirované mindfulness, v jedné aplikaci. Nenahrazuje odbornou péči.",
-              "medicalNotice": "Důležité: Aplikace není zdravotnický prostředek ani terapie. V akutní psychické tísni volejte 155 nebo 158, při ohrožení života 112.",
-              "badge": "ACTIVE",
-              "badgeColor": "#FF9A8B",
-              "accentColor": "#FF9A8B",
-              "image": "assets/app-home-clean.png",
-              "imageRotate": "5deg",
-              "iconEmoji": "✨",
-              "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
-              "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
-              "detailUrl": "apps/denik-vdecnosti.html",
-              "features": [
-                {
-                  "icon": "🌿",
-                  "title": "Zahrada Vděčnosti",
-                  "description": "Unikátní vizuální systém, kde vaše vděčnost doslova roste. Čím pravidelněji si zapisujete, tím košatější a krásnější je vaše digitální zahrada.",
-                  "badge": "SOUČÁST VERZE 1.0",
-                  "status": "included"
-                },
-                {
-                  "icon": "🧘‍♀️",
-                  "title": "Oáza klidu",
-                  "description": "Váš osobní prostor pro relaxaci. Obsahuje ambientní zvuky a vedená dechová cvičení.",
-                  "badge": "JIŽ BRZY V AKTUALIZACI",
-                  "status": "upcoming"
-                },
-                {
-                  "icon": "🌑",
-                  "title": "Můj prostor & Stíny",
-                  "description": "Bezpečné místo nejen pro radost, ale i pro těžké chvíle. Sekce pro vypsání se z negativních emocí.",
-                  "badge": "SOUČÁST VERZE 1.0",
-                  "status": "included"
-                },
-                {
-                  "icon": "📈",
-                  "title": "Moje cesta PLUS",
-                  "description": "Interaktivní grafy, kalendář nálady a měsíční PDF reporty pro hlubší pochopení sebe sama.",
-                  "badge": "PŘIPRAVUJEME PRO PREMIUM",
-                  "status": "upcoming"
-                },
-                {
-                  "icon": "🏆",
-                  "title": "Mikro-vítězství",
-                  "description": "Oslavujte malé denní úspěchy. Pomáháme vám všímat si drobností, které dělají život lepším.",
-                  "badge": "PŘIPRAVUJEME",
-                  "status": "upcoming"
-                },
-                {
-                  "icon": "☀️",
-                  "title": "Atmosféra podle počasí",
-                  "description": "Aplikace žije s vámi. Prostředí a barvy se dynamicky mění podle aktuálního počasí ve vašem okolí, což umocňuje zážitek z každého zápisu.",
-                  "badge": "SOUČÁST VERZE 1.0",
-                  "status": "included"
-                },
-                {
-                  "icon": "📅",
-                  "title": "Kalendář nálady",
-                  "description": "Ucelený přehled vašich dnů v přehledném kalendáři. Sledujte, jak se vaše nálada mění v průběhu měsíců.",
-                  "badge": "PŘIPRAVUJEME PRO PREMIUM",
-                  "status": "upcoming"
-                },
-                {
-                  "icon": "🎙️",
-                  "title": "Hlasové zadávání",
-                  "description": "Nestíháte psát? Brzy budete moci své vděčnosti prostě nadiktovat. AI se postará o zbytek.",
-                  "badge": "PŘIPRAVUJEME",
-                  "status": "upcoming"
-                },
-                {
-                  "icon": "📸",
-                  "title": "Foto vzpomínky",
-                  "description": "Uchovejte si vizuální vzpomínky. Možnost vyfotit momentku nebo nahrát fotku přímo k vašemu zápisu.",
-                  "badge": "PŘIPRAVUJEME PRO PREMIUM",
-                  "status": "upcoming"
-                },
-                {
-                  "icon": "👁️",
-                  "title": "Přístupnost (VoiceOver)",
-                  "description": "Plná podpora pro nevidomé a slabozraké. Aplikace je plně navržena a optimalizována pro čtečku obrazovky VoiceOver, včetně dynamických výzev.",
-                  "badge": "SOUČÁST VERZE 1.0",
-                  "status": "included"
-                },
-                {
-                  "icon": "🔒",
-                  "title": "Soukromí na prvním místě",
-                  "description": "Vaše záznamy jsou v zařízení chráněné Face ID / Touch ID. Ukládají se lokálně v telefonu; do iCloudu se dostanou jen v rámci zálohy iPhonu, pokud ji máte u Apple zapnutou.",
-                  "badge": "SOUČÁST VERZE 1.0",
-                  "status": "included"
+                "cta": {
+                        "title": "Začněte svou cestu k vděčnosti ještě dnes",
+                        "desc": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti.",
+                        "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+                        "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share"
                 }
-              ],
-              "screenshots": [
+        },
+        "pricing": {
+                "title": "Možnosti spolupráce",
+                "subtitle": "Férové ceny a individuální přístup pro každý projekt. Vyberte si úroveň měsíční péče nebo jednorázové řešení.",
+                "monthlyTitle": "Měsíční správa a podpora",
+                "monthlyPackages": [
+                        {
+                                "id": "basic",
+                                "title": "BASIC Podpora",
+                                "price": "1 000 Kč",
+                                "period": "/ měsíc",
+                                "badge": "",
+                                "badgeColor": "",
+                                "borderColor": "",
+                                "tagline": "Změny 1x měsíčně",
+                                "features": [
+                                        "Kontrola funkčnosti webu",
+                                        "Vložení dodaných textů a fotek",
+                                        "Základní technický dohled"
+                                ],
+                                "buttonText": "Zvolit balíček"
+                        },
+                        {
+                                "id": "weekly",
+                                "title": "WEEKLY Péče",
+                                "price": "3 500 Kč",
+                                "period": "/ měsíc",
+                                "badge": "OBLÍBENÉ",
+                                "badgeColor": "#0071e3",
+                                "borderColor": "#0071e3",
+                                "tagline": "Úpravy každý týden",
+                                "features": [
+                                        "Týdenní aktualizace obsahu",
+                                        "Design 1x newsletteru měsíčně",
+                                        "2x grafika pro sítě (Canva)",
+                                        "Přednostní podpora"
+                                ],
+                                "buttonText": "Zvolit balíček"
+                        },
+                        {
+                                "id": "premium",
+                                "title": "PREMIUM Podpora",
+                                "price": "7 000 Kč",
+                                "period": "/ měsíc",
+                                "badge": "",
+                                "badgeColor": "",
+                                "borderColor": "#FF9A8B",
+                                "tagline": "Pro aktivní projekty",
+                                "features": [
+                                        "Pravidelné vkládání obsahu",
+                                        "Rychlá pomoc na telefonu",
+                                        "Tvorba 2x newsletteru měsíčně",
+                                        "Slevy na nové featury"
+                                ],
+                                "buttonText": "Zvolit balíček"
+                        },
+                        {
+                                "id": "ultimate",
+                                "title": "ULTIMATE Správa",
+                                "price": "10 000 Kč",
+                                "period": "/ měsíc",
+                                "badge": "",
+                                "badgeColor": "",
+                                "borderColor": "#ffffff",
+                                "tagline": "Full-service bez starostí",
+                                "features": [
+                                        "Vymýšlení a tvorba obsahu",
+                                        "Měsíční strategická konzultace",
+                                        "Kompletní péče o digitální tvář",
+                                        "Neomezené technické úpravy"
+                                ],
+                                "buttonText": "Zvolit balíček"
+                        }
+                ],
+                "monthlyNote": "* U balíčků správy se předpokládá dodání podkladů (texty, fotky) od klienta, pokud není sjednána i tvorba obsahu (např. v balíčku ULTIMATE).\n** Ceny nezahrnují náklady na webhosting, doménu nebo licence za software třetích stran.",
+                "oneTimeTitle": "Jednorázové projekty",
+                "oneTimePackages": [
+                        {
+                                "id": "landing",
+                                "title": "Landing Page",
+                                "price": "Již od 5 000 Kč",
+                                "borderColor": "",
+                                "features": [
+                                        "Moderní jednostránkový web",
+                                        "Plně responzivní design",
+                                        "Základní SEO optimalizace"
+                                ],
+                                "buttonText": "Mám zájem"
+                        },
+                        {
+                                "id": "app",
+                                "title": "Mobilní & Web aplikace",
+                                "price": "Již od 25 000 Kč",
+                                "borderColor": "#0071e3",
+                                "features": [
+                                        "Nativní iOS aplikace na míru",
+                                        "Komplexní webové systémy",
+                                        "Publikace v App Store"
+                                ],
+                                "buttonText": "Mám zájem"
+                        },
+                        {
+                                "id": "seo",
+                                "title": "Obsah & SEO",
+                                "price": "Již od 3 000 Kč",
+                                "borderColor": "#FF9A8B",
+                                "features": [
+                                        "Technické SEO webu",
+                                        "Tvorba moderních newsletterů",
+                                        "Obsahová strategie a textace"
+                                ],
+                                "buttonText": "Mám zájem"
+                        }
+                ],
+                "customOffer": {
+                        "title": "Nenašli jste, co jste hledali?",
+                        "text": "Každá spolupráce je unikátní. Napište mi své představy a já vám připravím nabídku na míru vašim potřebám.",
+                        "buttonText": "Nezávazně poptat"
+                }
+        },
+        "support": {
+                "title": "Podpora a Kontakt",
+                "subtitle": "Máte dotaz k aplikaci nebo potřebujete pomoci s technickým problémem? Jsme tu pro vás.",
+                "faq": [
+                        {
+                                "question": "Jak obnovím své předplatné?",
+                                "answer": "Stačí v aplikaci kliknout na 'Obnovit nákupy' v sekci nastavení."
+                        },
+                        {
+                                "question": "Kam se ukládají moje data?",
+                                "answer": "Záznamy z aplikace jsou v telefonu (lokálně). Vývojář k nim nemá přístup. Do iCloudu se dostanou jen tehdy, pokud máte zapnutou zálohu iPhonu do iCloudu — podle nastavení u Apple."
+                        }
+                ],
+                "contact": {
+                        "name": "Veronika Mikovcová",
+                        "ico": "29851106",
+                        "location": "Praha, Česká republika",
+                        "email": "gratusapp@icloud.com",
+                        "responseTime": "Zpravidla odpovídáme do 24 hodin.",
+                        "note": "Dotazy, technická podpora a konzultace:"
+                }
+        },
+        "apps": [
                 {
-                  "url": "assets/app-home-clean.png",
-                  "alt": "Domů"
+                        "id": "denik-vdecnosti",
+                        "title": "Deník vděčnosti",
+                        "tagline": "Vaše každodenní dávka pozitivity. Moderní iOS aplikace inspirovaná klidem a minimalismem. Sledujte svůj pokrok a budujte nové návyky.",
+                        "heroSubtitle": "Osobní deník a nástroje pro každodenní záznamy a reflexi — inspirované mindfulness, v jedné aplikaci. Nenahrazuje odbornou péči.",
+                        "medicalNotice": "Důležité: Aplikace není zdravotnický prostředek ani terapie. V akutní psychické tísni volejte 155 nebo 158, při ohrožení života 112.",
+                        "badge": "ACTIVE",
+                        "badgeColor": "#FF9A8B",
+                        "accentColor": "#FF9A8B",
+                        "iconEmoji": "✨",
+                        "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+                        "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
+                        "image": "assets/app-home-clean.png",
+                        "detailUrl": "apps/denik-vdecnosti.html",
+                        "features": [
+                                {
+                                        "icon": "🌿",
+                                        "title": "Zahrada Vděčnosti",
+                                        "description": "Unikátní vizuální systém, kde vaše vděčnost doslova roste. Čím pravidelněji si zapisujete, tím košatější a krásnější je vaše digitální zahrada.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "🧘‍♀️",
+                                        "title": "Oáza klidu",
+                                        "description": "Váš osobní prostor pro relaxaci. Obsahuje ambientní zvuky a vedená dechová cvičení.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "🌑",
+                                        "title": "Můj prostor & Stíny",
+                                        "description": "Bezpečné místo nejen pro radost, ale i pro těžké chvíle. Sekce pro vypsání se z negativních emocí.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "📈",
+                                        "title": "Moje cesta PLUS",
+                                        "description": "Interaktivní grafy, kalendář nálady a měsíční PDF reporty pro hlubší pochopení sebe sama.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "🏆",
+                                        "title": "Mikro-vítězství",
+                                        "description": "Oslavujte malé denní úspěchy. Pomáháme vám všímat si drobností, které dělají život lepším.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "☀️",
+                                        "title": "Atmosféra podle počasí",
+                                        "description": "Aplikace žije s vámi. Prostředí a barvy se dynamicky mění podle aktuálního počasí ve vašem okolí, což umocňuje zážitek z každého zápisu.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "📅",
+                                        "title": "Kalendář nálady",
+                                        "description": "Ucelený přehled vašich dnů v přehledném kalendáři. Sledujte, jak se vaše nálada mění v průběhu měsíců.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "🎙️",
+                                        "title": "Hlasové zadávání",
+                                        "description": "Nestíháte psát? Brzy budete moci své vděčnosti prostě nadiktovat. AI se postará o zbytek.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "📸",
+                                        "title": "Foto vzpomínky",
+                                        "description": "Uchovejte si vizuální vzpomínky. Možnost vyfotit momentku nebo nahrát fotku přímo k vašemu zápisu.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "👁️",
+                                        "title": "Přístupnost (VoiceOver)",
+                                        "description": "Plná podpora pro nevidomé a slabozraké. Aplikace je plně navržena a optimalizována pro čtečku obrazovky VoiceOver, včetně dynamických výzev.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "🔒",
+                                        "title": "Soukromí na prvním místě",
+                                        "description": "Vaše záznamy jsou v zařízení chráněné Face ID / Touch ID. Ukládají se lokálně v telefonu; do iCloudu se dostanou jen v rámci zálohy iPhonu, pokud ji máte u Apple zapnutou.",
+                                        "badge": "SOUČÁST VERZE 2.0",
+                                        "status": "included"
+                                }
+                        ],
+                        "screenshots": [
+                                {
+                                        "url": "assets/app-home-clean.png",
+                                        "alt": "Domů"
+                                },
+                                {
+                                        "url": "assets/app-inspiration-clean.png",
+                                        "alt": "Inspirace"
+                                }
+                        ],
+                        "plusCard": {
+                                "title": "Deník v PLUS verzi",
+                                "text": "Postupně budeme uvolňovat prémiové funkce jako pokročilé statistiky, PDF exporty a relaxační zvukové terapie. Možnost předplatného je již k dispozici.",
+                                "note": "Aktuálně se soustředíme na to, aby vaše základní zkušenost s Deníkem vděčnosti byla co nejdokonalejší."
+                        },
+                        "cta": {
+                                "title": "Začněte svou cestu k vděčnosti ještě dnes",
+                                "text": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti."
+                        }
                 },
                 {
-                  "url": "assets/app-inspiration-clean.png",
-                  "alt": "Inspirace"
+                        "id": "podlahy-holcak",
+                        "title": "Podlahy Holčák",
+                        "tagline": "Moderní a elegantní webová prezentace řemeslných služeb. Důraz na čistý design, funkční SEO a skvělý uživatelský zážitek.",
+                        "badge": "ACTIVE",
+                        "badgeColor": "#8c7a6b",
+                        "accentColor": "#8c7a6b",
+                        "image": "assets/podlahy-holcak-hero.png",
+                        "iconEmoji": "🏡",
+                        "appStoreUrl": "",
+                        "webUrl": "https://www.podlahyholcak.cz",
+                        "detailUrl": "apps/podlahy-holcak.html",
+                        "features": [
+                                {
+                                        "icon": "🏡",
+                                        "title": "Webová prezentace na míru",
+                                        "description": "Čistý a funkční design zaměřený na konverzi a přehlednost pro zákazníky."
+                                },
+                                {
+                                        "icon": "⚡️",
+                                        "title": "Rychlost a SEO",
+                                        "description": "Bleskové načítání a optimalizace pro vyhledávače Google i Seznam."
+                                },
+                                {
+                                        "icon": "📱",
+                                        "title": "Responzivní design",
+                                        "description": "Dokonalé zobrazení na všech velikostech mobilních telefonů, tabletů i monitorů."
+                                }
+                        ],
+                        "screenshots": [
+                                "assets/podlahy-holcak-hero.png",
+                                "assets/podlahy-holcak-craft.png",
+                                "assets/podlahy-holcak-mobile.png"
+                        ]
+                },
+                {
+                        "id": "dane-pro",
+                        "title": "DaněPro",
+                        "tagline": "Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí na iCloudu.",
+                        "heroSubtitle": "",
+                        "medicalNotice": "",
+                        "badge": "Připravujeme",
+                        "badgeColor": "#10B981",
+                        "accentColor": "#10B981",
+                        "iconEmoji": "📊",
+                        "appStoreUrl": "",
+                        "image": "assets/dane-pro-dashboard.png",
+                        "detailUrl": "apps/dane-pro.html",
+                        "features": [
+                                {
+                                        "icon": "⚖️",
+                                        "title": "Live Daňový Souboj",
+                                        "description": "Real-time porovnání reálných výdajů proti výdajovému paušálu (60 % / 40 % / 80 %).",
+                                        "badge": "",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "💳",
+                                        "title": "Revolut Pro & Multi-Currency",
+                                        "description": "Bleskový import CSV výpisů a automatické přepočty měn dle oficiálních kurzů ČNB.",
+                                        "badge": "",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "🧾",
+                                        "title": "Faktury & ARES Registr",
+                                        "description": "Vystavení PDF faktury s QR platbou a načítání firemních údajů z registru ARES.",
+                                        "badge": "",
+                                        "status": "included"
+                                },
+                                {
+                                        "icon": "🔒",
+                                        "title": "100% Soukromí na iCloudu",
+                                        "description": "Žádné externí servery, žádné sledování. Vaše účetní data jsou pouze vaše.",
+                                        "badge": "",
+                                        "status": "included"
+                                }
+                        ],
+                        "screenshots": [
+                                {
+                                        "url": "assets/dane-pro-dashboard.png",
+                                        "alt": ""
+                                },
+                                {
+                                        "url": "assets/dane-pro-invoices.png",
+                                        "alt": ""
+                                },
+                                {
+                                        "url": "assets/dane-pro-import.png",
+                                        "alt": ""
+                                },
+                                {
+                                        "url": "assets/dane-pro-paywall.png",
+                                        "alt": ""
+                                }
+                        ]
                 }
-              ],
-              "plusCard": {
-                "title": "Deník v PLUS verzi",
-                "text": "Postupně budeme uvolňovat prémiové funkce jako pokročilé statistiky, PDF exporty a relaxační zvukové terapie. Možnost předplatného bude přidána v rámci dalších aktualizací.",
-                "note": "Aktuálně se soustředíme na to, aby vaše základní zkušenost s Deníkem vděčnosti byla co nejdokonalejší."
-              },
-              "cta": {
-                "title": "Začněte svou cestu k vděčnosti ještě dnes",
-                "text": "Stáhněte si Deník vděčnosti a objevte sílu každodenní vděčnosti."
-              }
-            },
-            {
-              "id": "podlahy-holcak",
-              "title": "Podlahy Holčák",
-              "tagline": "Moderní a elegantní webová prezentace řemeslných služeb. Důraz na čistý design, funkční SEO a skvělý uživatelský zážitek.",
-              "badge": "ACTIVE",
-              "badgeColor": "#8c7a6b",
-              "accentColor": "#8c7a6b",
-              "image": "assets/podlahy-holcak-hero.png",
-              "iconEmoji": "🏡",
-              "appStoreUrl": "",
-              "webUrl": "https://www.podlahyholcak.cz",
-              "detailUrl": "apps/podlahy-holcak.html",
-              "features": [
-                { "icon": "🏡", "title": "Webová prezentace na míru", "description": "Čistý a funkční design zaměřený na konverzi a přehlednost pro zákazníky." },
-                { "icon": "⚡️", "title": "Rychlost a SEO", "description": "Bleskové načítání a optimalizace pro vyhledávače Google i Seznam." },
-                { "icon": "📱", "title": "Responzivní design", "description": "Dokonalé zobrazení na všech velikostech mobilních telefonů, tabletů i monitorů." }
-              ],
-              "screenshots": [
-                "assets/podlahy-holcak-hero.png",
-                "assets/podlahy-holcak-craft.png",
-                "assets/podlahy-holcak-mobile.png"
-              ]
-            },
-            {
-              "id": "dane-pro",
-              "title": "DaněPro",
-              "tagline": "Chytrá daňová evidence a fakturace pro české freelancery. Live porovnání reálných výdajů s paušálem, Revolut Pro a 100% soukromí na iCloudu.",
-              "badge": "ACTIVE",
-              "badgeColor": "#10B981",
-              "accentColor": "#10B981",
-              "image": "assets/dane-pro-dashboard.png",
-              "imageRotate": "-5deg",
-              "iconEmoji": "📊",
-              "appStoreUrl": "",
-              "webUrl": "",
-              "detailUrl": "apps/dane-pro.html",
-              "features": [
-                { "icon": "⚖️", "title": "Live Daňový Souboj", "description": "Real-time porovnání reálných výdajů proti výdajovému paušálu (60 % / 40 % / 80 %)." },
-                { "icon": "💳", "title": "Revolut Pro & Multi-Currency", "description": "Bleskový import CSV výpisů a automatické přepočty měn dle oficiálních kurzů ČNB." },
-                { "icon": "🧾", "title": "Faktury & ARES Registr", "description": "Vystavení PDF faktury s QR platbou a načítání firemních údajů z registru ARES." },
-                { "icon": "🔒", "title": "100% Soukromí na iCloudu", "description": "Žádné externí servery, žádné sledování. Vaše účetní data jsou pouze vaše." }
-              ],
-              "screenshots": [
-                "assets/dane-pro-dashboard.png",
-                "assets/dane-pro-invoices.png",
-                "assets/dane-pro-import.png",
-                "assets/dane-pro-paywall.png"
-              ]
-            }
-          ],
-          "legal": {
-            "lastUpdated": "15. dubna 2026",
-            "admin": {
-              "name": "Veronika Mikovcová (fyzická osoba)",
-              "address": "Praha, Česká republika",
-              "ico": "29851106",
-              "email": "gratusapp@icloud.com",
-              "note": "Pro žádosti o přístup k údajům, opravu nebo výmaz pište na uvedený e-mail."
-            },
-            "appPrivacySections": [
-              {
-                "id": "dane-pro",
-                "appName": "DaněPro",
-                "title": "Aplikace DaněPro – 100% Soukromí a Finanční Data",
-                "badgeColor": "#10B981",
-                "points": [
-                  "Lokální uložení a Apple iCloud: Veškeré vámi zadané finanční doklady, faktury, výdaje, bankovní účty (Revolut Pro), IČO/DIČ a fotografie účtenek jsou ukládány výhradně na vašem zařízení a synchronizovány v rámci vašeho osobního soukromého iCloudu (Apple CloudKit).",
-                  "Žádné servery vývojáře: Poskytovatel aplikace neprovozuje žádný externí server, na který by se vaše účetní či osobní údaje odesílaly. K vašim fakturám ani finančním částkám nemá přístup vývojář ani jakákoliv třetí strana.",
-                  "Žádné sledování ani reklamy: Aplikace neobsahuje žádné reklamní trackery, analytické nástroje sledující vaše chování ani nástroje pro zpeněžování dat uživatelů.",
-                  "Veřejná API rozhraní: ČNB pro kurzy měn a ARES pro ověření IČO dle veřejných registrů ČR."
-                ]
-              },
-              {
-                "id": "denik-vdecnosti",
-                "appName": "Deník vděčnosti",
-                "title": "Aplikace Deník vděčnosti – Lokální data a počasí",
-                "badgeColor": "#FF9A8B",
-                "points": [
-                  "Lokální uložení: Záznamy vytvořené v aplikaci se ukládají lokálně v zařízení (iPhone/iPad). Vývojář k obsahu nemá přístup a neprovozuje žádný server.",
-                  "iCloud záloha: Data mohou být součástí standardní šifrované zálohy iCloudu spravované společností Apple dle vašeho účtu.",
-                  "Poloha a počasí (WeatherKit): Aplikace může požádat o přibližnou polohu pro zobrazení počasí přes Apple WeatherKit. Poloha se nikde neukládá ani nepředává."
-                ]
-              }
-            ],
-            "generalSections": [
-              {
-                "title": "1. Správce údajů",
-                "content": "Správcem osobních údajů je subjekt uvedený výše (může jít o fyzickou osobu i o podnikatele). Vaše údaje zpracováváme pouze pro nezbytné účely spojené s realizací zakázek a komunikací."
-              },
-              {
-                "title": "2. Rozsah zpracovávaných údajů",
-                "content": "Zpracováváme kontaktní údaje (jméno, e-mail, telefon) a fakturační údaje nezbytné pro plnění smlouvy a zákonné povinnosti."
-              },
-              {
-                "title": "3. Účel zpracování",
-                "content": "Vaše údaje využíváme k vyřízení poptávek, technické podpoře a správě vašich digitálních produktů. Vaše data nikdy neprodáváme třetím stranám."
-              },
-              {
-                "title": "4. Vaše práva",
-                "content": "Máte právo na přístup, opravu nebo výmaz svých údajů. V případě dotazů nás kontaktujte na kontaktním e-mailu."
-              }
-            ],
-            "appTermsSections": [
-              {
-                "id": "denik-vdecnosti",
-                "appName": "Deník vděčnosti",
-                "title": "Aplikace Deník vděčnosti – Podmínky předplatného a EULA (Apple & Google)",
-                "badgeColor": "#FF9A8B",
-                "applePoints": [
-                  "Automaticky obnovitelné předplatné (Apple App Store): Předplatné prémiových funkcí aplikace Deník vděčnosti se automaticky obnovuje za cenu zvoleného tarifu (měsíční nebo roční), pokud není zrušeno alespoň 24 hodin před koncem aktuálního zúčtovacího období.",
-                  "Účtování a platba: Platba je stržena z vašeho Apple ID účtu při potvrzení nákupu, případně po skončení bezplatné zkušební doby (je-li nabízena).",
-                  "Zrušení a správa předplatného: Uživatel může své předplatné kdykoliv spravovat a zrušit v nastavení zařízení iOS (Nastavení → Apple ID → Předplatná → Deník vděčnosti → Zrušit předplatné).",
-                  "Bezplatné zkušební období: Nevyužitá část bezplatné zkušební doby propadá v okamžiku zakoupení předplatného.",
-                  "Standardní licenční smlouva Apple (EULA): Užívání aplikace na zařízeních Apple podléhá standardním licenčním podmínkám Apple pro koncové uživatele (https://www.apple.com/legal/internet-services/itunes/dev/stdeula/)."
+        ],
+        "legal": {
+                "lastUpdated": "15. dubna 2026",
+                "admin": {
+                        "name": "Veronika Mikovcová (fyzická osoba)",
+                        "address": "Praha, Česká republika",
+                        "ico": "29851106",
+                        "email": "gratusapp@icloud.com",
+                        "note": "Pro žádosti o přístup k údajům, opravu nebo výmaz pište na uvedený e-mail."
+                },
+                "appPrivacySections": [
+                        {
+                                "id": "dane-pro",
+                                "appName": "DaněPro",
+                                "title": "Aplikace DaněPro – 100% Soukromí a Finanční Data",
+                                "badgeColor": "#10B981",
+                                "points": [
+                                        "Lokální uložení a Apple iCloud: Veškeré vámi zadané finanční doklady, faktury, výdaje, bankovní účty (Revolut Pro), IČO/DIČ a fotografie účtenek jsou ukládány výhradně na vašem zařízení a synchronizovány v rámci vašeho osobního soukromého iCloudu (Apple CloudKit).",
+                                        "Žádné servery vývojáře: Poskytovatel aplikace neprovozuje žádný externí server, na který by se vaše účetní či osobní údaje odesílaly. K vašim fakturám ani finančním částkám nemá přístup vývojář ani jakákoliv třetí strana.",
+                                        "Žádné sledování ani reklamy: Aplikace neobsahuje žádné reklamní trackery, analytické nástroje sledující vaše chování ani nástroje pro zpeněžování dat uživatelů.",
+                                        "Veřejná API rozhraní: ČNB pro kurzy měn a ARES pro ověření IČO dle veřejných registrů ČR."
+                                ]
+                        },
+                        {
+                                "id": "denik-vdecnosti",
+                                "appName": "Deník vděčnosti",
+                                "title": "Aplikace Deník vděčnosti – Lokální data a počasí",
+                                "badgeColor": "#FF9A8B",
+                                "points": [
+                                        "Lokální uložení: Záznamy vytvořené v aplikaci se ukládají lokálně v zařízení (iPhone/iPad). Vývojář k obsahu nemá přístup a neprovozuje žádný server.",
+                                        "iCloud záloha: Data mohou být součástí standardní šifrované zálohy iCloudu spravované společností Apple dle vašeho účtu.",
+                                        "Poloha a počasí (WeatherKit): Aplikace může požádat o přibližnou polohu pro zobrazení počasí přes Apple WeatherKit. Poloha se nikde neukládá ani nepředává."
+                                ]
+                        }
                 ],
-                "googlePoints": [
-                  "Předplatné přes Google Play Billing: Transakce a předplatné pro Android probíhají přes oficiální systém Google Play a jsou účtovány na platební metodu spojenou s vaším Google účtem.",
-                  "Automatická obnova na Google Play: Předplatné se automaticky obnovuje ke konci každého fakturačního období za stejnou cenu, pokud ho nezrušíte nejpozději 24 hodin před koncem období.",
-                  "Správa a zrušení na Androidu: Předplatné můžete kdykoliv zrušit v aplikaci Google Play (otevřete aplikaci Google Play Store → profilová ikona vpravo nahoře → Platby a předplatná → Předplatná → Deník vděčnosti → Zrušit předplatné).",
-                  "Zásady vrácení peněz (Refunds): Žádosti o vrácení peněz a refundace se řídí oficiálními pravidly a zásadami Google Play."
+                "generalSections": [
+                        {
+                                "title": "1. Správce údajů",
+                                "content": "Správcem osobních údajů je subjekt uvedený výše (může jít o fyzickou osobu i o podnikatele). Vaše údaje zpracováváme pouze pro nezbytné účely spojené s realizací zakázek a komunikací."
+                        },
+                        {
+                                "title": "2. Rozsah zpracovávaných údajů",
+                                "content": "Zpracováváme kontaktní údaje (jméno, e-mail, telefon) a fakturační údaje nezbytné pro plnění smlouvy a zákonné povinnosti."
+                        },
+                        {
+                                "title": "3. Účel zpracování",
+                                "content": "Vaše údaje využíváme k vyřízení poptávek, technické podpoře a správě vašich digitálních produktů. Vaše data nikdy neprodáváme třetím stranám."
+                        },
+                        {
+                                "title": "4. Vaše práva",
+                                "content": "Máte právo na přístup, opravu nebo výmaz svých údajů. V případě dotazů nás kontaktujte na kontaktním e-mailu."
+                        }
                 ],
-                "generalPoints": [
-                  "Povaha aplikace: Aplikace Deník vděčnosti slouží pro osobní reflexi a budování pozitivních návyků. Není zdravotnickým prostředkem ani psychoterapeutickou službou a nenahrazuje odbornou lékařskou péči.",
-                  "Soukromí a data: Všechny záznamy v deníku zůstávají uloženy výhradně lokálně v zařízení uživatele. Poskytovatel nemá k osobním zápisům přístup a neprovozuje žádný server pro sběr osobních dat."
+                "appTermsSections": [
+                        {
+                                "id": "denik-vdecnosti",
+                                "appName": "Deník vděčnosti",
+                                "title": "Aplikace Deník vděčnosti – Podmínky předplatného a EULA (Apple & Google)",
+                                "badgeColor": "#FF9A8B",
+                                "applePoints": [
+                                        "Automaticky obnovitelné předplatné (Apple App Store): Předplatné prémiových funkcí aplikace Deník vděčnosti se automaticky obnovuje za cenu zvoleného tarifu (měsíční nebo roční), pokud není zrušeno alespoň 24 hodin před koncem aktuálního zúčtovacího období.",
+                                        "Účtování a platba: Platba je stržena z vašeho Apple ID účtu při potvrzení nákupu, případně po skončení bezplatné zkušební doby (je-li nabízena).",
+                                        "Zrušení a správa předplatného: Uživatel může své předplatné kdykoliv spravovat a zrušit v nastavení zařízení iOS (Nastavení → Apple ID → Předplatná → Deník vděčnosti → Zrušit předplatné).",
+                                        "Bezplatné zkušební období: Nevyužitá část bezplatné zkušební doby propadá v okamžiku zakoupení předplatného.",
+                                        "Standardní licenční smlouva Apple (EULA): Užívání aplikace na zařízeních Apple podléhá standardním licenčním podmínkám Apple pro koncové uživatele (https://www.apple.com/legal/internet-services/itunes/dev/stdeula/)."
+                                ],
+                                "googlePoints": [
+                                        "Předplatné přes Google Play Billing: Transakce a předplatné pro Android probíhají přes oficiální systém Google Play a jsou účtovány na platební metodu spojenou s vaším Google účtem.",
+                                        "Automatická obnova na Google Play: Předplatné se automaticky obnovuje ke konci každého fakturačního období za stejnou cenu, pokud ho nezrušíte nejpozději 24 hodin před koncem období.",
+                                        "Správa a zrušení na Androidu: Předplatné můžete kdykoliv zrušit v aplikaci Google Play (otevřete aplikaci Google Play Store → profilová ikona vpravo nahoře → Platby a předplatná → Předplatná → Deník vděčnosti → Zrušit předplatné).",
+                                        "Zásady vrácení peněz (Refunds): Žádosti o vrácení peněz a refundace se řídí oficiálními pravidly a zásadami Google Play."
+                                ],
+                                "generalPoints": [
+                                        "Povaha aplikace: Aplikace Deník vděčnosti slouží pro osobní reflexi a budování pozitivních návyků. Není zdravotnickým prostředkem ani psychoterapeutickou službou a nenahrazuje odbornou lékařskou péči.",
+                                        "Soukromí a data: Všechny záznamy v deníku zůstávají uloženy výhradně lokálně v zařízení uživatele. Poskytovatel nemá k osobním zápisům přístup a neprovozuje žádný server pro sběr osobních dat."
+                                ]
+                        },
+                        {
+                                "id": "dane-pro",
+                                "appName": "DaněPro",
+                                "title": "Aplikace DaněPro – Podmínky předplatného a licence (Apple App Store)",
+                                "badgeColor": "#10B981",
+                                "applePoints": [
+                                        "Tarify: Měsíční předplatné, Roční předplatné se 14denní zkušební dobou zdarma a volitelná Doživotní licence.",
+                                        "Automatické obnovení: Předplatné se automaticky obnovuje, pokud není zrušeno alespoň 24 hodin před koncem období v Nastavení → Apple ID → Předplatná.",
+                                        "Licenční smlouva Apple (EULA): Řídí se standardními licenčními podmínkami Apple pro koncové uživatele (Apple Standard EULA).",
+                                        "Daňová doložka: Aplikace slouží pro modelové srovnání a evidenci pro OSVČ a nenahrazuje služby certifikovaného daňového poradce."
+                                ],
+                                "googlePoints": [],
+                                "generalPoints": [
+                                        "Veškerá data jsou bezpečně uložena v zařízení a synchronizována pouze v osobním iCloudu uživatele bez externích serverů."
+                                ]
+                        }
                 ]
-              },
-              {
-                "id": "dane-pro",
-                "appName": "DaněPro",
-                "title": "Aplikace DaněPro – Podmínky předplatného a licence (Apple App Store)",
-                "badgeColor": "#10B981",
-                "applePoints": [
-                  "Tarify: Měsíční předplatné, Roční předplatné se 14denní zkušební dobou zdarma a volitelná Doživotní licence.",
-                  "Automatické obnovení: Předplatné se automaticky obnovuje, pokud není zrušeno alespoň 24 hodin před koncem období v Nastavení → Apple ID → Předplatná.",
-                  "Licenční smlouva Apple (EULA): Řídí se standardními licenčními podmínkami Apple pro koncové uživatele (Apple Standard EULA).",
-                  "Daňová doložka: Aplikace slouží pro modelové srovnání a evidenci pro OSVČ a nenahrazuje služby certifikovaného daňového poradce."
-                ],
-                "googlePoints": [],
-                "generalPoints": [
-                  "Veškerá data jsou bezpečně uložena v zařízení a synchronizována pouze v osobním iCloudu uživatele bez externích serverů."
-                ]
-              }
-            ]
-          }
-        };
+        }
+};
 
         let appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
         let fileSha = null;
@@ -1919,10 +2022,21 @@
             if (!authToken) {
                 try {
                     const localDraft = localStorage.getItem('gratus_admin_content');
-                    if (localDraft) appData = JSON.parse(localDraft);
-                    else appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                    if (localDraft) {
+                        appData = JSON.parse(localDraft);
+                    } else {
+                        const localRes = await fetch(`data/content.json?v=${Date.now()}`);
+                        if (localRes.ok) appData = await localRes.json();
+                        else appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                    }
                 } catch(e) {
-                    appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                    try {
+                        const localRes = await fetch(`data/content.json?v=${Date.now()}`);
+                        if (localRes.ok) appData = await localRes.json();
+                        else appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                    } catch(err2) {
+                        appData = JSON.parse(JSON.stringify(DEFAULT_CONTENT));
+                    }
                 }
                 ensureAllRichContent();
                 markClean();
