@@ -19,7 +19,39 @@
       "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
       "showcaseLeft": "assets/app-inspiration-clean.png",
       "showcaseCenter": "assets/app-home-clean.png",
-      "showcaseRight": "assets/app-journey-clean.png"
+      "showcaseRight": "assets/app-journey-clean.png",
+      "slides": [
+        {
+          "id": "denik-vdecnosti",
+          "title": "Deník vděčnosti",
+          "subtitle": "Každodenní zápisník & duševní pohoda",
+          "badge": "GRATUS APP",
+          "badgeColor": "#f97316",
+          "accentColor": "#f97316",
+          "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+          "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
+          "detailUrl": "apps/denik-vdecnosti.html",
+          "showcaseLeft": "assets/app-inspiration-clean.png",
+          "showcaseCenter": "assets/app-home-clean.png",
+          "showcaseRight": "assets/app-journey-clean.png"
+        },
+        {
+          "id": "dane-pro",
+          "title": "Kapesní účetní",
+          "subtitle": "Chytrá daňová evidence a fakturace pro české OSVČ",
+          "badge": "NOVINKA 2026",
+          "badgeColor": "#10B981",
+          "accentColor": "#10B981",
+          "appStoreUrl": "",
+          "googlePlayUrl": "",
+          "detailUrl": "https://apps.apple.com/cz/app/kapesniucetni/id6821436026?l=cs KapesniUcetni",
+          "showcaseLeft": "assets/dane-pro-invoices-mockup.png",
+          "showcaseCenter": "assets/dane-pro-dashboard-mockup.png",
+          "showcaseRight": "assets/dane-pro-import-mockup.png"
+        }
+      ],
+      "autoRotate": true,
+      "autoRotateInterval": 6
     },
     "approach": {
       "title": "Kreativita poháněná technologií",
