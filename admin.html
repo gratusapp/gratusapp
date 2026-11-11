@@ -612,9 +612,15 @@
                 <a href="index.html" target="_blank" class="btn-secondary" style="text-decoration: none;">👁️ Zobrazit domovskou stránku</a>
             </div>
 
-            <!-- Sekce 1: Hero (Úvodní obrazovka) -->
+            <!-- Sekce 1: Hero (Úvodní obrazovka & Prezentace aplikací) -->
             <div class="section-box">
-                <h3>🚀 Úvodní sekce (Hero banner)</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                    <h3 style="margin: 0;">🚀 Úvodní sekce (Hero banner & Rotace aplikací)</h3>
+                    <span style="font-size: 12px; color: var(--admin-success); background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3); padding: 4px 10px; border-radius: 999px; font-weight: 600;">
+                        ✨ Podpora listování & překlikávání aplikací
+                    </span>
+                </div>
+                
                 <div class="form-group">
                     <label>Hlavní nadpis (H1):</label>
                     <input type="text" id="homeHeroTitleInput" class="form-control" onchange="autoSaveField('home.hero.title', this.value)">
@@ -639,31 +645,57 @@
                         <input type="text" id="homeHeroBtn2LinkInput" class="form-control" onchange="autoSaveField('home.hero.btn2Link', this.value)">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Odkaz na App Store (tlačítko "Download on the App Store"):</label>
-                    <input type="text" id="homeHeroAppStoreInput" class="form-control" onchange="autoSaveField('home.hero.appStoreUrl', this.value)">
-                </div>
-                <div class="form-group">
-                    <label>Odkaz na Google Play (tlačítko "GET IT ON Google Play"):</label>
-                    <input type="text" id="homeHeroGooglePlayInput" class="form-control" onchange="autoSaveField('home.hero.googlePlayUrl', this.value)">
-                </div>
-                <div class="form-group" style="background: rgba(255,255,255,0.02); padding: 14px; border-radius: 8px; border: 1px solid var(--admin-border);">
-                    <label style="margin-bottom: 8px;">3 prezentační telefony v záhlaví (cesty k obrázkům v <code>assets/</code>):</label>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label style="font-size: 12px; color: var(--text-secondary);">Levý telefon:</label>
-                            <input type="text" id="homeShowcaseLeftInput" class="form-control" onchange="autoSaveField('home.hero.showcaseLeft', this.value)">
+
+                <!-- Nastavení automatického překlikávání a listování -->
+                <div style="background: rgba(255,255,255,0.025); border: 1px solid var(--admin-border); padding: 16px; border-radius: 12px; margin-top: 16px; margin-bottom: 22px;">
+                    <div style="margin-bottom: 12px;">
+                        <h4 style="margin: 0 0 4px 0; font-size: 15px; color: #fff; display: flex; align-items: center; gap: 8px;">
+                            <span>⏱️ Automatické listování a přepínání aplikací</span>
+                        </h4>
+                        <p style="margin: 0; font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                            Na hlavní stránce se po uplynutí zvoleného času prezentace automaticky překlikne na další aplikaci (např. z <em>Deníku vděčnosti</em> na <em>Kapesní účetní</em>), včetně výměny obrázků 3 telefonů a odkazu na App Store. Návštěvník může také ručně listovat šipkami nebo přepínat aplikaci kliknutím.
+                        </p>
+                    </div>
+                    <div class="form-row" style="align-items: center; gap: 20px;">
+                        <div class="form-group" style="margin-bottom: 0; flex: 1.2;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none;">
+                                <input type="checkbox" id="heroAutoRotateCheckbox" style="width: 18px; height: 18px; accent-color: var(--accent-color);" onchange="toggleHeroAutoRotate(this.checked)">
+                                <span style="font-weight: 600; color: #fff;">Zapnout automatické překlikávání</span>
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <label style="font-size: 12px; color: var(--text-secondary);">Středový telefon:</label>
-                            <input type="text" id="homeShowcaseCenterInput" class="form-control" onchange="autoSaveField('home.hero.showcaseCenter', this.value)">
+                        <div class="form-group" style="margin-bottom: 0; flex: 1;">
+                            <label style="font-size: 12px;">Doba zobrazení každé aplikace (ve vteřinách):</label>
+                            <input type="number" id="heroAutoRotateIntervalInput" class="form-control" min="3" max="60" step="1" style="max-width: 140px;" onchange="updateHeroAutoRotateInterval(this.value)">
                         </div>
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label style="font-size: 12px; color: var(--text-secondary);">Pravý telefon:</label>
-                        <input type="text" id="homeShowcaseRightInput" class="form-control" onchange="autoSaveField('home.hero.showcaseRight', this.value)">
+                </div>
+
+                <!-- Správa prezentovaných aplikací (Slides v Hero sekci) -->
+                <div style="margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <h4 style="margin: 0 0 2px 0; font-size: 16px; color: #fff;">📱 Prezentované aplikace v Hero záhlaví (Slidy)</h4>
+                            <p style="margin: 0; font-size: 13px; color: var(--text-secondary);">
+                                Můžete upravovat texty, odkaz na App Store a 3 prezentační obrázky telefonů pro každou aplikaci.
+                            </p>
+                        </div>
+                        <button type="button" class="btn-secondary" onclick="addHeroSlide()" style="font-size: 13px; padding: 7px 14px;">
+                            ➕ Přidat další aplikaci
+                        </button>
+                    </div>
+
+                    <!-- Kontejner pro karty jednotlivých slidů -->
+                    <div id="heroSlidesList" style="display: flex; flex-direction: column; gap: 18px;">
+                        <!-- Dynamicky generováno funkcí renderHeroSlides() -->
                     </div>
                 </div>
+
+                <!-- Záložní inputy pro 100% zpětnou kompatibilitu -->
+                <input type="hidden" id="homeHeroAppStoreInput">
+                <input type="hidden" id="homeHeroGooglePlayInput">
+                <input type="hidden" id="homeShowcaseLeftInput">
+                <input type="hidden" id="homeShowcaseCenterInput">
+                <input type="hidden" id="homeShowcaseRightInput">
             </div>
 
             <!-- Sekce 2: Přístup & O mně -->
@@ -1392,6 +1424,38 @@
                         "btn1Link": "#vision",
                         "btn2Text": "Prohlédnout projekty",
                         "btn2Link": "apps.html",
+                        "autoRotate": true,
+                        "autoRotateInterval": 6,
+                        "slides": [
+                            {
+                                "id": "denik-vdecnosti",
+                                "title": "Deník vděčnosti",
+                                "subtitle": "Každodenní zápisník & duševní pohoda",
+                                "badge": "GRATUS APP",
+                                "badgeColor": "#f97316",
+                                "accentColor": "#f97316",
+                                "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
+                                "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
+                                "detailUrl": "apps/denik-vdecnosti.html",
+                                "showcaseLeft": "assets/app-inspiration-clean.png",
+                                "showcaseCenter": "assets/app-home-clean.png",
+                                "showcaseRight": "assets/app-journey-clean.png"
+                            },
+                            {
+                                "id": "dane-pro",
+                                "title": "Kapesní účetní",
+                                "subtitle": "Chytrá daňová evidence a fakturace pro české OSVČ",
+                                "badge": "NOVINKA 2026",
+                                "badgeColor": "#10B981",
+                                "accentColor": "#10B981",
+                                "appStoreUrl": "",
+                                "googlePlayUrl": "",
+                                "detailUrl": "apps/dane-pro.html",
+                                "showcaseLeft": "assets/dane-pro-invoices-mockup.png",
+                                "showcaseCenter": "assets/dane-pro-dashboard-mockup.png",
+                                "showcaseRight": "assets/dane-pro-import-mockup.png"
+                            }
+                        ],
                         "appStoreUrl": "https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs",
                         "googlePlayUrl": "https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share",
                         "showcaseLeft": "assets/app-inspiration-clean.png",
@@ -2166,6 +2230,12 @@
             if (!appData.settings.linkedinUrl) appData.settings.linkedinUrl = DEFAULT_CONTENT.settings.linkedinUrl;
 
             if (!appData.home) appData.home = JSON.parse(JSON.stringify(DEFAULT_CONTENT.home));
+            if (!appData.home.hero) appData.home.hero = JSON.parse(JSON.stringify(DEFAULT_CONTENT.home.hero));
+            if (!appData.home.hero.slides || !Array.isArray(appData.home.hero.slides) || appData.home.hero.slides.length === 0) {
+                appData.home.hero.slides = JSON.parse(JSON.stringify(DEFAULT_CONTENT.home.hero.slides));
+            }
+            if (appData.home.hero.autoRotate === undefined) appData.home.hero.autoRotate = true;
+            if (!appData.home.hero.autoRotateInterval) appData.home.hero.autoRotateInterval = 6;
             if (!appData.pricing) appData.pricing = JSON.parse(JSON.stringify(DEFAULT_CONTENT.pricing));
             if (!appData.support) appData.support = JSON.parse(JSON.stringify(DEFAULT_CONTENT.support));
 
@@ -2291,13 +2361,23 @@
                 appData.home.hero.btn1Link = document.getElementById('homeHeroBtn1LinkInput').value;
                 appData.home.hero.btn2Text = document.getElementById('homeHeroBtn2TextInput').value;
                 appData.home.hero.btn2Link = document.getElementById('homeHeroBtn2LinkInput').value;
-                appData.home.hero.appStoreUrl = document.getElementById('homeHeroAppStoreInput').value;
-                if (document.getElementById('homeHeroGooglePlayInput')) {
-                    appData.home.hero.googlePlayUrl = document.getElementById('homeHeroGooglePlayInput').value;
+
+                if (document.getElementById('heroAutoRotateCheckbox')) {
+                    appData.home.hero.autoRotate = document.getElementById('heroAutoRotateCheckbox').checked;
                 }
-                appData.home.hero.showcaseLeft = document.getElementById('homeShowcaseLeftInput').value;
-                appData.home.hero.showcaseCenter = document.getElementById('homeShowcaseCenterInput').value;
-                appData.home.hero.showcaseRight = document.getElementById('homeShowcaseRightInput').value;
+                if (document.getElementById('heroAutoRotateIntervalInput')) {
+                    appData.home.hero.autoRotateInterval = parseInt(document.getElementById('heroAutoRotateIntervalInput').value) || 6;
+                }
+
+                // Mirror first slide into top-level fallback fields
+                if (appData.home.hero.slides && appData.home.hero.slides.length > 0) {
+                    const first = appData.home.hero.slides[0];
+                    appData.home.hero.appStoreUrl = first.appStoreUrl || '';
+                    appData.home.hero.googlePlayUrl = first.googlePlayUrl || '';
+                    appData.home.hero.showcaseLeft = first.showcaseLeft || '';
+                    appData.home.hero.showcaseCenter = first.showcaseCenter || '';
+                    appData.home.hero.showcaseRight = first.showcaseRight || '';
+                }
 
                 appData.home.approach.title = document.getElementById('homeApproachTitleInput').value;
                 appData.home.approach.p1 = document.getElementById('homeApproachP1Input').value;
@@ -2383,6 +2463,240 @@
         }
 
         // TAB: HOME RENDERER
+        
+        // --- HERO SLIDES MANAGEMENT (Rotace a listování aplikací) ---
+        function renderHeroSlides() {
+            const list = document.getElementById('heroSlidesList');
+            if (!list) return;
+            if (!appData.home || !appData.home.hero) return;
+            if (!appData.home.hero.slides || !Array.isArray(appData.home.hero.slides) || appData.home.hero.slides.length === 0) {
+                appData.home.hero.slides = JSON.parse(JSON.stringify(DEFAULT_CONTENT.home.hero.slides));
+            }
+
+            const slides = appData.home.hero.slides;
+            list.innerHTML = slides.map((s, idx) => `
+                <div class="hero-slide-admin-card" style="background: rgba(255,255,255,0.035); border: 1px solid var(--admin-border); border-radius: 12px; padding: 18px; position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 13px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px;">
+                                Aplikace #${idx + 1}
+                            </span>
+                            <strong style="font-size: 16px; color: #fff;">${escapeAttr(s.title || 'Aplikace')}</strong>
+                            ${s.badge ? `<span style="font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: ${s.badgeColor || '#0071e3'}22; color: ${s.badgeColor || '#0071e3'}; border: 1px solid ${s.badgeColor || '#0071e3'}55;">${escapeAttr(s.badge)}</span>` : ''}
+                        </div>
+                        <div style="display: flex; gap: 6px;">
+                            <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="moveHeroSlide(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} title="Posunout nahoru">▲</button>
+                            <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="moveHeroSlide(${idx}, 1)" ${idx === slides.length - 1 ? 'disabled' : ''} title="Posunout dolů">▼</button>
+                            <button type="button" class="btn-secondary" style="padding: 4px 10px; font-size: 12px; color: var(--admin-danger); border-color: rgba(239,68,68,0.3);" onclick="deleteHeroSlide(${idx})" ${slides.length <= 1 ? 'disabled' : ''} title="Smazat slide">🗑️ Smazat</button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Název aplikace:</label>
+                            <input type="text" class="form-control" value="${escapeAttr(s.title || '')}" onchange="updateHeroSlideField(${idx}, 'title', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Podtitul (stručný popis):</label>
+                            <input type="text" class="form-control" value="${escapeAttr(s.subtitle || '')}" placeholder="např. Chytrá daňová evidence..." onchange="updateHeroSlideField(${idx}, 'subtitle', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Text štítku (Badge):</label>
+                            <input type="text" class="form-control" value="${escapeAttr(s.badge || '')}" placeholder="např. NOVINKA 2026, DOPORUČUJEME" onchange="updateHeroSlideField(${idx}, 'badge', this.value)">
+                        </div>
+                        <div class="form-group">
+                            <label>Barva štítku:</label>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <input type="color" value="${s.badgeColor || '#10B981'}" style="width: 44px; height: 38px; border: none; border-radius: 6px; background: transparent; cursor: pointer;" onchange="updateHeroSlideField(${idx}, 'badgeColor', this.value)">
+                                <input type="text" class="form-control" value="${escapeAttr(s.badgeColor || '#10B981')}" style="flex: 1;" onchange="updateHeroSlideField(${idx}, 'badgeColor', this.value)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>🍏 Odkaz na App Store (URL):</label>
+                            <input type="text" class="form-control" value="${escapeAttr(s.appStoreUrl || '')}" placeholder="https://apps.apple.com/cz/app/..." onchange="updateHeroSlideField(${idx}, 'appStoreUrl', this.value)">
+                            <small style="color: var(--text-secondary); font-size: 11px;">Pokud ponecháte prázdné, tlačítko na webu zobrazí stav přípravy a odkáže na detail aplikace.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>🤖 Odkaz na Google Play (URL, volitelné):</label>
+                            <input type="text" class="form-control" value="${escapeAttr(s.googlePlayUrl || '')}" placeholder="https://play.google.com/store/apps/..." onchange="updateHeroSlideField(${idx}, 'googlePlayUrl', this.value)">
+                            <small style="color: var(--text-secondary); font-size: 11px;">Pokud ponecháte prázdné, Google Play tlačítko se u této aplikace na webu automaticky skryje.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>📄 Odkaz na detailní stránku aplikace:</label>
+                        <input type="text" class="form-control" value="${escapeAttr(s.detailUrl || '')}" placeholder="např. apps/dane-pro.html" onchange="updateHeroSlideField(${idx}, 'detailUrl', this.value)">
+                    </div>
+
+                    <!-- 3 prezentační telefony -->
+                    <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px; margin-top: 12px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                            <label style="font-weight: 600; font-size: 13px; color: #fff; margin: 0;">📱 3 prezentační telefony v záhlaví pro tuto aplikaci:</label>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn-secondary" style="font-size: 11px; padding: 4px 8px;" onclick="applyHeroSlidePreset(${idx}, 'denik')">🎯 Načíst Deník vděčnosti</button>
+                                <button type="button" class="btn-secondary" style="font-size: 11px; padding: 4px 8px;" onclick="applyHeroSlidePreset(${idx}, 'dane_pro')">🎯 Načíst Kapesní účetní</button>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px;">
+                            <!-- Levý telefon -->
+                            <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                                <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 4px;">Levý telefon:</label>
+                                <input type="text" class="form-control" style="font-size: 12px; margin-bottom: 8px;" value="${escapeAttr(s.showcaseLeft || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseLeft', this.value)">
+                                <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+                                    <img src="${escapeAttr(s.showcaseLeft || '')}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="this.style.display='none'" onload="this.style.display='block'">
+                                </div>
+                            </div>
+
+                            <!-- Středový telefon -->
+                            <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                                <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 4px;">Středový telefon (hlavní):</label>
+                                <input type="text" class="form-control" style="font-size: 12px; margin-bottom: 8px;" value="${escapeAttr(s.showcaseCenter || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseCenter', this.value)">
+                                <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+                                    <img src="${escapeAttr(s.showcaseCenter || '')}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="this.style.display='none'" onload="this.style.display='block'">
+                                </div>
+                            </div>
+
+                            <!-- Pravý telefon -->
+                            <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                                <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 4px;">Pravý telefon:</label>
+                                <input type="text" class="form-control" style="font-size: 12px; margin-bottom: 8px;" value="${escapeAttr(s.showcaseRight || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseRight', this.value)">
+                                <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
+                                    <img src="${escapeAttr(s.showcaseRight || '')}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="this.style.display='none'" onload="this.style.display='block'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateHeroSlideField(idx, field, value) {
+            if (!appData.home || !appData.home.hero || !appData.home.hero.slides) return;
+            appData.home.hero.slides[idx][field] = value;
+            if (idx === 0) {
+                if (field === 'appStoreUrl') appData.home.hero.appStoreUrl = value;
+                if (field === 'googlePlayUrl') appData.home.hero.googlePlayUrl = value;
+                if (field === 'showcaseLeft') appData.home.hero.showcaseLeft = value;
+                if (field === 'showcaseCenter') appData.home.hero.showcaseCenter = value;
+                if (field === 'showcaseRight') appData.home.hero.showcaseRight = value;
+            }
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+            renderHeroSlides();
+        }
+
+        function toggleHeroAutoRotate(checked) {
+            if (!appData.home || !appData.home.hero) return;
+            appData.home.hero.autoRotate = checked;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        function updateHeroAutoRotateInterval(val) {
+            if (!appData.home || !appData.home.hero) return;
+            const num = Math.max(3, parseInt(val) || 6);
+            appData.home.hero.autoRotateInterval = num;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+        }
+
+        function addHeroSlide() {
+            if (!appData.home || !appData.home.hero) return;
+            if (!appData.home.hero.slides) appData.home.hero.slides = [];
+            appData.home.hero.slides.push({
+                id: 'nova-aplikace-' + Date.now(),
+                title: 'Nová Aplikace',
+                subtitle: 'Popis nové aplikace',
+                badge: 'NOVINKA',
+                badgeColor: '#0071e3',
+                accentColor: '#0071e3',
+                appStoreUrl: '',
+                googlePlayUrl: '',
+                detailUrl: 'apps.html',
+                showcaseLeft: 'assets/app-inspiration-clean.png',
+                showcaseCenter: 'assets/app-home-clean.png',
+                showcaseRight: 'assets/app-journey-clean.png'
+            });
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+            renderHeroSlides();
+        }
+
+        function deleteHeroSlide(idx) {
+            if (!appData.home || !appData.home.hero || !appData.home.hero.slides) return;
+            if (appData.home.hero.slides.length <= 1) {
+                alert('V prezentaci musí zůstat alespoň jedna aplikace.');
+                return;
+            }
+            if (confirm('Opravdu chcete odebrat tuto aplikaci z prezentace v Hero sekci?')) {
+                appData.home.hero.slides.splice(idx, 1);
+                markDirty();
+                try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+                renderHeroSlides();
+            }
+        }
+
+        function moveHeroSlide(idx, dir) {
+            if (!appData.home || !appData.home.hero || !appData.home.hero.slides) return;
+            const target = idx + dir;
+            if (target < 0 || target >= appData.home.hero.slides.length) return;
+            const temp = appData.home.hero.slides[idx];
+            appData.home.hero.slides[idx] = appData.home.hero.slides[target];
+            appData.home.hero.slides[target] = temp;
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+            renderHeroSlides();
+        }
+
+        function applyHeroSlidePreset(idx, presetType) {
+            if (!appData.home || !appData.home.hero || !appData.home.hero.slides) return;
+            const s = appData.home.hero.slides[idx];
+            if (presetType === 'denik') {
+                s.id = 'denik-vdecnosti';
+                s.title = 'Deník vděčnosti';
+                s.subtitle = 'Každodenní zápisník & duševní pohoda';
+                s.badge = 'GRATUS APP';
+                s.badgeColor = '#f97316';
+                s.accentColor = '#f97316';
+                s.appStoreUrl = 'https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs';
+                s.googlePlayUrl = 'https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share';
+                s.detailUrl = 'apps/denik-vdecnosti.html';
+                s.showcaseLeft = 'assets/app-inspiration-clean.png';
+                s.showcaseCenter = 'assets/app-home-clean.png';
+                s.showcaseRight = 'assets/app-journey-clean.png';
+            } else if (presetType === 'dane_pro') {
+                s.id = 'dane-pro';
+                s.title = 'Kapesní účetní';
+                s.subtitle = 'Chytrá daňová evidence a fakturace pro české OSVČ';
+                s.badge = 'NOVINKA 2026';
+                s.badgeColor = '#10B981';
+                s.accentColor = '#10B981';
+                s.appStoreUrl = s.appStoreUrl || '';
+                s.googlePlayUrl = s.googlePlayUrl || '';
+                s.detailUrl = 'apps/dane-pro.html';
+                s.showcaseLeft = 'assets/dane-pro-invoices-mockup.png';
+                s.showcaseCenter = 'assets/dane-pro-dashboard-mockup.png';
+                s.showcaseRight = 'assets/dane-pro-import-mockup.png';
+            }
+            if (idx === 0) {
+                appData.home.hero.appStoreUrl = s.appStoreUrl;
+                appData.home.hero.googlePlayUrl = s.googlePlayUrl;
+                appData.home.hero.showcaseLeft = s.showcaseLeft;
+                appData.home.hero.showcaseCenter = s.showcaseCenter;
+                appData.home.hero.showcaseRight = s.showcaseRight;
+            }
+            markDirty();
+            try { localStorage.setItem('gratus_admin_content', JSON.stringify(appData)); } catch(e) {}
+            renderHeroSlides();
+        }
+
         function renderHomeTab() {
             if (!appData.home) appData.home = JSON.parse(JSON.stringify(DEFAULT_CONTENT.home));
             const h = appData.home;
@@ -2399,16 +2713,14 @@
                 if (b2t) b2t.value = h.hero.btn2Text || '';
                 const b2l = document.getElementById('homeHeroBtn2LinkInput');
                 if (b2l) b2l.value = h.hero.btn2Link || '';
-                const asb = document.getElementById('homeHeroAppStoreInput');
-                if (asb) asb.value = h.hero.appStoreUrl || '';
-                const gpb = document.getElementById('homeHeroGooglePlayInput');
-                if (gpb) gpb.value = h.hero.googlePlayUrl || '';
-                const sl = document.getElementById('homeShowcaseLeftInput');
-                if (sl) sl.value = h.hero.showcaseLeft || '';
-                const sc = document.getElementById('homeShowcaseCenterInput');
-                if (sc) sc.value = h.hero.showcaseCenter || '';
-                const sr = document.getElementById('homeShowcaseRightInput');
-                if (sr) sr.value = h.hero.showcaseRight || '';
+
+                const arc = document.getElementById('heroAutoRotateCheckbox');
+                if (arc) arc.checked = h.hero.autoRotate !== false;
+                const ari = document.getElementById('heroAutoRotateIntervalInput');
+                if (ari) ari.value = h.hero.autoRotateInterval || 6;
+
+                // Render dynamic slide cards
+                renderHeroSlides();
             }
 
             // Approach
@@ -3764,7 +4076,7 @@
             }
 
             // Also standard project images
-            ['assets/app-home-clean.png', 'assets/app-inspiration-clean.png', 'assets/app-journey-clean.png', 'assets/dane-pro-dashboard.png', 'assets/dane-pro-invoices.png', 'assets/dane-pro-import.png', 'assets/dane-pro-paywall.png', 'assets/podlahy-holcak-hero.png'].forEach(img => knownImages.add(img));
+            ['assets/app-home-clean.png', 'assets/app-inspiration-clean.png', 'assets/app-journey-clean.png', 'assets/dane-pro-dashboard-mockup.png', 'assets/dane-pro-invoices-mockup.png', 'assets/dane-pro-import-mockup.png', 'assets/dane-pro-paywall-mockup.png', 'assets/dane-pro-dashboard.png', 'assets/dane-pro-invoices.png', 'assets/dane-pro-import.png', 'assets/dane-pro-paywall.png', 'assets/podlahy-holcak-hero.png'].forEach(img => knownImages.add(img));
 
             knownImages.forEach(imgSrc => {
                 const item = document.createElement('div');

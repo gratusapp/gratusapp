@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gratus App | Webové stránky a aplikace na míru</title>
     <meta name="description" content="Profesionální vývoj webů a aplikací s využitím AI. Moderní design a řešení na míru.">
-    <link rel="stylesheet" href="index.css?v=20260501-1">
+    <link rel="stylesheet" href="index.css?v=20261111-1">
 </head>
 <body>
     <nav>
@@ -55,12 +55,27 @@
             <a id="homeHeroBtn1" href="#vision" class="btn" style="background: white; color: black;">Moje vize</a>
             <a id="homeHeroBtn2" href="apps.html" class="btn">Prohlédnout projekty</a>
         </div>
+
+        <!-- Přepínač aplikací / Pills pro listování -->
+        <div class="hero-app-switcher" id="heroAppSwitcher" role="tablist" aria-label="Prezentované aplikace">
+            <button class="app-switcher-pill active" onclick="switchHeroSlide(0, true)" style="--pill-accent: #f97316;" role="tab" aria-selected="true" id="heroPill-0">
+                <span class="pill-dot"></span>
+                <span class="pill-title">Deník vděčnosti</span>
+                <span class="pill-badge" style="background: rgba(249,115,22,0.15); color: #f97316; border-color: rgba(249,115,22,0.3);">GRATUS APP</span>
+            </button>
+            <button class="app-switcher-pill" onclick="switchHeroSlide(1, true)" style="--pill-accent: #10B981;" role="tab" aria-selected="false" id="heroPill-1">
+                <span class="pill-dot"></span>
+                <span class="pill-title">Kapesní účetní</span>
+                <span class="pill-badge" style="background: rgba(16,185,129,0.15); color: #10B981; border-color: rgba(16,185,129,0.3);">NOVINKA 2026</span>
+            </button>
+        </div>
+
         <div class="hero-badge hero-badges">
             <a id="homeHeroAppStore" href="https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs" class="app-store-badge" target="_blank" rel="noopener noreferrer">
                 <span class="asb-apple"></span>
                 <span class="asb-text">
-                    <span class="asb-subtitle">Download on the</span>
-                    <span class="asb-title">App Store</span>
+                    <span class="asb-subtitle" id="homeHeroAppStoreSubtitle">Download on the</span>
+                    <span class="asb-title" id="homeHeroAppStoreTitle">App Store</span>
                 </span>
             </a>
             <a id="homeHeroGooglePlay" href="https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share" class="google-play-badge" target="_blank" rel="noopener noreferrer">
@@ -71,17 +86,38 @@
                 </span>
             </a>
         </div>
-        <div class="hero-showcase">
-            <div class="ambient-glow"></div>
-            <div class="showcase-item item-left">
-                <img id="homeShowcaseLeft" src="assets/app-inspiration-clean.png" alt="Inspirace">
+
+        <!-- Showcase carousel wrapper s listováním (šipky a gesta) -->
+        <div class="hero-showcase-wrapper" id="heroShowcaseWrapper" aria-label="Prezentace mobilních aplikací">
+            <button class="showcase-arrow showcase-arrow-prev" id="heroPrevBtn" onclick="prevHeroSlide()" aria-label="Předchozí aplikace" title="Předchozí aplikace">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+
+            <div class="hero-showcase" id="heroShowcase">
+                <div class="ambient-glow" id="heroShowcaseGlow"></div>
+                <div class="showcase-item item-left" id="showcaseItemLeft">
+                    <img id="homeShowcaseLeft" src="assets/app-inspiration-clean.png" alt="Inspirace" loading="eager">
+                </div>
+                <div class="showcase-item item-center" id="showcaseItemCenter" style="cursor: pointer;" title="Klikněte pro zobrazení detailu aplikace">
+                    <img id="homeShowcaseCenter" src="assets/app-home-clean.png" alt="Domů" loading="eager">
+                    <div class="showcase-item-overlay">
+                        <span>Zobrazit aplikaci &rarr;</span>
+                    </div>
+                </div>
+                <div class="showcase-item item-right" id="showcaseItemRight">
+                    <img id="homeShowcaseRight" src="assets/app-journey-clean.png" alt="Moje cesta" loading="eager">
+                </div>
             </div>
-            <div class="showcase-item item-center">
-                <img id="homeShowcaseCenter" src="assets/app-home-clean.png" alt="Domů">
-            </div>
-            <div class="showcase-item item-right">
-                <img id="homeShowcaseRight" src="assets/app-journey-clean.png" alt="Moje cesta">
-            </div>
+
+            <button class="showcase-arrow showcase-arrow-next" id="heroNextBtn" onclick="nextHeroSlide()" aria-label="Další aplikace" title="Další aplikace">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+        </div>
+
+        <!-- Tečky / indikátor rotace -->
+        <div class="showcase-dots" id="heroShowcaseDots">
+            <span class="showcase-dot active" onclick="switchHeroSlide(0, true)" id="heroDot-0"><span class="dot-progress"></span></span>
+            <span class="showcase-dot" onclick="switchHeroSlide(1, true)" id="heroDot-1"><span class="dot-progress"></span></span>
         </div>
     </header>
 
@@ -334,6 +370,300 @@
             loadDynamicHomeContent();
         });
 
+        
+        // --- Interactive Hero Showcase Carousel ---
+        let heroSlides = [
+            {
+                id: 'denik-vdecnosti',
+                title: 'Deník vděčnosti',
+                badge: 'GRATUS APP',
+                badgeColor: '#f97316',
+                accentColor: '#f97316',
+                appStoreUrl: 'https://apps.apple.com/cz/app/vd%C4%9B%C4%8Dnost/id6785057444?l=cs',
+                googlePlayUrl: 'https://play.google.com/store/apps/details?id=cz.gratusapp.denikvdecnosti&pcampaignid=web_share',
+                detailUrl: 'apps/denik-vdecnosti.html',
+                showcaseLeft: 'assets/app-inspiration-clean.png',
+                showcaseCenter: 'assets/app-home-clean.png',
+                showcaseRight: 'assets/app-journey-clean.png'
+            },
+            {
+                id: 'dane-pro',
+                title: 'Kapesní účetní',
+                badge: 'NOVINKA 2026',
+                badgeColor: '#10B981',
+                accentColor: '#10B981',
+                appStoreUrl: '',
+                googlePlayUrl: '',
+                detailUrl: 'apps/dane-pro.html',
+                showcaseLeft: 'assets/dane-pro-invoices-mockup.png',
+                showcaseCenter: 'assets/dane-pro-dashboard-mockup.png',
+                showcaseRight: 'assets/dane-pro-import-mockup.png'
+            }
+        ];
+        let currentHeroSlideIndex = 0;
+        let heroAutoRotateTimer = null;
+        let heroAutoRotateInterval = 6000;
+        let heroAutoRotateEnabled = true;
+        let isHeroHovered = false;
+
+        function setupHeroCarousel(heroData) {
+            if (heroData) {
+                if (heroData.slides && Array.isArray(heroData.slides) && heroData.slides.length > 0) {
+                    heroSlides = heroData.slides;
+                }
+                if (heroData.autoRotate !== undefined) {
+                    heroAutoRotateEnabled = !!heroData.autoRotate;
+                }
+                if (heroData.autoRotateInterval) {
+                    heroAutoRotateInterval = Math.max(3, parseInt(heroData.autoRotateInterval)) * 1000;
+                }
+            }
+
+            renderHeroSwitcher();
+            renderHeroDots();
+            applyHeroSlide(0, false);
+            setupHeroInteractions();
+
+            if (heroAutoRotateEnabled && heroSlides.length > 1) {
+                startHeroAutoRotate();
+            }
+        }
+
+        function renderHeroSwitcher() {
+            const switcher = document.getElementById('heroAppSwitcher');
+            if (!switcher) return;
+            if (heroSlides.length <= 1) {
+                switcher.style.display = 'none';
+                return;
+            }
+            switcher.style.display = 'inline-flex';
+            switcher.innerHTML = heroSlides.map((slide, idx) => `
+                <button class="app-switcher-pill ${idx === currentHeroSlideIndex ? 'active' : ''}" 
+                        onclick="switchHeroSlide(${idx}, true)" 
+                        style="--pill-accent: ${slide.accentColor || slide.badgeColor || '#f97316'};"
+                        role="tab" 
+                        aria-selected="${idx === currentHeroSlideIndex ? 'true' : 'false'}"
+                        id="heroPill-${idx}">
+                    <span class="pill-dot"></span>
+                    <span class="pill-title">${slide.title || 'Aplikace'}</span>
+                    ${slide.badge ? `<span class="pill-badge" style="background: ${slide.badgeColor || '#0071e3'}22; color: ${slide.badgeColor || '#0071e3'}; border-color: ${slide.badgeColor || '#0071e3'}44;">${slide.badge}</span>` : ''}
+                </button>
+            `).join('');
+        }
+
+        function renderHeroDots() {
+            const dots = document.getElementById('heroShowcaseDots');
+            if (!dots) return;
+            if (heroSlides.length <= 1) {
+                dots.style.display = 'none';
+                return;
+            }
+            dots.style.display = 'flex';
+            dots.innerHTML = heroSlides.map((slide, idx) => `
+                <span class="showcase-dot ${idx === currentHeroSlideIndex ? 'active' : ''}" 
+                      onclick="switchHeroSlide(${idx}, true)" 
+                      title="${slide.title || 'Aplikace'}"
+                      id="heroDot-${idx}">
+                    <span class="dot-progress"></span>
+                </span>
+            `).join('');
+        }
+
+        function applyHeroSlide(index, animate = true) {
+            if (!heroSlides || heroSlides.length === 0) return;
+            currentHeroSlideIndex = (index + heroSlides.length) % heroSlides.length;
+            const slide = heroSlides[currentHeroSlideIndex];
+
+            const showcase = document.getElementById('heroShowcase');
+            const glow = document.getElementById('heroShowcaseGlow');
+            const sl = document.getElementById('homeShowcaseLeft');
+            const sc = document.getElementById('homeShowcaseCenter');
+            const sr = document.getElementById('homeShowcaseRight');
+            const centerWrap = document.getElementById('showcaseItemCenter');
+
+            // Update pills & dots
+            heroSlides.forEach((_, i) => {
+                const pill = document.getElementById(`heroPill-${i}`);
+                if (pill) {
+                    if (i === currentHeroSlideIndex) {
+                        pill.classList.add('active');
+                        pill.setAttribute('aria-selected', 'true');
+                    } else {
+                        pill.classList.remove('active');
+                        pill.setAttribute('aria-selected', 'false');
+                    }
+                }
+                const dot = document.getElementById(`heroDot-${i}`);
+                if (dot) {
+                    const prog = dot.querySelector('.dot-progress');
+                    if (i === currentHeroSlideIndex) {
+                        dot.classList.add('active');
+                        if (prog) {
+                            prog.style.transition = 'none';
+                            prog.style.width = '0%';
+                            setTimeout(() => {
+                                if (heroAutoRotateEnabled && !isHeroHovered) {
+                                    prog.style.transition = `width ${heroAutoRotateInterval}ms linear`;
+                                    prog.style.width = '100%';
+                                }
+                            }, 50);
+                        }
+                    } else {
+                        dot.classList.remove('active');
+                        if (prog) {
+                            prog.style.transition = 'none';
+                            prog.style.width = '0%';
+                        }
+                    }
+                }
+            });
+
+            // Update badges
+            const asb = document.getElementById('homeHeroAppStore');
+            const asbSub = document.getElementById('homeHeroAppStoreSubtitle');
+            const asbTitle = document.getElementById('homeHeroAppStoreTitle');
+            const gpb = document.getElementById('homeHeroGooglePlay');
+            const navAsb = document.querySelector('.nav-app-store');
+            const navGpb = document.getElementById('navHeroGooglePlay');
+
+            if (asb) {
+                if (slide.appStoreUrl && slide.appStoreUrl.trim().length > 0) {
+                    asb.href = slide.appStoreUrl;
+                    asb.target = '_blank';
+                    if (asbSub) asbSub.textContent = 'Download on the';
+                    if (asbTitle) asbTitle.textContent = 'App Store';
+                    asb.title = `Stáhnout aplikaci ${slide.title} na App Store`;
+                    if (navAsb) navAsb.href = slide.appStoreUrl;
+                } else {
+                    if (slide.detailUrl) {
+                        asb.href = slide.detailUrl;
+                        asb.target = '_self';
+                    } else {
+                        asb.href = 'apps.html';
+                        asb.target = '_self';
+                    }
+                    if (asbSub) asbSub.textContent = 'Již brzy na';
+                    if (asbTitle) asbTitle.textContent = 'App Store';
+                    asb.title = `${slide.title} se připravuje na App Store – klikněte pro detaily`;
+                }
+            }
+
+            if (gpb) {
+                if (slide.googlePlayUrl && slide.googlePlayUrl.trim().length > 0) {
+                    gpb.href = slide.googlePlayUrl;
+                    gpb.style.display = 'inline-flex';
+                    if (navGpb) {
+                        navGpb.href = slide.googlePlayUrl;
+                        navGpb.style.display = 'inline-block';
+                    }
+                } else {
+                    gpb.style.display = 'none';
+                    if (navGpb) navGpb.style.display = 'none';
+                }
+            }
+
+            // Click center phone to view details
+            if (centerWrap) {
+                centerWrap.onclick = () => {
+                    if (slide.detailUrl) {
+                        window.location.href = slide.detailUrl;
+                    } else if (slide.appStoreUrl) {
+                        window.open(slide.appStoreUrl, '_blank');
+                    }
+                };
+            }
+
+            // Glow accent color
+            if (glow && (slide.accentColor || slide.badgeColor)) {
+                const color = slide.accentColor || slide.badgeColor;
+                glow.style.background = `radial-gradient(circle, ${color}33 0%, transparent 70%)`;
+            }
+
+            // Animate images
+            if (animate && showcase) {
+                showcase.classList.add('is-transitioning');
+                setTimeout(() => {
+                    if (sl && slide.showcaseLeft) sl.src = slide.showcaseLeft;
+                    if (sc && slide.showcaseCenter) sc.src = slide.showcaseCenter;
+                    if (sr && slide.showcaseRight) sr.src = slide.showcaseRight;
+                    showcase.classList.remove('is-transitioning');
+                }, 180);
+            } else {
+                if (sl && slide.showcaseLeft) sl.src = slide.showcaseLeft;
+                if (sc && slide.showcaseCenter) sc.src = slide.showcaseCenter;
+                if (sr && slide.showcaseRight) sr.src = slide.showcaseRight;
+            }
+        }
+
+        function switchHeroSlide(index, isManual = false) {
+            applyHeroSlide(index, true);
+            if (isManual) {
+                restartHeroAutoRotate();
+            }
+        }
+
+        function nextHeroSlide() {
+            switchHeroSlide(currentHeroSlideIndex + 1, true);
+        }
+
+        function prevHeroSlide() {
+            switchHeroSlide(currentHeroSlideIndex - 1, true);
+        }
+
+        function startHeroAutoRotate() {
+            stopHeroAutoRotate();
+            if (!heroAutoRotateEnabled || heroSlides.length <= 1) return;
+            heroAutoRotateTimer = setInterval(() => {
+                if (!isHeroHovered) {
+                    applyHeroSlide(currentHeroSlideIndex + 1, true);
+                }
+            }, heroAutoRotateInterval);
+        }
+
+        function stopHeroAutoRotate() {
+            if (heroAutoRotateTimer) {
+                clearInterval(heroAutoRotateTimer);
+                heroAutoRotateTimer = null;
+            }
+        }
+
+        function restartHeroAutoRotate() {
+            stopHeroAutoRotate();
+            if (heroAutoRotateEnabled && heroSlides.length > 1) {
+                startHeroAutoRotate();
+            }
+        }
+
+        function setupHeroInteractions() {
+            const wrapper = document.getElementById('heroShowcaseWrapper');
+            if (!wrapper) return;
+
+            wrapper.addEventListener('mouseenter', () => {
+                isHeroHovered = true;
+            });
+            wrapper.addEventListener('mouseleave', () => {
+                isHeroHovered = false;
+            });
+
+            let touchStartX = 0;
+            let touchEndX = 0;
+
+            wrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                isHeroHovered = true;
+            }, { passive: true });
+
+            wrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                isHeroHovered = false;
+                const diff = touchEndX - touchStartX;
+                if (Math.abs(diff) > 40) {
+                    if (diff < 0) nextHeroSlide();
+                    else prevHeroSlide();
+                }
+            }, { passive: true });
+        }
+
         async function loadDynamicHomeContent() {
             let data = null;
             try {
@@ -379,18 +709,9 @@
                         if (h.hero.btn2Text) b2.textContent = h.hero.btn2Text;
                         if (h.hero.btn2Link) b2.href = h.hero.btn2Link;
                     }
-                    const asb = document.getElementById('homeHeroAppStore');
-                    if (asb && h.hero.appStoreUrl) asb.href = h.hero.appStoreUrl;
-                    const gpb = document.getElementById('homeHeroGooglePlay');
-                    if (gpb && h.hero.googlePlayUrl) gpb.href = h.hero.googlePlayUrl;
-                    const ngp = document.getElementById('navHeroGooglePlay');
-                    if (ngp && h.hero.googlePlayUrl) ngp.href = h.hero.googlePlayUrl;
-                    const sl = document.getElementById('homeShowcaseLeft');
-                    if (sl && h.hero.showcaseLeft) sl.src = h.hero.showcaseLeft;
-                    const sc = document.getElementById('homeShowcaseCenter');
-                    if (sc && h.hero.showcaseCenter) sc.src = h.hero.showcaseCenter;
-                    const sr = document.getElementById('homeShowcaseRight');
-                    if (sr && h.hero.showcaseRight) sr.src = h.hero.showcaseRight;
+
+                    // Setup interactive multi-app carousel (Gratus + Kapesní účetní)
+                    setupHeroCarousel(h.hero);
                 }
 
                 // Approach / O mně
