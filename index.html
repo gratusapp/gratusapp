@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gratus App | Webové stránky a aplikace na míru</title>
     <meta name="description" content="Profesionální vývoj webů a aplikací s využitím AI. Moderní design a řešení na míru.">
-    <link rel="stylesheet" href="index.css?v=20261111-1">
+    <link rel="stylesheet" href="index.css?v=20261111-2">
 </head>
 <body>
     <nav>
@@ -258,7 +258,7 @@
 
     <section id="developer">
         <h2 class="section-title">Moje projekty & aplikace</h2>
-        <div id="homeProjectsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto;">
+        <div id="homeProjectsGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto;">
             <!-- Deník vděčnosti -->
             <div class="card" onclick="window.location.href='apps/denik-vdecnosti.html'" style="border-color: var(--accent-color); cursor: pointer; text-align: left;">
                 <div style="height: 200px; background: linear-gradient(135deg, #1c1c1e, #000); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
@@ -817,7 +817,7 @@
                         const badgeColor = app.badgeColor || accentColor;
                         let previewContent = '';
                         if (app.image) {
-                            previewContent = `<img src="${app.image}" alt="${app.title}" style="width: 120px; transform: rotate(${app.imageRotate || '0deg'}); transition: transform 0.5s ease;">`;
+                            previewContent = `<img src="${app.image}" alt="${app.title}" style="max-height: 180px; width: auto; max-width: 85%; object-fit: contain; transform: rotate(${app.imageRotate || '0deg'}); border-radius: 10px; transition: transform 0.5s ease;">`;
                         } else {
                             previewContent = `<div style="font-size: 55px; text-shadow: 0 10px 20px rgba(0,0,0,0.5);">${app.iconEmoji || '📱'}</div>`;
                         }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Podlahy Holčák | Web Project Case Study</title>
-    <link rel="stylesheet" href="../../index.css?v=20260622-1">
+    <link rel="stylesheet" href="../../index.css?v=20261111-2">
     <style>
         .project-hero {
             background: linear-gradient(180deg, #1c1c1e 0%, #0c0b0a 100%);
@@ -36,7 +36,7 @@
         }
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -66,7 +66,7 @@
         }
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 24px;
             max-width: 1100px;
             margin: 40px auto 0;
@@ -124,6 +124,14 @@
         .stat-box .label {
             color: var(--text-secondary);
             font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .project-hero {
+                padding: 130px 16px 50px;
+            }
+            .project-hero h1 {
+                font-size: 34px !important;
+            }
         }
     </style>
 </head>

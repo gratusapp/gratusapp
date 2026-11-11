@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gratitude Journal | Features & Details</title>
-    <link rel="stylesheet" href="../../index.css?v=20260622-1">
+    <link rel="stylesheet" href="../../index.css?v=20261111-2">
     <style>
         .feature-hero {
             background: linear-gradient(180deg, #1c1c1e 0%, #000 100%);
@@ -13,7 +13,7 @@
         }
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -34,6 +34,14 @@
         .highlight {
             color: var(--accent-color);
             font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .feature-hero {
+                padding: 140px 16px 60px;
+            }
+            .feature-hero h1 {
+                font-size: 34px !important;
+            }
         }
     </style>
 </head>

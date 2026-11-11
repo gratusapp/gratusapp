@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Moje Aplikace | Portfolio Projektů</title>
-    <link rel="stylesheet" href="index.css?v=20260501-1">
+    <link rel="stylesheet" href="index.css?v=20261111-2">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body class="dark-mode">
@@ -131,7 +131,7 @@
                     
                     let previewContent = '';
                     if (app.image) {
-                        previewContent = `<img src="${app.image}" alt="${app.title}" style="width: 140px; transform: rotate(${app.imageRotate || '0deg'}); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); transition: transform 0.5s ease;">`;
+                        previewContent = `<img src="${app.image}" alt="${app.title}" style="max-height: 220px; width: auto; max-width: 85%; object-fit: contain; transform: rotate(${app.imageRotate || '0deg'}); border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); transition: transform 0.5s ease;">`;
                     } else {
                         previewContent = `<div style="font-size: 70px; text-shadow: 0 10px 20px rgba(0,0,0,0.5);">${app.iconEmoji || '📱'}</div>`;
                     }

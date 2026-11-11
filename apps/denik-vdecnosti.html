@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deník vděčnosti | Funkce a detaily</title>
-    <link rel="stylesheet" href="../index.css?v=20260501-1">
+    <link rel="stylesheet" href="../index.css?v=20261111-2">
     <style>
         .feature-hero {
             background: linear-gradient(180deg, #1c1c1e 0%, #000 100%);
@@ -13,7 +13,7 @@
         }
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -34,6 +34,18 @@
         .highlight {
             color: var(--accent-color);
             font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .feature-hero {
+                padding: 140px 16px 60px;
+            }
+            .feature-hero h1 {
+                font-size: 34px !important;
+            }
+            #screenshotsContainer img {
+                width: min(250px, 76vw) !important;
+                height: auto !important;
+            }
         }
     </style>
 </head>
@@ -176,7 +188,7 @@
 
     <section style="background: #0a0a0a; text-align: center;">
         <h2 class="section-title">Jak to vypadá?</h2>
-        <div id="screenshotsContainer" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px;">
+        <div id="screenshotsContainer" style="display: flex; gap: 20px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-top: 40px;">
             <img src="../assets/app-home-clean.png" alt="Domů" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
             <img src="../assets/app-inspiration-clean.png" alt="Inspirace" style="width: 250px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
         </div>

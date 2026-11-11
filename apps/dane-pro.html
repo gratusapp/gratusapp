@@ -2,9 +2,9 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width="device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DaněPro | Funkce a detaily aplikace</title>
-    <link rel="stylesheet" href="../index.css?v=20260501-1">
+    <link rel="stylesheet" href="../index.css?v=20261111-2">
     <style>
         .feature-hero {
             background: linear-gradient(180deg, #1c1c1e 0%, #000 100%);
@@ -36,7 +36,7 @@
         }
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -72,12 +72,17 @@
             margin-top: 40px;
         }
         .showcase-item {
+            position: static;
+            width: auto;
+            max-width: 240px;
             text-align: center;
-            flex: 0 0 auto;
+            flex: 0 1 220px;
+            transform: none !important;
+            opacity: 1 !important;
         }
         .showcase-item img {
-            height: 480px;
-            width: auto;
+            width: 100%;
+            height: auto;
             border-radius: 24px;
             box-shadow: 0 22px 45px rgba(0, 0, 0, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.12);
@@ -95,6 +100,20 @@
             font-size: 14px;
             font-weight: 600;
             letter-spacing: 0.2px;
+        }
+        @media (max-width: 768px) {
+            .feature-hero {
+                padding: 140px 16px 50px;
+            }
+            .feature-hero h1 {
+                font-size: 34px !important;
+            }
+            .showcase-row {
+                gap: 18px;
+            }
+            .showcase-item {
+                flex: 0 1 min(240px, 76vw);
+            }
         }
     </style>
 </head>

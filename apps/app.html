@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">Detail Aplikace | Gratus App</title>
-    <link rel="stylesheet" href="../index.css?v=20260501-1">
+    <link rel="stylesheet" href="../index.css?v=20261111-2">
     <style>
         .feature-hero {
             background: linear-gradient(180deg, #1c1c1e 0%, #000 100%);
@@ -36,7 +36,7 @@
         }
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 30px;
             margin-top: 40px;
         }
@@ -62,11 +62,17 @@
             margin-top: 40px;
         }
         .showcase-item {
-            text-align: center;
+            position: static;
+            width: auto;
             max-width: 220px;
+            flex: 0 1 220px;
+            text-align: center;
+            transform: none !important;
+            opacity: 1 !important;
         }
         .showcase-item img {
             width: 100%;
+            height: auto;
             border-radius: 18px;
             border: 1px solid #333;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
@@ -79,6 +85,18 @@
             font-size: 13px;
             color: var(--text-secondary);
             margin-top: 12px;
+        }
+        @media (max-width: 768px) {
+            .feature-hero {
+                padding: 140px 16px 50px;
+            }
+            .feature-hero h1 {
+                font-size: 34px !important;
+            }
+            .showcase-item {
+                max-width: 240px;
+                flex: 0 1 min(240px, 76vw);
+            }
         }
         .cta-download {
             background: #1c1c1e;

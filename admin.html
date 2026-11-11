@@ -684,6 +684,9 @@
                         </button>
                     </div>
 
+                    <!-- Skrytý input pro nahrání obrázků telefonů v Hero sekci -->
+                    <input type="file" id="heroSlideImageUploadInput" accept="image/png, image/jpeg, image/webp, image/svg+xml, image/*" style="display: none;" onchange="handleHeroSlideImageUpload(event)">
+
                     <!-- Kontejner pro karty jednotlivých slidů -->
                     <div id="heroSlidesList" style="display: flex; flex-direction: column; gap: 18px;">
                         <!-- Dynamicky generováno funkcí renderHeroSlides() -->
@@ -2548,33 +2551,109 @@
                             <!-- Levý telefon -->
                             <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
                                 <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 4px;">Levý telefon:</label>
-                                <input type="text" class="form-control" style="font-size: 12px; margin-bottom: 8px;" value="${escapeAttr(s.showcaseLeft || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseLeft', this.value)">
+                                <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+                                    <input type="text" class="form-control" style="font-size: 12px; flex: 1; min-width: 0;" value="${escapeAttr(s.showcaseLeft || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseLeft', this.value)">
+                                    <button type="button" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; white-space: nowrap;" onclick="triggerHeroSlideImageUpload(${idx}, 'showcaseLeft')" title="Nahrát obrázek přímo na GitHub">📤 Nahrát</button>
+                                </div>
                                 <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
-                                    <img src="${escapeAttr(s.showcaseLeft || '')}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="this.style.display='none'" onload="this.style.display='block'">
+                                    <img src="${escapeAttr(getHeroSlidePreviewSrc(s.showcaseLeft || ''))}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="handleAdminImageError(this)" onload="this.style.display='block'">
                                 </div>
                             </div>
 
                             <!-- Středový telefon -->
                             <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
                                 <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 4px;">Středový telefon (hlavní):</label>
-                                <input type="text" class="form-control" style="font-size: 12px; margin-bottom: 8px;" value="${escapeAttr(s.showcaseCenter || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseCenter', this.value)">
+                                <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+                                    <input type="text" class="form-control" style="font-size: 12px; flex: 1; min-width: 0;" value="${escapeAttr(s.showcaseCenter || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseCenter', this.value)">
+                                    <button type="button" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; white-space: nowrap;" onclick="triggerHeroSlideImageUpload(${idx}, 'showcaseCenter')" title="Nahrát obrázek přímo na GitHub">📤 Nahrát</button>
+                                </div>
                                 <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
-                                    <img src="${escapeAttr(s.showcaseCenter || '')}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="this.style.display='none'" onload="this.style.display='block'">
+                                    <img src="${escapeAttr(getHeroSlidePreviewSrc(s.showcaseCenter || ''))}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="handleAdminImageError(this)" onload="this.style.display='block'">
                                 </div>
                             </div>
 
                             <!-- Pravý telefon -->
                             <div style="background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
                                 <label style="font-size: 11px; color: var(--text-secondary); display: block; margin-bottom: 4px;">Pravý telefon:</label>
-                                <input type="text" class="form-control" style="font-size: 12px; margin-bottom: 8px;" value="${escapeAttr(s.showcaseRight || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseRight', this.value)">
+                                <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+                                    <input type="text" class="form-control" style="font-size: 12px; flex: 1; min-width: 0;" value="${escapeAttr(s.showcaseRight || '')}" onchange="updateHeroSlideField(${idx}, 'showcaseRight', this.value)">
+                                    <button type="button" class="btn-secondary" style="font-size: 11px; padding: 6px 10px; white-space: nowrap;" onclick="triggerHeroSlideImageUpload(${idx}, 'showcaseRight')" title="Nahrát obrázek přímo na GitHub">📤 Nahrát</button>
+                                </div>
                                 <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08);">
-                                    <img src="${escapeAttr(s.showcaseRight || '')}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="this.style.display='none'" onload="this.style.display='block'">
+                                    <img src="${escapeAttr(getHeroSlidePreviewSrc(s.showcaseRight || ''))}" style="max-height: 110px; max-width: 100%; object-fit: contain;" onerror="handleAdminImageError(this)" onload="this.style.display='block'">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             `).join('');
+        }
+
+        const heroSlidePreviewCache = {};
+        let activeHeroSlideUploadTarget = null;
+
+        function getHeroSlidePreviewSrc(path) {
+            const trimmed = (path || '').trim();
+            if (!trimmed) return '';
+            if (heroSlidePreviewCache[trimmed]) return heroSlidePreviewCache[trimmed];
+            try {
+                const cached = localStorage.getItem('gratus_preview_' + trimmed);
+                if (cached) return cached;
+            } catch(e) {}
+            return trimmed;
+        }
+
+        function triggerHeroSlideImageUpload(idx, field) {
+            if (!authToken) {
+                openTokenModal();
+                alert('Pro nahrávání obrázků na GitHub je nejprve potřeba zadat GitHub Token.');
+                return;
+            }
+            activeHeroSlideUploadTarget = { idx, field };
+            const input = document.getElementById('heroSlideImageUploadInput');
+            if (input) input.click();
+        }
+
+        async function handleHeroSlideImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file || !activeHeroSlideUploadTarget) return;
+
+            const { idx, field } = activeHeroSlideUploadTarget;
+            activeHeroSlideUploadTarget = null;
+
+            if (!authToken) {
+                openTokenModal();
+                alert('Pro nahrávání obrázků na GitHub je nejprve potřeba zadat GitHub Token.');
+                event.target.value = '';
+                return;
+            }
+
+            showToast('⏳ Zpracovávám a optimalizuji obrázek...', 'info');
+
+            try {
+                const prepared = await compressAndPrepareImage(file, 1600, 0.88);
+                let baseName = sanitizeFilename(file.name.substring(0, file.name.lastIndexOf('.')) || file.name);
+                if (!baseName) baseName = 'hero-phone';
+                const filename = `${baseName}.${prepared.extension}`;
+                const path = `assets/${filename}`;
+
+                heroSlidePreviewCache[path] = prepared.blobUrl;
+                try {
+                    localStorage.setItem('gratus_preview_' + path, prepared.blobUrl);
+                } catch(e) {}
+
+                showToast(`⏳ Nahrávám "${filename}" na GitHub...`, 'info', 10000);
+                await uploadFileToGitHub(path, prepared.base64, `Upload Hero obrázku ${filename}`);
+
+                updateHeroSlideField(idx, field, path);
+                showToast(`✅ Obrázek "${filename}" nahrán na GitHub! Nezapomeňte kliknout na „🚀 Publikovat na GitHub“.`, 'success', 6000);
+            } catch (err) {
+                console.error(err);
+                alert(`Chyba při nahrávání obrázku: ${err.message}`);
+                showToast(`❌ ${err.message}`, 'error', 6000);
+            } finally {
+                event.target.value = '';
+            }
         }
 
         function updateHeroSlideField(idx, field, value) {
